@@ -1,0 +1,40 @@
+@startuml
+hide footbox
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName SansSerif
+actor "Usuário autenticado" as U
+boundary "Navegador / Jinja2" as UI
+control "Flask / CSRFProtect" as F
+control "routes.logout" as R
+entity "LoginSession / SQLAlchemy" as ORM
+database "SQLite" as DB
+U -> UI : Pressionar Sair
+UI -> F : POST /logout [CSRF + cookie]
+F -> F : Validar CSRF
+alt CSRF ausente ou inválido
+  F --> UI : 400; sessão preservada
+else CSRF válido
+  F -> ORM : load_user(): buscar hash do token e expiração
+  ORM -> DB : SELECT login_sessions / users
+  DB --> ORM : Sessão ou ausência
+  ORM --> F : Usuário ou None
+  F -> R : require_user()
+  alt Sessão ausente ou expirada
+    R --> UI : 302 para /login?next=/logout
+  else Sessão válida
+    R -> ORM : Consultar e excluir LoginSession pelo hash do token
+    ORM -> DB : DELETE login_sessions / COMMIT
+    DB --> ORM : Exclusão persistida
+    R -> R : session.clear() / flash de confirmação
+    R --> UI : 303 /login + cookie sem token de autenticação
+    UI -> F : GET /login
+    F --> UI : 200 login.html + confirmação
+    UI --> U : Você saiu da sua conta
+    note over F, DB
+      Token revogado no banco: mesmo uma cópia
+      do cookie anterior não acessa rotas privadas.
+    end note
+  end
+end
+@enduml

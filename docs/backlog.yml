@@ -5,31 +5,31 @@ tasks:
     title: Autenticação e permissões
     sprint: 1
     priority: Alta
-    column: Em andamento
+    column: Concluído
     acceptance: Login dos dois perfis, logout POST com CSRF, sessões e bloqueios verificados por testes isolados.
   - id: S1-02
     title: Abertura de chamado
     sprint: 1
     priority: Alta
-    column: Em andamento
+    column: Concluído
     acceptance: Validações, autor autenticado, UTC, protocolo, PRG e propriedade comprovados por testes.
   - id: S1-03
     title: Interface acessível e responsiva
     sprint: 1
     priority: Alta
-    column: Em andamento
+    column: Concluído
     acceptance: Fluxos revisados no navegador em desktop/celular, labels e foco visíveis.
   - id: S1-04
     title: Kanban persistente
     sprint: 1
     priority: Média
-    column: Em andamento
+    column: Concluído
     acceptance: Técnico move tarefas com CSRF; solicitante não acessa; sincronização preserva coluna alterada.
   - id: S1-05
     title: Docker, migrações e provisionamento
     sprint: 1
     priority: Alta
-    column: Em andamento
+    column: Concluído
     acceptance: Compose inicia sem preparação manual, healthcheck passa e dados sobrevivem à recriação isolada.
   - id: S1-06
     title: Testes e integração contínua
@@ -41,13 +41,13 @@ tasks:
     title: Documentação acadêmica
     sprint: 1
     priority: Média
-    column: A fazer
+    column: Concluído
     acceptance: Requisitos, regras, três casos de uso, SCRUM individual e roteiro coerentes com o código.
   - id: S1-08
     title: Diagramas UML reproduzíveis
     sprint: 1
     priority: Média
-    column: A fazer
+    column: Concluído
     acceptance: Quatro fontes PlantUML renderizadas em SVG e PNG, inspecionadas e referenciadas.
   - id: S2-01
     title: RF03 — Consultar chamados

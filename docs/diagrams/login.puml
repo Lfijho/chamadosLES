@@ -1,0 +1,62 @@
+@startuml
+hide footbox
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName SansSerif
+actor "Usuário" as U
+boundary "Navegador / Jinja2" as UI
+control "Flask / CSRFProtect" as F
+control "routes.login" as R
+control "LoginForm / security" as S
+entity "SQLAlchemy" as ORM
+database "SQLite" as DB
+U -> UI : Informar e-mail e senha
+UI -> F : POST /login [CSRF, e-mail, senha, next opcional]
+F -> F : Validar CSRF e limite de corpo
+alt CSRF ausente ou inválido
+  F --> UI : 400 + orientação para atualizar
+else CSRF válido
+  F -> R : login()
+  R -> S : LoginForm.validate_on_submit()
+  alt Campos inválidos
+    R --> UI : 422 + erros junto aos campos
+  else Campos válidos
+    R -> S : bucket_keys() / is_limited()
+    S -> ORM : Remover limites expirados / consultar contadores
+    ORM -> DB : DELETE / SELECT login_buckets
+    DB --> ORM : Contadores
+    ORM --> S : Estado
+    S --> R : Limite atingido?
+    alt Limite atingido
+      R --> UI : 429 + Retry-After: 600
+    else Permitido
+      R -> ORM : Consultar User por e-mail normalizado
+      ORM -> DB : SELECT users
+      DB --> ORM : Usuário ou ausência
+      ORM --> R : User ou None
+      R -> S : authenticate(user, password)
+      S -> S : Verificar hash scrypt (ou hash fictício)
+      S --> R : Resultado
+      alt Credenciais inválidas
+        R -> S : failed_login(keys)
+        S -> ORM : Incrementar contadores
+        ORM -> DB : UPSERT login_buckets / COMMIT
+        R --> UI : 200 + mensagem genérica, sem autenticação
+      else Credenciais válidas
+        R -> S : start_session(user)
+        S -> S : Limpar sessão e gerar token aleatório
+        S -> ORM : Persistir hash do token e expiração UTC
+        ORM -> DB : INSERT login_sessions / COMMIT
+        S --> R : Sessão iniciada
+        R -> S : safe_next(next)
+        S --> R : Caminho local permitido ou None
+        R --> UI : 303 para next seguro ou / + cookie assinado
+        UI -> F : GET destino
+        F -> ORM : load_user(): consultar sessão não expirada
+        ORM -> DB : SELECT login_sessions / users
+        F --> UI : 200 página privada conforme perfil
+      end
+    end
+  end
+end
+@enduml

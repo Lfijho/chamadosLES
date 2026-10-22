@@ -1,0 +1,54 @@
+@startuml
+hide footbox
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName SansSerif
+actor "Solicitante" as U
+boundary "Navegador / Jinja2" as UI
+control "Flask / CSRFProtect" as F
+control "routes.new_ticket" as R
+control "TicketForm" as Form
+entity "Ticket / SQLAlchemy" as ORM
+database "SQLite" as DB
+U -> UI : Preencher título, categoria e descrição
+UI -> F : POST /chamados/novo [campos + CSRF]
+F -> F : Validar CSRF
+alt CSRF inválido
+  F --> UI : 400 + orientação para atualizar
+else CSRF válido
+  F -> F : load_user() pela sessão
+  F -> R : require_user("solicitante")
+  alt Sem sessão válida
+    R --> UI : 302 para /login?next=/chamados/novo
+  else Perfil técnico
+    R --> UI : 403
+  else Solicitante autenticado
+    R -> Form : validate_on_submit()
+    Form -> Form : Strip, limites e categoria do servidor
+    Form --> R : Resultado
+    alt Dados inválidos
+      R --> UI : 422 + formulário e erros
+    else Dados válidos
+      R -> ORM : Ticket(requester_id=g.user.id, campos validados)
+      ORM -> ORM : UUID v4, status "Aberto", utcnow()
+      R -> ORM : db.session.add() / commit()
+      ORM -> DB : INSERT tickets / COMMIT
+      DB --> ORM : Persistido
+      R --> UI : 303 /chamados/{uuid}
+      UI -> F : GET /chamados/{uuid}
+      F -> F : load_user() / require_user("solicitante")
+      F -> ORM : ticket_confirmation(): consultar Ticket
+      ORM -> DB : SELECT tickets WHERE id = uuid
+      DB --> ORM : Ticket
+      ORM --> F : Ticket
+      F -> F : Validar requester_id == g.user.id
+      alt Ausente ou pertence a outro solicitante
+        F --> UI : 404
+      else É proprietário
+        F --> UI : 200 confirmation.html com escape automático
+        UI --> U : Protocolo, resumo, status e abertura UTC
+      end
+    end
+  end
+end
+@enduml
