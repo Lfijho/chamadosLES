@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% from '_fields.html' import field %}
+{% block title %}Abrir chamado{% endblock %}
+{% block content %}
+<div class="page-heading"><h1>Abrir chamado</h1><p>Descreva o problema para que a equipe possa entender sua solicitação.</p></div>
+<div class="form-layout">
+  <form class="ticket-form" method="post">
+    {{ form.hidden_tag() }}
+    {% if form.errors %}<div role="alert" class="notice error">Revise os campos indicados antes de enviar.</div>{% endif %}
+    {{ field(form.title, 'Resuma o problema em 5 a 120 caracteres.', {'minlength': 5, 'maxlength': 120, 'required': true, 'placeholder': 'Ex.: Computador não conecta à rede'}) }}
+    {{ field(form.category, 'Escolha a opção que melhor representa o problema.', {'required': true}) }}
+    {{ field(form.description, 'Use de 10 a 5.000 caracteres. Informe o que aconteceu e como o problema pode ser reproduzido.', {'minlength': 10, 'maxlength': 5000, 'rows': 8, 'required': true}) }}
+    <div class="form-actions"><button class="button button-primary" type="submit">Enviar chamado</button><a class="button button-secondary" href="{{ url_for('web.home') }}">Cancelar</a></div>
+  </form>
+  <aside class="guidance"><h2>Um bom relato ajuda</h2><p>Informe o nome do sistema ou equipamento e desde quando o problema ocorre.</p><p>Se aparecer uma mensagem de erro, copie o texto na descrição.</p><hr><p>Não envie senhas, tokens ou outros dados confidenciais.</p><p>Seu chamado será registrado em seu nome com o status <strong>Aberto</strong>.</p></aside>
+</div>
+{% endblock %}

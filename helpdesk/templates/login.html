@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% from '_fields.html' import field %}
+{% block title %}Entrar{% endblock %}
+{% block main_class %}page login-page{% endblock %}
+{% block content %}
+<section class="login-intro">
+  <h1>Seu suporte de TI<br>começa aqui.</h1>
+  <p>Registre um problema com as informações que a equipe precisa para ajudar.</p>
+  <div class="intro-detail"><span class="signal" aria-hidden="true"></span>Acesso para solicitantes e técnicos</div>
+</section>
+<section class="login-form" aria-labelledby="entrar-titulo">
+  <h2 id="entrar-titulo">Entrar na sua conta</h2>
+  <p>Use seu e-mail e sua senha de acesso.</p>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    {{ field(form.email, 'Exemplo: nome@empresa.com', {'type': 'email', 'maxlength': 254, 'autocomplete': 'username', 'required': true}) }}
+    {{ field(form.password, 'A senha diferencia maiúsculas de minúsculas.', {'maxlength': 128, 'autocomplete': 'current-password', 'required': true}) }}
+    <button type="submit" class="button button-primary full">Entrar</button>
+  </form>
+  <p class="form-note">O acesso é fornecido pela organização. Não há cadastro público nesta versão.</p>
+</section>
+{% endblock %}

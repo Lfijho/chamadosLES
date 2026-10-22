@@ -1,0 +1,87 @@
+# Catálogo de tarefas acadêmicas. Coluna inicial só é aplicada ao inserir a tarefa.
+# Concluído exige evidência em docs/verificacoes.md; o seed preserva a coluna existente.
+tasks:
+  - id: S1-01
+    title: Autenticação e permissões
+    sprint: 1
+    priority: Alta
+    column: Em andamento
+    acceptance: Login dos dois perfis, logout POST com CSRF, sessões e bloqueios verificados por testes isolados.
+  - id: S1-02
+    title: Abertura de chamado
+    sprint: 1
+    priority: Alta
+    column: Em andamento
+    acceptance: Validações, autor autenticado, UTC, protocolo, PRG e propriedade comprovados por testes.
+  - id: S1-03
+    title: Interface acessível e responsiva
+    sprint: 1
+    priority: Alta
+    column: Em andamento
+    acceptance: Fluxos revisados no navegador em desktop/celular, labels e foco visíveis.
+  - id: S1-04
+    title: Kanban persistente
+    sprint: 1
+    priority: Média
+    column: Em andamento
+    acceptance: Técnico move tarefas com CSRF; solicitante não acessa; sincronização preserva coluna alterada.
+  - id: S1-05
+    title: Docker, migrações e provisionamento
+    sprint: 1
+    priority: Alta
+    column: Em andamento
+    acceptance: Compose inicia sem preparação manual, healthcheck passa e dados sobrevivem à recriação isolada.
+  - id: S1-06
+    title: Testes e integração contínua
+    sprint: 1
+    priority: Alta
+    column: Em andamento
+    acceptance: Suíte isolada passa e workflow versionado executa testes e valida Compose.
+  - id: S1-07
+    title: Documentação acadêmica
+    sprint: 1
+    priority: Média
+    column: A fazer
+    acceptance: Requisitos, regras, três casos de uso, SCRUM individual e roteiro coerentes com o código.
+  - id: S1-08
+    title: Diagramas UML reproduzíveis
+    sprint: 1
+    priority: Média
+    column: A fazer
+    acceptance: Quatro fontes PlantUML renderizadas em SVG e PNG, inspecionadas e referenciadas.
+  - id: S2-01
+    title: RF03 — Consultar chamados
+    sprint: 2
+    priority: Alta
+    column: Backlog
+    acceptance: Implementar listagem, filtros e permissões de consulta na Sprint 2.
+  - id: S2-02
+    title: RF04 — Gerenciar atendimento
+    sprint: 2
+    priority: Alta
+    column: Backlog
+    acceptance: Implementar prioridade e status, exigindo solução no encerramento, com testes na Sprint 2.
+  - id: S2-03
+    title: Testes e documentação da Sprint 2
+    sprint: 2
+    priority: Média
+    column: Backlog
+    acceptance: Verificar RF03 e RF04 e atualizar documentação e diagramas após implementação.
+  - id: S3-01
+    title: RF05 — Histórico de atendimento
+    sprint: 3
+    priority: Alta
+    column: Backlog
+    acceptance: Implementar registro e consulta de ações com permissões e testes na Sprint 3.
+  - id: S3-02
+    title: RF06 — Indicadores
+    sprint: 3
+    priority: Média
+    column: Backlog
+    acceptance: Implementar indicadores com consultas verificadas na Sprint 3.
+  - id: S3-03
+    title: Testes, documentação e revisão final
+    sprint: 3
+    priority: Média
+    column: Backlog
+    acceptance: Verificar histórico e indicadores e revisar documentação e diagramas do produto final.

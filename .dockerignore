@@ -1,0 +1,11 @@
+.git
+.env
+.venv
+**/__pycache__
+.pytest_cache
+*.sqlite*
+instance
+runtime
+node_modules
+.*/
+artifacts

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Chamado registrado{% endblock %}
+{% block content %}
+<div class="notice success" role="status">Chamado registrado com sucesso.</div>
+<div class="page-heading"><h1>Sua solicitação foi recebida.</h1><p>Guarde o protocolo para identificar este chamado.</p></div>
+<section class="ticket-summary" aria-labelledby="resumo">
+  <div class="summary-header"><div><h2 id="resumo">{{ ticket.title }}</h2><p class="protocol">{{ ticket.protocol }}</p></div><span class="status">{{ ticket.status }}</span></div>
+  <dl class="metadata"><div><dt>Categoria</dt><dd>{{ ticket.category }}</dd></div><div><dt>Abertura (UTC)</dt><dd><time datetime="{{ ticket.opened_at.isoformat() }}Z">{{ ticket.opened_at.strftime('%d/%m/%Y às %H:%M') }}</time></dd></div></dl>
+  <h3>Descrição</h3><p class="description">{{ ticket.description }}</p>
+</section>
+<div class="form-actions"><a class="button button-primary" href="{{ url_for('web.new_ticket') }}">Abrir outro chamado</a><a class="button button-secondary" href="{{ url_for('web.home') }}">Voltar ao início</a></div>
+<p class="scope-note">Esta página comprova a abertura. A consulta e o acompanhamento dos chamados serão entregues na Sprint 2.</p>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Início{% endblock %}
+{% block content %}
+<div class="page-heading"><h1>Olá, {{ g.user.name }}.</h1><p>Bem-vindo ao HelpDesk.</p></div>
+{% if g.user.role == 'solicitante' %}
+<section class="welcome-surface">
+  <div><h2>Precisa de suporte de TI?</h2><p>Conte o que aconteceu, escolha uma categoria e receba um protocolo para identificar sua solicitação.</p>
+  <a class="button button-primary" href="{{ url_for('web.new_ticket') }}">Abrir chamado</a></div>
+  <aside><h3>Antes de enviar</h3><p>Descreva o equipamento ou sistema, o comportamento esperado e a mensagem de erro, se houver.</p><p>Evite incluir senhas ou informações confidenciais.</p></aside>
+</section>
+<p class="scope-note">Nesta versão, você pode abrir um chamado e consultar sua confirmação. O acompanhamento dos chamados será entregue na Sprint 2.</p>
+{% else %}
+<section class="welcome-surface">
+  <div><h2>Espaço do técnico</h2><p>A consulta e a gestão do atendimento serão entregues na Sprint 2. Histórico e indicadores fazem parte da Sprint 3.</p><a class="button button-primary" href="{{ url_for('web.kanban') }}">Acompanhar o projeto</a></div>
+  <aside><h3>Quadro do projeto</h3><p>Organize as tarefas do desenvolvimento acadêmico. Este quadro é separado dos chamados de suporte.</p></aside>
+</section>
+{% endif %}
+{% endblock %}

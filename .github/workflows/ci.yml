@@ -1,0 +1,22 @@
+name: Verificações da Sprint 1
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validar Compose
+        run: docker compose config --quiet
+      - name: Construir e executar testes isolados
+        run: |
+          docker build --target test -t helpdesk-tests .
+          docker run --rm helpdesk-tests
+      - name: Iniciar aplicação e verificar saúde
+        run: docker compose -p helpdesk-ci up -d --build --wait --wait-timeout 120
+      - name: Conferir HTTP
+        run: curl --fail http://localhost:8080/healthz
+      - name: Encerrar containers sem apagar volumes
+        if: always()
+        run: docker compose -p helpdesk-ci down

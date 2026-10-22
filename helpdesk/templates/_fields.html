@@ -1,0 +1,8 @@
+{% macro field(input, hint='', extra={}) %}
+<div class="field">
+  {{ input.label }} <span class="required">(obrigatório)</span>
+  {% if hint %}<p id="{{ input.id }}-hint" class="field-hint">{{ hint }}</p>{% endif %}
+  {{ input(aria_describedby=input.id ~ '-hint ' ~ input.id ~ '-errors', aria_invalid='true' if input.errors else 'false', **extra) }}
+  <div id="{{ input.id }}-errors">{% for error in input.errors %}<p class="field-error">{{ error }}</p>{% endfor %}</div>
+</div>
+{% endmacro %}

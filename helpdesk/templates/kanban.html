@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Quadro do projeto{% endblock %}
+{% block main_class %}page board-page{% endblock %}
+{% block content %}
+<div class="page-heading"><h1>Quadro do projeto</h1><p>Acompanhamento do desenvolvimento acadêmico. As colunas representam tarefas do projeto, não o status dos chamados.</p></div>
+<p class="board-help">Para mover uma tarefa, escolha a coluna e pressione “Mover tarefa”. Alterações são salvas no banco.</p>
+<div class="board">
+{% for column in columns %}
+<section class="board-column" aria-labelledby="coluna-{{ loop.index }}">
+  <h2 id="coluna-{{ loop.index }}">{{ column }} <span class="count">{{ tasks|selectattr('column', 'equalto', column)|list|length }}</span></h2>
+  {% for task in tasks if task.column == column %}
+  <article class="task" id="{{ task.id }}">
+    <div class="task-meta"><span>{{ task.id }} · Sprint {{ task.sprint }}</span><span class="priority">{{ task.priority }}</span></div>
+    <h3>{{ task.title }}</h3><p><strong>Aceite:</strong> {{ task.acceptance }}</p>
+    <form method="post" action="{{ url_for('web.move_task', task_id=task.id) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label for="mover-{{ task.id }}">Mover {{ task.id }} para</label>
+      <select name="column" id="mover-{{ task.id }}">{% for target in columns %}<option value="{{ target }}" {% if target == task.column %}selected{% endif %}>{{ target }}</option>{% endfor %}</select>
+      <button class="button button-secondary full" type="submit">Mover tarefa<span class="sr-only"> {{ task.id }}</span></button>
+    </form>
+  </article>
+  {% else %}
+  <p class="empty-state">Nenhuma tarefa nesta coluna. Mova uma tarefa de outra coluna para começar.</p>
+  {% endfor %}
+</section>
+{% endfor %}
+</div>
+{% endblock %}
