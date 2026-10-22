@@ -72,5 +72,6 @@ class Task(db.Model):
     sprint = db.Column(db.Integer, nullable=False)
     priority = db.Column(db.String(20), nullable=False)
     acceptance = db.Column(db.Text, nullable=False)
+    description = db.Column(db.Text, nullable=False, default="", server_default="")
     column = db.Column(db.String(20), nullable=False, default="Backlog")
     __table_args__ = (db.CheckConstraint('"column" IN (\'Backlog\',\'A fazer\',\'Em andamento\',\'Concluído\')', name="task_column"),)

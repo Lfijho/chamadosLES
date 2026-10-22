@@ -1,5 +1,12 @@
 # Catálogo de tarefas acadêmicas. Coluna inicial só é aplicada ao inserir a tarefa.
 # Concluído exige evidência em docs/verificacoes.md; o seed preserva a coluna existente.
+sprints:
+  2:
+    delivery: "2026-11-12"
+    goal: Permitir consulta e gestão básica dos chamados.
+  3:
+    delivery: "2026-12-03"
+    goal: Disponibilizar histórico, indicadores e entrega final.
 tasks:
   - id: S1-01
     title: Autenticação e permissões
@@ -54,34 +61,275 @@ tasks:
     sprint: 2
     priority: Alta
     column: Backlog
+    description: Tarefa-resumo preservada do catálogo original. O detalhamento de consulta está em S2-04 e S2-05.
     acceptance: Implementar listagem, filtros e permissões de consulta na Sprint 2.
   - id: S2-02
     title: RF04 — Gerenciar atendimento
     sprint: 2
     priority: Alta
     column: Backlog
+    description: Tarefa-resumo preservada do catálogo original. O detalhamento de atendimento está em S2-06, S2-07 e S2-08.
     acceptance: Implementar prioridade e status, exigindo solução no encerramento, com testes na Sprint 2.
   - id: S2-03
     title: Testes e documentação da Sprint 2
     sprint: 2
-    priority: Média
+    priority: Alta
     column: Backlog
+    description: Tarefa-resumo preservada do catálogo original. Testes, documentação, validação e apresentação estão detalhados em S2-09 a S2-12.
     acceptance: Verificar RF03 e RF04 e atualizar documentação e diagramas após implementação.
   - id: S3-01
     title: RF05 — Histórico de atendimento
     sprint: 3
     priority: Alta
     column: Backlog
+    description: Tarefa-resumo preservada do catálogo original. Escrita e consulta do histórico estão detalhadas em S3-04 e S3-05.
     acceptance: Implementar registro e consulta de ações com permissões e testes na Sprint 3.
   - id: S3-02
     title: RF06 — Indicadores
     sprint: 3
-    priority: Média
+    priority: Alta
     column: Backlog
+    description: Tarefa-resumo preservada do catálogo original. O painel de indicadores está detalhado em S3-06.
     acceptance: Implementar indicadores com consultas verificadas na Sprint 3.
   - id: S3-03
     title: Testes, documentação e revisão final
     sprint: 3
+    priority: Alta
+    column: Backlog
+    description: Tarefa-resumo preservada do catálogo original. Testes, segurança, Compose, documentação e entrega estão detalhados em S3-07 a S3-13.
+    acceptance: Verificar histórico e indicadores e revisar documentação e diagramas do produto final.
+  - id: S2-04
+    title: RF03 — Listar e visualizar chamados
+    sprint: 2
+    priority: Alta
+    column: Backlog
+    description: >-
+      Criar listagem e detalhe dos chamados com visibilidade por perfil e estado vazio.
+      Solicitante consulta somente seus chamados; técnico consulta todos.
+    acceptance: >-
+      Exibir protocolo, título, categoria, status e data de abertura. Validar autorização
+      no servidor na listagem e no acesso direto por URL. Impedir consulta de chamado
+      alheio pelo solicitante e apresentar estado vazio quando não houver chamados visíveis.
+  - id: S2-05
+    title: RF03 — Filtrar chamados por status e categoria
+    sprint: 2
+    priority: Alta
+    column: Backlog
+    description: >-
+      Acrescentar filtros combináveis de status e categoria à consulta, sempre limitados
+      aos chamados que o perfil autenticado pode visualizar.
+    acceptance: >-
+      Validar valores dos filtros no servidor; combinar status e categoria sem ampliar
+      permissões; permitir limpar ambos os filtros; informar quando não houver resultados.
+      Rejeitar valores inexistentes e verificar filtros isolados e combinados para os dois perfis.
+  - id: S2-06
+    title: RF04 — Definir prioridade do chamado
+    sprint: 2
+    priority: Alta
+    column: Backlog
+    description: >-
+      Permitir somente ao técnico definir ou alterar prioridade entre Baixa, Média e Alta.
+      Acrescentar prioridade Média como valor inicial de chamados novos.
+    acceptance: >-
+      Persistir apenas prioridades da lista definida no servidor; chamados novos recebem
+      Média; solicitante não consegue alterar a prioridade, inclusive manipulando uma
+      requisição direta. Rejeitar prioridades inexistentes e verificar autorização no servidor.
+  - id: S2-07
+    title: RF04 — Atualizar status e registrar solução
+    sprint: 2
+    priority: Alta
+    column: Backlog
+    description: >-
+      Implementar atendimento exclusivo do técnico com fluxo Aberto → Em atendimento →
+      Concluído. Concluído será terminal nesta entrega.
+    acceptance: >-
+      Autorizar alterações somente ao técnico; exigir solução não vazia após remover
+      espaços externos para concluir; persistir solução e data de conclusão UTC. Rejeitar
+      saltos, retrocessos e alterações após Concluído no servidor. Rejeições não alteram o chamado.
+  - id: S2-08
+    title: Preparar eventos de status para o histórico
+    sprint: 2
+    priority: Alta
+    column: Backlog
+    description: >-
+      Registrar automaticamente os eventos de alteração de status para consumo pelo
+      histórico da Sprint 3, sem criar a interface de histórico nesta Sprint.
+    acceptance: >-
+      Cada alteração válida registra chamado, autor autenticado, data UTC e valores
+      anterior e novo. Evento e alteração do chamado são confirmados na mesma transação;
+      uma falha desfaz ambos. Tentativas rejeitadas não produzem evento de alteração.
+  - id: S2-09
+    title: Testar consulta e atendimento
+    sprint: 2
+    priority: Alta
+    column: Backlog
+    description: >-
+      Ampliar os testes isolados para consulta, filtros, prioridade, status, solução e
+      eventos atômicos de atendimento, preservando a cobertura da Sprint 1.
+    acceptance: >-
+      Testes passam cobrindo isolamento entre solicitantes, visibilidade do técnico,
+      acesso direto por URL, filtros combinados e inválidos, prioridades válidas e
+      inválidas, transições, solução obrigatória, status terminal, autoria de eventos e
+      rollback conjunto. Incluir acessos e alterações não autorizados, inclusive requisições manipuladas.
+  - id: S2-10
+    title: Atualizar documentação e UML da Sprint 2
+    sprint: 2
+    priority: Alta
+    column: Backlog
+    description: >-
+      Atualizar requisitos funcionais e não funcionais, casos de uso e respectivas
+      especificações e sequências de consulta e atendimento.
+    acceptance: >-
+      Entregar diagrama de casos de uso atualizado, sequências, diagrama de classes e
+      diagrama de atividades do atendimento em fontes PlantUML, SVG e PNG. Renderizar,
+      inspecionar e conferir coerência com o código efetivamente implementado, sem
+      apresentar histórico e indicadores futuros como concluídos.
+  - id: S2-11
+    title: Validar migrações, Compose e persistência da Sprint 2
+    sprint: 2
+    priority: Alta
+    column: Backlog
+    description: >-
+      Verificar a evolução da aplicação preservando os dados da Sprint 1 e a experiência
+      de inicialização local por Docker Compose.
+    acceptance: >-
+      Verificar migrações sobre dados da Sprint 1, inicialização pelo Compose,
+      healthcheck, persistência após recriar containers, interface responsiva e testes
+      acumulados. Registrar comandos, resultados e limitações reais; não apagar volumes
+      existentes para realizar as verificações.
+  - id: S2-12
+    title: Preparar apresentação e revisão da Sprint 2
+    sprint: 2
     priority: Média
     column: Backlog
-    acceptance: Verificar histórico e indicadores e revisar documentação e diagramas do produto final.
+    description: >-
+      Preparar roteiro de demonstração da consulta e da gestão básica para a entrega
+      de 12/11/2026, incluindo os fluxos dos dois perfis.
+    acceptance: >-
+      Roteiro descreve consulta própria e geral, filtros, prioridades, transições,
+      solução obrigatória e bloqueios de permissão. Registrar revisão, retrospectiva e
+      limitações efetivamente constatadas, sem inventar reuniões ou evidências de execução.
+  - id: S3-04
+    title: RF05 — Adicionar registros de atendimento
+    sprint: 3
+    priority: Alta
+    column: Backlog
+    description: >-
+      Permitir somente ao técnico incluir anotações não vazias em um chamado, com
+      conteúdo, autor autenticado e data UTC persistidos.
+    acceptance: >-
+      Validar conteúdo não vazio após remover espaços externos e autorização no
+      servidor. Solicitações do solicitante são bloqueadas. Registros são somente de
+      inclusão, sem edição ou exclusão pela interface; conteúdo, autoria e data persistem.
+  - id: S3-05
+    title: RF05 — Consultar histórico cronológico
+    sprint: 3
+    priority: Alta
+    column: Backlog
+    description: >-
+      Apresentar cronologicamente as anotações e os eventos de alteração de status
+      persistidos, identificando autor e data em cada registro.
+    acceptance: >-
+      Técnico consulta qualquer chamado; solicitante consulta somente os próprios,
+      inclusive por URL direta. Ordenar cronologicamente com desempate estável e exibir
+      autor e data UTC. Não inventar eventos antigos ausentes no banco; indicar histórico
+      vazio quando não houver registros.
+  - id: S3-06
+    title: RF06 — Painel de indicadores por status e prioridade
+    sprint: 3
+    priority: Alta
+    column: Backlog
+    description: >-
+      Disponibilizar exclusivamente ao técnico contagens reais de chamados agrupados
+      por status e por prioridade, calculadas a partir dos dados persistidos.
+    acceptance: >-
+      Bloquear solicitantes e anônimos no servidor; mostrar todas as categorias de
+      status e prioridade com zero quando não houver chamados; atualizar contagens após
+      alterações persistidas. Não adicionar métricas além das contagens por status e prioridade.
+  - id: S3-07
+    title: Testar histórico e indicadores
+    sprint: 3
+    priority: Alta
+    column: Backlog
+    description: >-
+      Criar testes isolados dos registros de atendimento, eventos de status,
+      permissões de histórico e contagens do painel.
+    acceptance: >-
+      Testes passam verificando persistência, ordenação e desempate, autoria, data UTC,
+      isolamento entre solicitantes, bloqueio da escrita pelo solicitante e visibilidade
+      do técnico. Conferir contagens e valores zero antes e depois de alterações dos chamados.
+  - id: S3-08
+    title: Revisar segurança e executar regressão
+    sprint: 3
+    priority: Alta
+    column: Backlog
+    description: >-
+      Revisar autenticação, autorização e proteção das entradas e executar a regressão
+      acumulada das três Sprints nos fluxos completos dos dois perfis.
+    acceptance: >-
+      Verificar CSRF, escape de conteúdo, validações, sessão e permissões no servidor;
+      revisar ausência de segredos no repositório; executar todos os testes acumulados
+      e os fluxos completos de solicitante e técnico. Registrar resultados e corrigir
+      falhas verificadas antes de declarar o aceite.
+  - id: S3-09
+    title: Validar Compose, backup e restauração do SQLite
+    sprint: 3
+    priority: Alta
+    column: Backlog
+    description: >-
+      Verificar a entrega final por Docker Compose e documentar e ensaiar um procedimento
+      consistente de backup e restauração do estado persistido.
+    acceptance: >-
+      Validar subida em clone limpo com docker compose up -d, migrações das versões
+      anteriores, provisionamento idempotente, healthcheck e persistência após recriação.
+      Documentar e testar backup e restauração consistentes do SQLite, por API de backup
+      ou com escrita suspensa, sem copiar o banco ativo de forma insegura nem apagar dados existentes.
+  - id: S3-10
+    title: Finalizar documentação e diagramas
+    sprint: 3
+    priority: Alta
+    column: Backlog
+    description: >-
+      Consolidar documentação acadêmica e técnica do produto final, incluindo as seis
+      funcionalidades efetivamente implementadas e as limitações conhecidas.
+    acceptance: >-
+      Atualizar requisitos, casos de uso e especificações, sequências, classes e
+      atividades. Entregar fontes PlantUML, SVG e PNG renderizados e inspecionados.
+      Atualizar README, execução, evidências e limitações em coerência com o código final.
+  - id: S3-11
+    title: Preparar roteiro do vídeo final
+    sprint: 3
+    priority: Média
+    column: Backlog
+    description: >-
+      Elaborar roteiro para demonstrar os dois perfis, as seis funcionalidades,
+      permissões e execução por Compose na entrega de 03/12/2026.
+    acceptance: >-
+      Roteiro cobre os fluxos dos dois perfis, RF01 a RF06, tentativas não autorizadas e
+      inicialização por Compose. A preparação do roteiro não constitui evidência de
+      gravação ou postagem do vídeo e não conclui S3-12.
+  - id: S3-12
+    title: Gravar vídeo e entregar pacote final no LEX
+    sprint: 3
+    priority: Alta
+    column: Backlog
+    description: >-
+      Preparar checklist de arquivos obrigatórios, gravar a demonstração final e
+      publicar o vídeo e o pacote da entrega no LEX.
+    acceptance: >-
+      Conferir checklist e conteúdo do pacote, incluindo código, documentação e fontes
+      e imagens dos diagramas. Concluir somente após vídeo realmente gravado e postagem
+      efetivamente realizada no LEX, com evidência verificável da entrega. Documentar
+      roteiro ou intenção de postagem não satisfaz este aceite.
+  - id: S3-13
+    title: Encerrar o acompanhamento do projeto
+    sprint: 3
+    priority: Média
+    column: Backlog
+    description: >-
+      Registrar revisão e retrospectiva final, conferir o atendimento dos critérios de
+      aceite e identificar as pendências reais da entrega.
+    acceptance: >-
+      Revisão e retrospectiva refletem o trabalho efetivamente realizado; cada tarefa
+      concluída tem evidência de aceite. Pendências permanecem identificadas no quadro;
+      documentação de uma tarefa, por si só, não a torna concluída.

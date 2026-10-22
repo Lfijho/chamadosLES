@@ -11,7 +11,9 @@
   {% for task in tasks if task.column == column %}
   <article class="task" id="{{ task.id }}">
     <div class="task-meta"><span>{{ task.id }} · Sprint {{ task.sprint }}</span><span class="priority">{{ task.priority }}</span></div>
-    <h3>{{ task.title }}</h3><p><strong>Aceite:</strong> {{ task.acceptance }}</p>
+    <h3>{{ task.title }}</h3>
+    {% if task.description %}<p>{{ task.description }}</p>{% endif %}
+    <p><strong>Aceite:</strong> {{ task.acceptance }}</p>
     <form method="post" action="{{ url_for('web.move_task', task_id=task.id) }}">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <label for="mover-{{ task.id }}">Mover {{ task.id }} para</label>

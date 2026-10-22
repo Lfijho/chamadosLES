@@ -45,6 +45,9 @@ def seed():
         if task is None:
             task = Task(id=item["id"], column=column)
             db.session.add(task)
+        # Catálogos antigos sem descrição não apagam descrições já persistidas.
+        if "description" in item:
+            task.description = item["description"]
         for field in ("title", "sprint", "priority", "acceptance"):
             setattr(task, field, item[field])
     db.session.commit()

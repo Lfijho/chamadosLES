@@ -23,7 +23,7 @@ O segundo comando mostra localmente os e-mails e as senhas aleatórias iniciais 
 
 ## Persistência e operação
 
-O volume nomeado `<projeto-compose>_helpdesk_state` contém SQLite, chave de sessão e credenciais iniciais. Permissões são preparadas pela imagem; a aplicação e o provisionamento executam como UID/GID 10001. O seed não redefine senhas, não duplica contas/tarefas nem altera colunas existentes do quadro. Metadados de tarefas são sincronizados de `docs/backlog.yml`.
+O volume nomeado `<projeto-compose>_helpdesk_state` contém SQLite, chave de sessão e credenciais iniciais. Permissões são preparadas pela imagem; a aplicação e o provisionamento executam como UID/GID 10001. O seed não redefine senhas, não duplica contas/tarefas nem altera colunas existentes do quadro. Metadados de tarefas, incluindo descrição e critérios de aceite, são sincronizados de `docs/backlog.yml`. O catálogo detalha o trabalho futuro das Sprints 2 e 3; prazos, metas e relação entre tarefas-resumo e detalhadas estão em [docs/kanban.md](docs/kanban.md).
 
 ```bash
 docker compose logs --tail 50 app
