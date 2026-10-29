@@ -1,40 +1,25 @@
 @startuml
-' Versão de leitura para A4, derivada do diagrama detalhado de mesmo fluxo.
+hide footbox
 skinparam backgroundColor #FFFFFF
 skinparam shadowing false
+skinparam dpi 300
 skinparam defaultFontName SansSerif
-skinparam defaultFontSize 14
-hide footbox
-skinparam ParticipantPadding 10
-skinparam BoxPadding 6
-skinparam maxMessageSize 180
+skinparam defaultFontSize 16
+skinparam ParticipantPadding 12
+skinparam maxMessageSize 210
 actor "Solicitante" as U
-boundary "Navegador" as B
-control "Flask\nnew_ticket / TicketForm" as F
-database "SQLite\n(SQLAlchemy)" as D
-U -> B : Preencher o chamado
-B -> F : POST /chamados/novo + CSRF
-F -> F : Validar CSRF, sessão, perfil\ne campos do formulário
-alt Validação ou acesso rejeitado
-  F --> B : Erro sem criar chamado
-else Solicitante e dados válidos
-  F -> D : INSERT Ticket e COMMIT\nautor = g.user.id; UUID;\nstatus Aberto; abertura UTC
-  D --> F : Chamado persistido
-  F --> B : 303 /chamados/{uuid}
-  B -> F : GET /chamados/{uuid}
-  F -> D : Consultar chamado
-  D --> F : Ticket ou ausência
-  F -> F : Conferir propriedade
-  alt Ausente ou de outro solicitante
-    F --> B : 404
-  else Proprietário
-    F --> B : Confirmação com escape (200)
-    B --> U : Protocolo e resumo
-  end
+boundary "Interface" as I
+control "Sistema" as S
+database "Banco de dados" as B
+U -> I : Preencher título, descrição\ne categoria
+I -> S : Enviar chamado
+alt Dados incompletos ou inválidos
+  S --> I : Solicitar correção
+  I --> U : Mostrar orientação
+else Dados válidos
+  S -> B : Salvar chamado do solicitante\ncom status Aberto
+  B --> S : Registro confirmado
+  S --> I : Protocolo e resumo do chamado
+  I --> U : Exibir confirmação
 end
-note over B,F
-  POST sem CSRF: 400; sem sessão válida: 302.
-  Perfil técnico: 403; campos inválidos: 422.
-  GET de confirmação também exige sessão e perfil.
-end note
 @enduml

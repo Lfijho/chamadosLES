@@ -47,7 +47,7 @@ def format_document(path):
     section.header_distance = section.footer_distance = Cm(0.7)
     normal = doc.styles["Normal"]
     normal.font.name = "Liberation Sans"
-    normal.font.size = Pt(10.5)
+    normal.font.size = Pt(11)
     normal.font.color.rgb = RGBColor.from_string("202830")
     normal.paragraph_format.space_after = Pt(6)
     normal.paragraph_format.line_spacing = 1.12
@@ -139,7 +139,7 @@ def format_document(path):
                     paragraph.paragraph_format.space_after = Pt(3)
                     paragraph.paragraph_format.line_spacing = 1.05
                     for run in paragraph.runs:
-                        run.font.size = Pt(9.5)
+                        run.font.size = Pt(10.5)
                         if row_index == 0:
                             run.font.bold = True
     footer = section.footer.paragraphs[0]
@@ -161,9 +161,9 @@ def format_document(path):
 
 def main():
     source = SOURCE.read_text()
-    assert len(re.findall(r"^## \d+\. ", source, re.M)) == 10
+    assert len(re.findall(r"^## \d+\. ", source, re.M)) == 7
     images = re.findall(r"!\[[^\]]*\]\(([^)]+)\)", source)
-    assert len(images) == 5  # Uma captura e quatro desenhos UML.
+    assert len(images) == 4  # Quatro desenhos UML.
     assert all((SOURCE.parent / image).is_file() for image in images)
     with tempfile.TemporaryDirectory(prefix="helpdesk-docs-") as temporary:
         draft = Path(temporary) / "delivery.md"

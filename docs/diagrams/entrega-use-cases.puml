@@ -2,6 +2,7 @@
 left to right direction
 skinparam backgroundColor #FFFFFF
 skinparam shadowing false
+skinparam dpi 300
 skinparam defaultFontName SansSerif
 skinparam actorStyle awesome
 skinparam defaultFontSize 15
@@ -18,7 +19,7 @@ rectangle "HelpDesk: Sprint 1" {
 User -- Login
 User -- Logout
 Requester -- Open
-rectangle "Ferramenta auxiliar acadêmica" {
+rectangle "Quadro do projeto" {
   usecase "Consultar quadro\ndo projeto" as Board
   usecase "Mover tarefa" as Move
 }

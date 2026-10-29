@@ -1,36 +1,24 @@
 @startuml
-' Versão de leitura para A4, derivada do diagrama detalhado de mesmo fluxo.
+hide footbox
 skinparam backgroundColor #FFFFFF
 skinparam shadowing false
+skinparam dpi 300
 skinparam defaultFontName SansSerif
-skinparam defaultFontSize 14
-hide footbox
-skinparam ParticipantPadding 10
-skinparam BoxPadding 6
-skinparam maxMessageSize 180
+skinparam defaultFontSize 16
+skinparam ParticipantPadding 12
+skinparam maxMessageSize 210
 actor "Usuário" as U
-boundary "Navegador" as B
-control "Flask\nlogin / security" as F
-database "SQLite\n(SQLAlchemy)" as D
-U -> B : Informar e-mail e senha
-B -> F : POST /login + CSRF
-F -> F : Validar CSRF, LoginForm\ne limites de tentativas
-F -> D : Consultar usuário e contadores
-D --> F : Conta e limites
-F -> F : authenticate(): verificar scrypt
-alt Credenciais inválidas
-  F -> D : Incrementar falhas e COMMIT
-  F --> B : Mensagem genérica (200)
-else Credenciais válidas
-  F -> D : start_session(): gravar hash\ndo token e expiração UTC
-  F --> B : 303 para destino seguro\ne cookie assinado
-  B -> F : GET destino
-  F -> D : load_user(): conferir sessão
-  F --> B : Página do perfil (Jinja2)
+boundary "Interface" as I
+control "Sistema" as S
+database "Banco de dados" as B
+U -> I : Informar e-mail e senha
+I -> S : Solicitar acesso
+S -> B : Consultar usuário
+B --> S : Dados da conta
+alt Dados válidos
+  S --> I : Permitir acesso ao perfil
+else Dados inválidos
+  S --> I : Informar dados incorretos
 end
-note over B,F
-  CSRF inválido: 400; campos inválidos: 422.
-  Limite de tentativas: 429.
-  next externo ou desconhecido retorna a /.
-end note
+I --> U : Apresentar resultado
 @enduml

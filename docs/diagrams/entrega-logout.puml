@@ -1,35 +1,17 @@
 @startuml
-' Versão de leitura para A4, derivada do diagrama detalhado de mesmo fluxo.
+hide footbox
 skinparam backgroundColor #FFFFFF
 skinparam shadowing false
+skinparam dpi 300
 skinparam defaultFontName SansSerif
-skinparam defaultFontSize 14
-hide footbox
-skinparam ParticipantPadding 10
-skinparam BoxPadding 6
-skinparam maxMessageSize 180
+skinparam defaultFontSize 16
+skinparam ParticipantPadding 12
+skinparam maxMessageSize 210
 actor "Usuário" as U
-boundary "Navegador" as B
-control "Flask\nlogout / security" as F
-database "SQLite\n(SQLAlchemy)" as D
-U -> B : Pressionar Sair
-B -> F : POST /logout + CSRF e cookie
-F -> F : Validar CSRF
-F -> D : load_user(): conferir token\ne expiração da sessão
-D --> F : Sessão atual ou ausência
-alt Sem sessão válida
-  F --> B : 302 para /login
-else Sessão válida
-  F -> D : DELETE LoginSession\npelo hash do token; COMMIT
-  F -> F : session.clear() e mensagem
-  F --> B : 303 /login; sem token\nautenticador no cookie
-  B -> F : GET /login
-  F --> B : Login e confirmação (200)
-end
-note over B,F
-  CSRF inválido: 400, sem executar logout.
-  GET /logout: 405.
-  Após revogar, copiar o cookie antigo
-  não restaura o acesso privado.
-end note
+boundary "Interface" as I
+control "Sistema" as S
+U -> I : Selecionar Sair
+I -> S : Solicitar saída
+S --> I : Acesso encerrado
+I --> U : Apresentar login e confirmação
 @enduml

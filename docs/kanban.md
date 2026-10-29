@@ -97,3 +97,11 @@ Os estados operacionais do banco podem mudar posteriormente por ação do técni
 Foram preparados `docs/entrega-sprint-1.md`, `docs/entrega-sprint-1.docx` e `docs/entrega-sprint-1.pdf` a partir do mesmo conteúdo revisado. A exportação final tem 10 páginas A4, uma captura sintética e quatro desenhos UML incorporados. Fontes detalhadas anteriores foram preservadas; versões de leitura `entrega-*` e procedimento de geração foram versionados.
 
 Requisitos, casos de uso, responsabilidades de Tech Lead e limites foram conferidos contra código, configurações, testes, backlog e Git. A redação não declara retrospectiva formal ou apresentação sem evidência. A inspeção de todas as páginas conferiu tabelas, imagens, legendas e numeração. A geração dos arquivos conclui esta atividade de documentação; S1-06 continua em andamento pela CI externa bloqueada, e as funcionalidades futuras permanecem no Backlog. Evidências atuais em [verificacoes.md](verificacoes.md), seção de revalidação para 29/10/2026.
+
+## Versão objetiva do documento acadêmico
+
+A entrega acadêmica foi reescrita com foco na apresentação do projeto, organização individual, requisitos, funcionalidades da Sprint 1 e três casos de uso. O documento reúne quatro diagramas UML simplificados, os dois comandos de inicialização e as próximas Sprints, em cinco páginas A4.
+
+Markdown, DOCX e PDF foram regenerados do mesmo conteúdo final. A inspeção visual conferiu legibilidade, tabelas inteiras, paginação e ocupação das páginas. A fonte do corpo foi ampliada para 11 pontos e a das tabelas para 10,5 pontos. O gerador de documentos foi ajustado à estrutura de sete seções e quatro figuras.
+
+Os relatórios técnicos e os diagramas detalhados anteriores foram preservados. O código da aplicação, as configurações de execução e os dados não foram alterados. Esta revisão substitui a versão acadêmica de dez páginas, sem modificar o andamento das tarefas de implementação.
