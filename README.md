@@ -74,6 +74,7 @@ PlantUML substitui o diagrams.net inicialmente previsto para permitir fontes ver
 
 O script usa `plantuml/plantuml:1.2025.10`, profile `tools`, sem rede no container e com UID/GID do usuário para escrever os desenhos. Em ambientes sem shell POSIX, execute os comandos `docker compose --profile tools run --rm --no-deps diagrams -charset UTF-8 -tsvg '*.puml'` e a variante `-tpng`, ajustando DIAGRAM_UID/DIAGRAM_GID conforme o host.
 
+- [Documento acadêmico de entrega da Sprint 1](docs/entrega-sprint-1.md): [DOCX editável](docs/entrega-sprint-1.docx) e [PDF](docs/entrega-sprint-1.pdf).
 - [Documentação acadêmica, requisitos, casos de uso e diagramas](docs/sprint-1.md).
 - [Catálogo inicial de tarefas e critérios](docs/backlog.yml).
 - [Acompanhamento versionado](docs/kanban.md): registro do código verificado. O quadro da aplicação mantém o estado operacional no banco, exclusivo do técnico.
@@ -107,3 +108,16 @@ Uma chave externa pode ser fornecida como `SECRET_KEY` (mínimo 32 caracteres al
 5. Entre como técnico. Mostre a mensagem de escopo e o quadro acadêmico; mova uma tarefa pelo seletor.
 6. Recrie os containers sem apagar volumes e confirme que o quadro persiste.
 7. Apresente os testes, os desenhos UML e os itens futuros no backlog, sem alegar implantação de RF03–RF06.
+
+
+## Gerar o documento de entrega
+
+`docs/entrega-sprint-1.md` é a fonte final revisada. DOCX e PDF são produzidos em sequência a partir dela, com os mesmos textos e imagens:
+
+```bash
+./scripts/build-delivery-docs.sh
+```
+
+O script constrói uma ferramenta opcional em container, separada da aplicação, com Pandoc, python-docx e LibreOffice. Aplica apenas formatação ao DOCX e exporta esse arquivo para PDF. Requer Docker e acesso à rede na primeira construção; não altera banco, código ou configuração da aplicação. A versão entregue usou Pandoc 2.17.1.1, python-docx 1.2.0 e LibreOffice 7.4.7.2. A imagem base é Python 3.13.7 em Debian Bookworm; pacotes da distribuição podem receber atualizações em construções futuras, portanto confira novamente a paginação após regenerar.
+
+A captura em `docs/figures/` contém somente um chamado sintético de ensaio. Os diagramas com prefixo `entrega-` são versões de leitura em A4 dos desenhos detalhados preservados; `scripts/render-diagrams.sh` renderiza ambos os conjuntos. O documento contém somente a versão final revisada.

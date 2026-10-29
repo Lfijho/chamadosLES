@@ -1,0 +1,27 @@
+@startuml
+left to right direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName SansSerif
+skinparam actorStyle awesome
+skinparam defaultFontSize 15
+actor "Usuário" as User <<abstrato>>
+actor "Solicitante" as Requester
+actor "Técnico" as Tech
+Requester --|> User
+Tech --|> User
+rectangle "HelpDesk: Sprint 1" {
+  usecase "UC01\nRealizar login" as Login
+  usecase "UC02\nRealizar logout" as Logout
+  usecase "UC03\nAbrir chamado" as Open
+}
+User -- Login
+User -- Logout
+Requester -- Open
+rectangle "Ferramenta auxiliar acadêmica" {
+  usecase "Consultar quadro\ndo projeto" as Board
+  usecase "Mover tarefa" as Move
+}
+Tech -- Board
+Tech -- Move
+@enduml

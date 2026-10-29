@@ -1,5 +1,9 @@
 # Verificações da Sprint 1
 
+O registro inicial abaixo descreve os incrementos `86ac70b` e `20ad9d1`. A seção final de revalidação informa os resultados reconferidos para a entrega em 29/10/2026. As contagens antigas de testes e tarefas são históricas.
+
+## Registro inicial
+
 Resultados de execução real nesta implementação. Testes não usam os dados de demonstração. Containers e volumes de ensaio pertencem ao projeto isolado `helpdesk-sprint1-check`; nenhum volume foi apagado.
 
 | Verificação | Evidência |
@@ -37,3 +41,26 @@ Contraste renderizado foi verificado pelo axe. O CSS foi formatado para leitura;
 - Primeiro bloco commitado e enviado como `86ac70b` em `feature/sprint-1-helpdesk`, com autor e committer Leandro Pinzon Filho <leandro.pinzon.filho@gmail.com>. Documentação, UML e acompanhamento consolidados em segundo bloco, com a mesma identidade. A branch principal não recebeu commits ou merge.
 
 Os containers isolados de verificação foram encerrados com `down`, sem remover volumes. A aplicação normal do repositório foi iniciada separadamente com `docker compose up -d`, ficou healthy e respondeu 200 em `/healthz`, para uso com os comandos do README. O seed final criou duas contas e 14 tarefas: sete concluídas, uma em andamento (CI remota) e seis futuras no Backlog.
+
+
+## Revalidação para o documento de entrega: 29/10/2026
+
+Código da aplicação inspecionado: `85e04c8`, incluindo a descrição das tarefas do Kanban, sem RF03–RF06 implementados. Não havia serviço HelpDesk em execução no início desta inspeção; as verificações atuais utilizaram `helpdesk-delivery-check` na porta local 8081, com volume próprio. O Compose do projeto continua configurado para localhost:8080 por padrão.
+
+| Verificação reconferida | Evidência atual |
+|---|---|
+| Suíte local | `docker build --target test -t helpdesk-delivery-tests .` e `docker run --rm helpdesk-delivery-tests`: 47 testes passaram, sem warnings |
+| Compose e migrações | `docker compose config --quiet` passou; projeto isolado iniciou com build e wait; `flask db check` informou ausência de alterações de esquema pendentes |
+| Servidor e banco | UID/GID 10001; `/healthz` respondeu 200; serviço healthy; migrações e seed executados automaticamente |
+| Navegador e responsividade | Script `scripts/browser-check.cjs` executado com Playwright 1.64.1/Chromium: seis páginas auditadas, fluxos dos dois perfis e Kanban aprovados, sem overflow em 320/390/768/1440px |
+| Acessibilidade automatizada | Axe 4.11.1 sem violações nos escopos A/AA executados; foco inicial por teclado verificado. Isso não certifica acessibilidade completa |
+| Persistência | Recriação sem remover volume seguida de `--verify-persistence`: mesmo chamado, sessão, credenciais e coluna do Kanban confirmados; coluna original restaurada |
+| CI remota | Consultadas as execuções 39866630979 e 39868270652; ambas sem etapas executadas. As anotações informam conta bloqueada por faturamento; não houve execução remota da suíte |
+| Documento acadêmico | Fonte `docs/entrega-sprint-1.md`, DOCX nativo editável e PDF gerados da mesma fonte; PDF A4 com 10 páginas, fontes incorporadas e numeração de páginas |
+| Diagramas e captura | Fontes detalhadas anteriores preservadas; quatro versões UML `entrega-*` para leitura em A4, renderizadas em SVG/PNG. Uma captura do resumo de chamado sintético, sem senha/cookie, incorporada ao documento |
+
+O documento foi renderizado para imagens de todas as páginas e inspecionado quanto a cortes, tabelas, títulos, legendas e legibilidade. A inspeção refere-se à exportação pelo LibreOffice; não houve ensaio do DOCX no Microsoft Word. A regeneração usa Pandoc 2.17.1.1, python-docx 1.2.0 e LibreOffice 7.4.7.2, conforme `scripts/build-delivery-docs.sh`.
+
+Permanecem sem verificação: leitor de tela, aparelhos físicos, outros navegadores, carga, TLS publicado e restauração de backup. Não foi confirmado registro formal de retrospectiva, apresentação, vídeo ou postagem no LEX. O texto de organização em `docs/sprint-1.md` foi alinhado ao papel de Tech Lead, sem afirmar uma equipe SCRUM completa ou cerimônias realizadas.
+
+Os containers de `helpdesk-delivery-check` foram encerrados ao final, sem remoção do volume de ensaio ou dos volumes existentes. Nenhum comportamento da aplicação foi alterado nesta tarefa de documentação.

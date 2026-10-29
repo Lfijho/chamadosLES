@@ -6,9 +6,9 @@
 
 O HelpDesk centraliza solicitações de suporte de TI em uma aplicação web. O solicitante registra um problema; o técnico organizará seu atendimento nas próximas Sprints. O objetivo desta Sprint é entregar acesso autenticado e registro persistente de chamados, com confirmação privada, em um ambiente local reproduzível.
 
-## Organização do trabalho e SCRUM individual
+## Organização individual e práticas de SCRUM
 
-Leandro acumula as responsabilidades de priorização e aceite (Product Owner), organização do processo e impedimentos (Scrum Master) e análise, desenvolvimento, teste, infraestrutura e documentação (desenvolvedor). Essa é uma adaptação acadêmica para uma pessoa, sem simular equipe ou cerimônias realizadas.
+Leandro atua como Tech Lead, responsável por requisitos, planejamento, arquitetura, desenvolvimento, testes, infraestrutura, documentação e apresentação. Tech Lead é uma responsabilidade técnica, não um papel oficial do SCRUM. O desenvolvimento individual utiliza backlog, planejamento por Sprint, acompanhamento de tarefas e revisão por testes e inspeção; não constitui uma equipe SCRUM completa. Não há registro formal de retrospectiva ou de cerimônias realizadas nas fontes consultadas.
 
 O Product Backlog define evolução; o Sprint Backlog decompõe o trabalho em tarefas verificáveis; o incremento é validado por testes, demonstração e revisão. `docs/kanban.md` registra o que foi verificado na entrega, sem inventar reuniões ou datas de execução. O quadro na aplicação permite acompanhar o estado operacional; divergências posteriores são possíveis, pois o documento é um registro versionado.
 

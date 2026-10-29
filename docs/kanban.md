@@ -9,7 +9,7 @@ Este arquivo registra o trabalho verificado no código. O quadro da aplicação 
 | Concluído | S1-03 — Interface | Fluxos, labels, foco, axe e viewports desktop/celular verificados no navegador |
 | Concluído | S1-04 — Kanban | Perfil técnico, CSRF, coluna persistente e sincronização idempotente: testes e recriação |
 | Concluído | S1-05 — Docker | Build, volume automático, migração, usuário sem root, HTTP healthy e persistência após recriação verificados |
-| Em andamento | S1-06 — Testes e CI | 43 testes passaram e workflow foi entregue. Confirmação de execução no GitHub bloqueada por faturamento da conta |
+| Em andamento | S1-06 — Testes e CI | 47 testes locais passaram na revalidação da entrega. CI remota permanece bloqueada por faturamento da conta, reconferido em 29/10/2026 |
 | Concluído | S1-07 — Documentação | README, RF/RNF, regras, UC01–UC03, SCRUM individual, roteiro e limites revisados contra o código |
 | Concluído | S1-08 — Diagramas | Quatro fontes PlantUML com SVG/PNG renderizados, inspecionados e referenciados |
 | Backlog | S2-01 a S2-12 | Três resumos originais e nove tarefas detalhadas de consulta, atendimento e entrega; não implementados |
@@ -90,3 +90,10 @@ Verificações executadas nesta alteração:
 - A revisão renderizada foi feita no navegador. Não houve certificação de acessibilidade ou teste em aparelho físico.
 
 Os estados operacionais do banco podem mudar posteriormente por ação do técnico; o documento continua sendo um registro versionado, não uma cópia dinâmica do quadro.
+
+
+## Documento acadêmico de entrega da Sprint 1
+
+Foram preparados `docs/entrega-sprint-1.md`, `docs/entrega-sprint-1.docx` e `docs/entrega-sprint-1.pdf` a partir do mesmo conteúdo revisado. A exportação final tem 10 páginas A4, uma captura sintética e quatro desenhos UML incorporados. Fontes detalhadas anteriores foram preservadas; versões de leitura `entrega-*` e procedimento de geração foram versionados.
+
+Requisitos, casos de uso, responsabilidades de Tech Lead e limites foram conferidos contra código, configurações, testes, backlog e Git. A redação não declara retrospectiva formal ou apresentação sem evidência. A inspeção de todas as páginas conferiu tabelas, imagens, legendas e numeração. A geração dos arquivos conclui esta atividade de documentação; S1-06 continua em andamento pela CI externa bloqueada, e as funcionalidades futuras permanecem no Backlog. Evidências atuais em [verificacoes.md](verificacoes.md), seção de revalidação para 29/10/2026.
