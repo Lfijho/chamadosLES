@@ -1,6 +1,6 @@
 # Verificações da Sprint 1
 
-O registro inicial abaixo descreve os incrementos `86ac70b` e `20ad9d1`. A seção final de revalidação informa os resultados reconferidos para a entrega em 29/10/2026. As contagens antigas de testes e tarefas são históricas.
+O registro inicial abaixo descreve os incrementos `544c0d8` e `8f641e1`. A seção final de revalidação informa os resultados reconferidos para a entrega em 29/10/2026. As contagens antigas de testes e tarefas são históricas.
 
 ## Registro inicial
 
@@ -38,14 +38,14 @@ Contraste renderizado foi verificado pelo axe. O CSS foi formatado para leitura;
 - RF03–RF06 permanecem no backlog. A página do chamado apenas confirma a abertura do próprio solicitante.
 - As contas e a recuperação de senhas são de demonstração local; publicação real exige ajustes descritos no README.
 - CI está versionada e o primeiro push acionou o workflow, mas nenhum step foi executado: GitHub informou “The job was not started because your account is locked due to a billing issue.” [Execução bloqueada](https://github.com/Lfijho/chamadosLES/actions/runs/39865825032). O usuário precisa regularizar a conta para permitir execução remota; não se declara CI aprovada.
-- Primeiro bloco commitado e enviado como `86ac70b` em `feature/sprint-1-helpdesk`, com autor e committer Leandro Pinzon Filho <leandro.pinzon.filho@gmail.com>. Documentação, UML e acompanhamento consolidados em segundo bloco, com a mesma identidade. A branch principal não recebeu commits ou merge.
+- Primeiro bloco commitado e enviado como `544c0d8` em `feature/sprint-1-helpdesk`, com autor e committer Leandro Pinzon Filho <leandro.pinzon.filho@gmail.com>. Documentação, UML e acompanhamento consolidados em segundo bloco, com a mesma identidade. A branch principal não recebeu commits ou merge.
 
 Os containers isolados de verificação foram encerrados com `down`, sem remover volumes. A aplicação normal do repositório foi iniciada separadamente com `docker compose up -d`, ficou healthy e respondeu 200 em `/healthz`, para uso com os comandos do README. O seed final criou duas contas e 14 tarefas: sete concluídas, uma em andamento (CI remota) e seis futuras no Backlog.
 
 
 ## Revalidação para o documento de entrega: 29/10/2026
 
-Código da aplicação inspecionado: `85e04c8`, incluindo a descrição das tarefas do Kanban, sem RF03–RF06 implementados. Não havia serviço HelpDesk em execução no início desta inspeção; as verificações atuais utilizaram `helpdesk-delivery-check` na porta local 8081, com volume próprio. O Compose do projeto continua configurado para localhost:8080 por padrão.
+Código da aplicação inspecionado: `9cc38c5`, incluindo a descrição das tarefas do Kanban, sem RF03–RF06 implementados. Não havia serviço HelpDesk em execução no início desta inspeção; as verificações atuais utilizaram `helpdesk-delivery-check` na porta local 8081, com volume próprio. O Compose do projeto continua configurado para localhost:8080 por padrão.
 
 | Verificação reconferida | Evidência atual |
 |---|---|

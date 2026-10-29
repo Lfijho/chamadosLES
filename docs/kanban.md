@@ -112,3 +112,10 @@ Os relatórios técnicos e os diagramas detalhados anteriores foram preservados.
 Configurações locais de ferramentas foram retiradas do índice e excluídas de novas inclusões neste checkout. README, catálogo e registros técnicos mantêm as informações do produto, dos testes e das verificações realizadas. As capturas opcionais do navegador passam a usar `artifacts/browser/`, ignorado pelo Git. O documento acadêmico, a aplicação e os diagramas foram preservados.
 
 Verificações deste bloco: 47 testes passaram em container com estado temporário; build e validação do Compose concluídos; sintaxe do script de navegador e diff conferidos. A inspeção dos arquivos rastreados incluiu textos, SVG, conteúdo XML do DOCX e texto extraído do PDF. Configurações locais e capturas permanecem ignoradas. Nenhum volume ou dado da aplicação foi alterado.
+
+
+## Reorganização do histórico
+
+As seis branches foram preparadas com histórico reorganizado para manter os arquivos locais fora de todas as revisões versionadas. A cópia de recuperação e o mapa entre identificadores anteriores e atuais ficam fora do repositório. Autores, committers e evolução das funcionalidades foram preservados. O conteúdo atual da aplicação e os documentos acadêmicos de cinco páginas permaneceram idênticos. As referências de commits no registro técnico foram atualizadas.
+
+A conferência das seis revisões verificou 107 conteúdos distintos, incluindo documentos e metadados das imagens. A integridade Git, a configuração do Compose e a sintaxe do script de navegador foram verificadas; os 47 testes passaram em container com estado temporário. Esta reorganização não altera o estado operacional do Kanban nem os dados do SQLite.
