@@ -12,11 +12,16 @@ boundary "Interface" as I
 control "Sistema" as S
 database "Banco de dados" as B
 U -> I : Informar e-mail e senha
-I -> S : Solicitar acesso
+I -> S : login()
 S -> B : Consultar usuário
 B --> S : Dados da conta
+S -> S : authenticate(user, password)
+S -> S : User.check_password(password)\nSe a conta existir
 alt Dados válidos
-  S --> I : Permitir acesso ao perfil
+  S -> S : start_session(user)
+  S --> I : Abrir página inicial
+  I -> S : home()
+  S --> I : Página do perfil
 else Dados inválidos
   S --> I : Informar dados incorretos
 end

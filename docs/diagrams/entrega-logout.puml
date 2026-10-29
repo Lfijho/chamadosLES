@@ -11,7 +11,7 @@ actor "Usuário" as U
 boundary "Interface" as I
 control "Sistema" as S
 U -> I : Selecionar Sair
-I -> S : Solicitar saída
+I -> S : logout()\nRota protegida por require_user()
 S --> I : Acesso encerrado
 I --> U : Apresentar login e confirmação
 @enduml

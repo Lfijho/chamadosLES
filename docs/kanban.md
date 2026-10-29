@@ -119,3 +119,10 @@ Verificações deste bloco: 47 testes passaram em container com estado temporár
 As seis branches foram preparadas com histórico reorganizado para manter os arquivos locais fora de todas as revisões versionadas. A cópia de recuperação e o mapa entre identificadores anteriores e atuais ficam fora do repositório. Autores, committers e evolução das funcionalidades foram preservados. O conteúdo atual da aplicação e os documentos acadêmicos de cinco páginas permaneceram idênticos. As referências de commits no registro técnico foram atualizadas.
 
 A conferência das seis revisões verificou 107 conteúdos distintos, incluindo documentos e metadados das imagens. A integridade Git, a configuração do Compose e a sintaxe do script de navegador foram verificadas; os 47 testes passaram em container com estado temporário. Esta reorganização não altera o estado operacional do Kanban nem os dados do SQLite.
+
+
+## Métodos nos casos de uso da Sprint 1
+
+UC01, UC02 e UC03 receberam tabelas curtas com os nomes e as assinaturas das funções implementadas, suas classes ou módulos e responsabilidades. Os três diagramas de sequência da entrega identificam as operações reais. Os demais textos, o diagrama de casos de uso e a implementação foram preservados.
+
+Markdown, DOCX e PDF foram atualizados da mesma fonte. A exportação tem seis páginas A4; todas foram inspecionadas quanto a legibilidade, tabelas, diagramas e numeração. A conferência dos nomes com o código, das imagens incorporadas e da preservação do texto anterior passou. O gerador recebeu apenas o ajuste de formatação para as novas tabelas.

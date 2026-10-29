@@ -69,6 +69,16 @@ Alternativa: se os dados forem inválidos ou algum campo obrigatório estiver va
 
 Resultado esperado: o usuário acessa as funcionalidades disponíveis para seu perfil.
 
+| Método/função | Classe ou módulo | Responsabilidade no caso de uso |
+|---|---|---|
+| `login()` | `helpdesk.routes` | Recebe os dados e coordena o acesso do usuário |
+| `authenticate(user, password)` | `helpdesk.security` | Verifica as credenciais informadas |
+| `check_password(password)` | `User`, em `helpdesk.models` | Confere a senha da conta |
+| `start_session(user)` | `helpdesk.security` | Inicia o acesso autenticado |
+| `home()` | `helpdesk.routes` | Apresenta a página inicial do perfil |
+
+<!-- pagebreak -->
+
 ### UC02: realizar logout
 
 Ator: solicitante ou técnico. Objetivo: sair da conta. Precondição: estar autenticado.
@@ -81,7 +91,10 @@ Alternativa: se o acesso já tiver expirado, o usuário precisa entrar novamente
 
 Resultado esperado: o usuário sai da conta e precisa se autenticar para voltar às páginas restritas.
 
-<!-- pagebreak -->
+| Método/função | Classe ou módulo | Responsabilidade no caso de uso |
+|---|---|---|
+| `require_user()` | `helpdesk.security` | Exige autenticação para acessar a rota de saída |
+| `logout()` | `helpdesk.routes` | Encerra o acesso e retorna à página de login |
 
 ### UC03: abrir chamado
 
@@ -96,6 +109,16 @@ Ator: solicitante. Objetivo: registrar um problema de TI. Precondição: estar a
 Alternativas: se houver campos incompletos ou inválidos, o sistema solicita a correção antes de salvar. Um usuário com perfil técnico não pode abrir chamados nesta Sprint.
 
 Resultado esperado: o chamado fica registrado e o solicitante recebe seu protocolo.
+
+| Método/função | Classe ou módulo | Responsabilidade no caso de uso |
+|---|---|---|
+| `require_user("solicitante")` | `helpdesk.security` | Restringe a abertura ao perfil solicitante |
+| `new_ticket()` | `helpdesk.routes` | Exibe o formulário e registra o chamado do solicitante |
+| `pre_validate(form)` | `PortugueseSelectField`, em `helpdesk.forms` | Valida a categoria selecionada e orienta sua correção |
+| `utcnow()` | `helpdesk.models` | Fornece a data e hora de abertura em UTC |
+| `ticket_confirmation(ticket_id)` | `helpdesk.routes` | Confere o autor e apresenta protocolo e resumo |
+
+<!-- pagebreak -->
 
 ## 6. Diagramas UML
 
@@ -115,7 +138,7 @@ O usuário informa suas credenciais, e o sistema verifica os dados antes de libe
 
 ### 6.3. Sequência do logout
 
-![Figura 3. Sequência de saída da conta.](diagrams/entrega-logout.png){width=16.5cm}
+![Figura 3. Sequência de saída da conta.](diagrams/entrega-logout.png){width=13cm}
 
 Ao selecionar Sair, o usuário encerra o acesso à conta e retorna à página de login.
 

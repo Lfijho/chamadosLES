@@ -12,13 +12,19 @@ boundary "Interface" as I
 control "Sistema" as S
 database "Banco de dados" as B
 U -> I : Preencher título, descrição\ne categoria
-I -> S : Enviar chamado
+I -> S : new_ticket()\nRota protegida por require_user("solicitante")
+S -> S : pre_validate(form)\nPortugueseSelectField
 alt Dados incompletos ou inválidos
   S --> I : Solicitar correção
   I --> U : Mostrar orientação
 else Dados válidos
+  S -> S : utcnow()\nData de abertura
   S -> B : Salvar chamado do solicitante\ncom status Aberto
   B --> S : Registro confirmado
+  S --> I : Abrir página de confirmação
+  I -> S : ticket_confirmation(ticket_id)
+  S -> B : Consultar chamado do solicitante
+  B --> S : Dados do chamado
   S --> I : Protocolo e resumo do chamado
   I --> U : Exibir confirmação
 end

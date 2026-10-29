@@ -113,6 +113,8 @@ def format_document(path):
             ratios = [0.29, 0.22, 0.49]
         elif headers[-1] == "Sprint":
             ratios = [0.12, 0.73, 0.15]
+        elif headers[0] == "Método/função":
+            ratios = [0.36, 0.26, 0.38]
         elif headers[0] == "ID":
             ratios = [0.18, 0.47, 0.35]
         else:
@@ -139,7 +141,7 @@ def format_document(path):
                     paragraph.paragraph_format.space_after = Pt(3)
                     paragraph.paragraph_format.line_spacing = 1.05
                     for run in paragraph.runs:
-                        run.font.size = Pt(10.5)
+                        run.font.size = Pt(9 if run.style.style_id == "VerbatimChar" else 10.5)
                         if row_index == 0:
                             run.font.bold = True
     footer = section.footer.paragraphs[0]
