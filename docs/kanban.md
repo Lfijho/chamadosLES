@@ -105,3 +105,10 @@ A entrega acadêmica foi reescrita com foco na apresentação do projeto, organi
 Markdown, DOCX e PDF foram regenerados do mesmo conteúdo final. A inspeção visual conferiu legibilidade, tabelas inteiras, paginação e ocupação das páginas. A fonte do corpo foi ampliada para 11 pontos e a das tabelas para 10,5 pontos. O gerador de documentos foi ajustado à estrutura de sete seções e quatro figuras.
 
 Os relatórios técnicos e os diagramas detalhados anteriores foram preservados. O código da aplicação, as configurações de execução e os dados não foram alterados. Esta revisão substitui a versão acadêmica de dez páginas, sem modificar o andamento das tarefas de implementação.
+
+
+## Organização dos arquivos versionados
+
+Configurações locais de ferramentas foram retiradas do índice e excluídas de novas inclusões neste checkout. README, catálogo e registros técnicos mantêm as informações do produto, dos testes e das verificações realizadas. As capturas opcionais do navegador passam a usar `artifacts/browser/`, ignorado pelo Git. O documento acadêmico, a aplicação e os diagramas foram preservados.
+
+Verificações deste bloco: 47 testes passaram em container com estado temporário; build e validação do Compose concluídos; sintaxe do script de navegador e diff conferidos. A inspeção dos arquivos rastreados incluiu textos, SVG, conteúdo XML do DOCX e texto extraído do PDF. Configurações locais e capturas permanecem ignoradas. Nenhum volume ou dado da aplicação foi alterado.
