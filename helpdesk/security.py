@@ -40,7 +40,7 @@ def safe_next(target):
     if parts.scheme or parts.netloc:
         return None
     # Redirecionar somente para caminhos conhecidos evita ambiguidades do navegador.
-    if parts.path not in ("/", "/chamados/novo", "/kanban"):
+    if parts.path not in ("/", "/chamados/novo", "/chamados", "/kanban"):
         return None
     return parts.path
 

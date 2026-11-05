@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, SelectField, StringField, TextAreaField
-from wtforms.validators import DataRequired, Email, Length, ValidationError
-from .models import CATEGORIES, COLUMNS
+from wtforms import IntegerField, PasswordField, SelectField, StringField, TextAreaField
+from wtforms.widgets import HiddenInput
+from wtforms.validators import DataRequired, Email, Length, NumberRange, ValidationError
+from .models import CATEGORIES, COLUMNS, PRIORITIES, STATUSES
 
 
 def stripped(value):
@@ -45,3 +46,30 @@ class TicketForm(FlaskForm):
 class MoveTaskForm(FlaskForm):
     column = PortugueseSelectField("Mover para", choices=[(x, x) for x in COLUMNS],
                          validators=[DataRequired(message="Selecione uma coluna.")])
+
+
+class TicketFilterForm(FlaskForm):
+    class Meta:
+        csrf = False
+
+    status = PortugueseSelectField("Status", default="", choices=[("", "Todos os status")] + [(x, x) for x in STATUSES])
+    category = PortugueseSelectField("Categoria", default="", choices=[("", "Todas as categorias")] + [(x, x) for x in CATEGORIES])
+    page = IntegerField(default=1, validators=[NumberRange(min=1, max=1000000, message="Informe uma página válida.")])
+
+
+class PriorityForm(FlaskForm):
+    priority = PortugueseSelectField("Prioridade", choices=[(x, x) for x in PRIORITIES],
+                                     validators=[DataRequired(message="Selecione uma prioridade.")])
+    version = IntegerField(widget=HiddenInput(), validators=[DataRequired(), NumberRange(min=1)])
+
+
+class StatusForm(FlaskForm):
+    status = PortugueseSelectField("Novo status", choices=[(x, x) for x in STATUSES],
+                                   validators=[DataRequired(message="Selecione o novo status.")])
+    solution = TextAreaField("Solução", filters=[stripped], validators=[
+                             Length(max=5000, message="Use no máximo 5.000 caracteres.")])
+    version = IntegerField(widget=HiddenInput(), validators=[DataRequired(), NumberRange(min=1)])
+
+    def validate_solution(self, field):
+        if self.status.data == "Concluído" and not (field.data or "").strip():
+            raise ValidationError("Informe a solução para concluir o chamado.")

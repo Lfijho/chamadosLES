@@ -17,6 +17,7 @@
   {% if g.user %}
   <nav aria-label="Navegação principal">
     <a href="{{ url_for('web.home') }}" {% if request.endpoint == 'web.home' %}aria-current="page"{% endif %}>Início</a>
+    <a href="{{ url_for('web.ticket_list') }}" {% if request.endpoint in ['web.ticket_list', 'web.ticket_detail', 'web.ticket_priority', 'web.ticket_status'] %}aria-current="page"{% endif %}>{{ 'Meus chamados' if g.user.role == 'solicitante' else 'Chamados' }}</a>
     {% if g.user.role == 'solicitante' %}
     <a href="{{ url_for('web.new_ticket') }}" {% if request.endpoint == 'web.new_ticket' %}aria-current="page"{% endif %}>Abrir chamado</a>
     {% else %}
@@ -37,6 +38,6 @@
   {% endfor %}
   {% block content %}{% endblock %}
 </main>
-<footer class="app-footer"><span>HelpDesk · Laboratório de Engenharia de Software</span><span>Sprint 1 · Leandro Pinzon Filho</span></footer>
+<footer class="app-footer"><span>HelpDesk · Laboratório de Engenharia de Software</span><span>Sprint 2 · Leandro Pinzon Filho</span></footer>
 </body>
 </html>

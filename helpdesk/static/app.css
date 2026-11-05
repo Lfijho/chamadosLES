@@ -121,6 +121,7 @@ svg {
 }
 nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   flex: 1;
 }
@@ -546,6 +547,97 @@ textarea[aria-invalid="true"] {
   white-space: nowrap;
   border: 0;
 }
+.ticket-filters {
+  display: flex;
+  align-items: end;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: var(--radius);
+}
+.ticket-filters .field {
+  flex: 1 1 180px;
+  margin: 0;
+  min-width: 0;
+}
+.filter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.results-count,
+.ticket-meta dt {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+.ticket-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.ticket-row {
+  padding: 24px;
+}
+.ticket-row + .ticket-row {
+  border-top: 1px solid var(--line);
+}
+.ticket-row-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 20px;
+}
+.ticket-row h2 {
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+  overflow-wrap: anywhere;
+}
+.ticket-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 40px;
+  margin: 16px 0 0;
+}
+.ticket-meta dd {
+  margin: 0;
+}
+.pagination {
+  margin-top: 24px;
+  align-items: center;
+  gap: 20px;
+}
+.ticket-empty {
+  padding: 32px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: var(--radius);
+}
+.detail-title {
+  margin-top: 20px;
+  overflow-wrap: anywhere;
+}
+.detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 32px;
+}
+.detail-layout:not(:has(.attendance)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+.attendance {
+  display: grid;
+  gap: 24px;
+}
+.solution-heading {
+  margin-top: 32px;
+}
 @media (min-width: 1500px) {
   .board-page {
     padding-inline: 32px;
@@ -647,6 +739,18 @@ textarea[aria-invalid="true"] {
   }
   .form-actions > .button {
     flex: 1;
+  }
+  .detail-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ticket-row-heading {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .ticket-filters,
+  .ticket-row,
+  .ticket-empty {
+    padding: 20px;
   }
   .page-heading {
     margin-bottom: 24px;

@@ -60,21 +60,21 @@ tasks:
     title: RF03 — Consultar chamados
     sprint: 2
     priority: Alta
-    column: Backlog
+    column: Concluído
     description: Tarefa-resumo preservada do catálogo original. O detalhamento de consulta está em S2-04 e S2-05.
     acceptance: Implementar listagem, filtros e permissões de consulta na Sprint 2.
   - id: S2-02
     title: RF04 — Gerenciar atendimento
     sprint: 2
     priority: Alta
-    column: Backlog
+    column: Concluído
     description: Tarefa-resumo preservada do catálogo original. O detalhamento de atendimento está em S2-06, S2-07 e S2-08.
     acceptance: Implementar prioridade e status, exigindo solução no encerramento, com testes na Sprint 2.
   - id: S2-03
     title: Testes e documentação da Sprint 2
     sprint: 2
     priority: Alta
-    column: Backlog
+    column: Em andamento
     description: Tarefa-resumo preservada do catálogo original. Testes, documentação, validação e apresentação estão detalhados em S2-09 a S2-12.
     acceptance: Verificar RF03 e RF04 e atualizar documentação e diagramas após implementação.
   - id: S3-01
@@ -102,7 +102,7 @@ tasks:
     title: RF03 — Listar e visualizar chamados
     sprint: 2
     priority: Alta
-    column: Backlog
+    column: Concluído
     description: >-
       Criar listagem e detalhe dos chamados com visibilidade por perfil e estado vazio.
       Solicitante consulta somente seus chamados; técnico consulta todos.
@@ -114,19 +114,19 @@ tasks:
     title: RF03 — Filtrar chamados por status e categoria
     sprint: 2
     priority: Alta
-    column: Backlog
+    column: Concluído
     description: >-
-      Acrescentar filtros combináveis de status e categoria à consulta, sempre limitados
+      Acrescentar filtros combináveis de status e categoria e paginação de dez itens, sempre limitados
       aos chamados que o perfil autenticado pode visualizar.
     acceptance: >-
       Validar valores dos filtros no servidor; combinar status e categoria sem ampliar
-      permissões; permitir limpar ambos os filtros; informar quando não houver resultados.
+      permissões; permitir limpar ambos os filtros; informar quando não houver resultados. Paginar com ordem estável, preservando os filtros nos links.
       Rejeitar valores inexistentes e verificar filtros isolados e combinados para os dois perfis.
   - id: S2-06
     title: RF04 — Definir prioridade do chamado
     sprint: 2
     priority: Alta
-    column: Backlog
+    column: Concluído
     description: >-
       Permitir somente ao técnico definir ou alterar prioridade entre Baixa, Média e Alta.
       Acrescentar prioridade Média como valor inicial de chamados novos.
@@ -138,7 +138,7 @@ tasks:
     title: RF04 — Atualizar status e registrar solução
     sprint: 2
     priority: Alta
-    column: Backlog
+    column: Concluído
     description: >-
       Implementar atendimento exclusivo do técnico com fluxo Aberto → Em atendimento →
       Concluído. Concluído será terminal nesta entrega.
@@ -150,7 +150,7 @@ tasks:
     title: Preparar eventos de status para o histórico
     sprint: 2
     priority: Alta
-    column: Backlog
+    column: Concluído
     description: >-
       Registrar automaticamente os eventos de alteração de status para consumo pelo
       histórico da Sprint 3, sem criar a interface de histórico nesta Sprint.
@@ -162,7 +162,7 @@ tasks:
     title: Testar consulta e atendimento
     sprint: 2
     priority: Alta
-    column: Backlog
+    column: Concluído
     description: >-
       Ampliar os testes isolados para consulta, filtros, prioridade, status, solução e
       eventos atômicos de atendimento, preservando a cobertura da Sprint 1.
@@ -175,7 +175,7 @@ tasks:
     title: Atualizar documentação e UML da Sprint 2
     sprint: 2
     priority: Alta
-    column: Backlog
+    column: Em andamento
     description: >-
       Atualizar requisitos funcionais e não funcionais, casos de uso e respectivas
       especificações e sequências de consulta e atendimento.
@@ -188,7 +188,7 @@ tasks:
     title: Validar migrações, Compose e persistência da Sprint 2
     sprint: 2
     priority: Alta
-    column: Backlog
+    column: Em andamento
     description: >-
       Verificar a evolução da aplicação preservando os dados da Sprint 1 e a experiência
       de inicialização local por Docker Compose.
@@ -201,7 +201,7 @@ tasks:
     title: Preparar apresentação e revisão da Sprint 2
     sprint: 2
     priority: Média
-    column: Backlog
+    column: Em andamento
     description: >-
       Preparar roteiro de demonstração da consulta e da gestão básica para a entrega
       de 12/11/2026, incluindo os fluxos dos dois perfis.

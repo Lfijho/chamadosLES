@@ -12,14 +12,15 @@ Este arquivo registra o trabalho verificado no código. O quadro da aplicação 
 | Em andamento | S1-06 — Testes e CI | 47 testes locais passaram na revalidação da entrega. CI remota permanece bloqueada por faturamento da conta, reconferido em 29/10/2026 |
 | Concluído | S1-07 — Documentação | README, RF/RNF, regras, UC01–UC03, SCRUM individual, roteiro e limites revisados contra o código |
 | Concluído | S1-08 — Diagramas | Quatro fontes PlantUML com SVG/PNG renderizados, inspecionados e referenciados |
-| Backlog | S2-01 a S2-12 | Três resumos originais e nove tarefas detalhadas de consulta, atendimento e entrega; não implementados |
+| Concluído | S2-01, S2-02 e S2-04 a S2-09 | Consulta, filtros/paginação, prioridade, status, solução e eventos: 85 testes e fluxo de navegador |
+| Em andamento | S2-03 e S2-10 a S2-12 | Consolidação acadêmica, UML, validação da entrega e preparação da apresentação |
 | Backlog | S3-01 a S3-13 | Três resumos originais e dez tarefas detalhadas de histórico, indicadores e entrega final; não implementados |
 | A fazer | — | — |
 
 S1-06 permanece em andamento exclusivamente pela verificação remota bloqueada; implementação da suíte e do workflow foi entregue. Não se declara CI remota aprovada. Evidências e limitações: [verificacoes.md](verificacoes.md). Não há reuniões ou datas de trabalho presumidas.
 
 
-## Planejamento das Sprints 2 e 3
+## Planejamento original das Sprints 2 e 3
 
 Esta atualização cadastra e documenta trabalho futuro; não implementa RF03–RF06. As 19 tarefas detalhadas novas começam em **Backlog**. Os seis IDs de resumo anteriores foram mantidos como agrupadores, sem recriar seus registros. Seus metadados agora indicam as tarefas detalhadas, e as prioridades dos entregáveis obrigatórios foram alinhadas para Alta. As oito tarefas da Sprint 1 mantêm metadados e colunas anteriores.
 
@@ -126,3 +127,10 @@ A conferência das seis revisões verificou 107 conteúdos distintos, incluindo 
 UC01, UC02 e UC03 receberam tabelas curtas com os nomes e as assinaturas das funções implementadas, suas classes ou módulos e responsabilidades. Os três diagramas de sequência da entrega identificam as operações reais. Os demais textos, o diagrama de casos de uso e a implementação foram preservados.
 
 Markdown, DOCX e PDF foram atualizados da mesma fonte. A exportação tem seis páginas A4; todas foram inspecionadas quanto a legibilidade, tabelas, diagramas e numeração. A conferência dos nomes com o código, das imagens incorporadas e da preservação do texto anterior passou. O gerador recebeu apenas o ajuste de formatação para as novas tabelas.
+
+
+## Implementação da Sprint 2
+
+RF03 e RF04 foram implementados e verificados: visibilidade por perfil, detalhe autorizado, filtros e paginação, prioridade, fluxo de status com solução e eventos transacionais. O código preserva a confirmação de abertura e o quadro acadêmico. A migração mantém dados anteriores; o seed continua preservando colunas alteradas pelo usuário.
+
+O catálogo registra oito tarefas da Sprint 2 concluídas e quatro em andamento, correspondentes à documentação, UML, consolidação da validação e preparação da apresentação. As tarefas da Sprint 3 permanecem no Backlog. Resultados atuais e limites estão em [verificacoes-sprint-2.md](verificacoes-sprint-2.md).

@@ -1,4 +1,4 @@
-"""Verifica catálogo futuro sem implementar RF03–RF06."""
+"""Verifica catálogo e preservação do estado operacional nas sincronizações."""
 from pathlib import Path
 import yaml
 from flask_migrate import downgrade, upgrade
@@ -25,7 +25,9 @@ def test_future_catalog_has_complete_metadata_and_backlog():
     assert set(detailed) == NEW_IDS
     medium = {"S2-12", "S3-11", "S3-13"}
     for task_id, task in detailed.items():
-        assert task["column"] == "Backlog"
+        assert task["column"] in {"Backlog", "Em andamento", "Concluído"}
+        if task["sprint"] == 3:
+            assert task["column"] == "Backlog"
         assert task["sprint"] == int(task_id[1])
         assert task["title"].strip() and len(task["title"]) <= 160
         assert task["description"].strip() and task["acceptance"].strip()
@@ -58,7 +60,8 @@ def test_two_imports_add_only_missing_tasks_and_preserve_existing_data(app):
             assert len(tasks) == 34  # 33 do catálogo e uma tarefa local preservada.
             assert {task.id: task.column for task in tasks if task.id in columns} == columns
             assert {task.id for task in tasks if task.id not in columns} == NEW_IDS
-            assert all(task.column == "Backlog" and task.description for task in tasks if task.id in NEW_IDS)
+            defaults={task["id"]:task["column"] for task in catalog()["tasks"]}
+            assert all(task.column == defaults[task.id] and task.description for task in tasks if task.id in NEW_IDS)
             assert {task.id: (task.title, task.sprint, task.priority, task.acceptance, task.description, task.column)
                     for task in tasks if task.sprint == 1} == s1
             assert {user.id: (user.email, user.password_hash, user.role)

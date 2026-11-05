@@ -1,8 +1,8 @@
 # HelpDesk — Sistema de Controle de Chamados de TI
 
-Projeto de Laboratório de Engenharia de Software, desenvolvido individualmente por **Leandro Pinzon Filho**. Entrega da Sprint 1: **29/10/2026**.
+Projeto de Laboratório de Engenharia de Software, desenvolvido individualmente por **Leandro Pinzon Filho**. Entregas: Sprint 1 em **29/10/2026** e Sprint 2 em **12/11/2026**.
 
-A Sprint 1 implementa RF01 (autenticação) e RF02 (abertura de chamado). Solicitantes abrem chamados e recebem uma confirmação privada com protocolo; técnicos acessam uma página inicial e o quadro auxiliar do desenvolvimento. Consulta com filtros e atendimento (Sprint 2), histórico e indicadores (Sprint 3) permanecem no backlog.
+A Sprint 1 implementa RF01 (autenticação) e RF02 (abertura). A Sprint 2 entrega RF03 (consulta com filtros e paginação por perfil) e RF04 (prioridade, status e solução pelo técnico). O Kanban acompanha tarefas do desenvolvimento. A interface de histórico e os indicadores permanecem para a Sprint 3.
 
 ## Iniciar
 
@@ -32,7 +32,7 @@ docker compose down
 docker compose up -d
 ```
 
-Esses comandos preservam os dados. Não use `down -v` ou remova o volume se deseja preservá-los. Mudanças no código exigem `docker compose up -d --build`. A política `unless-stopped` reinicia o processo se ele falhar; migrações com erro encerram a inicialização sem iniciar o servidor.
+Esses comandos preservam os dados. Não use `down -v` ou remova o volume se deseja preservá-los. Após atualizar o código de uma instalação que já tem imagem construída, execute `docker compose up -d --build`. A política `unless-stopped` reinicia o processo se ele falhar; migrações com erro encerram a inicialização sem iniciar o servidor.
 
 A porta é publicada somente em `127.0.0.1`. Para trocar a porta sem editar arquivos: `HELPDESK_PORT=8081 docker compose up -d`. `/healthz` responde 200 quando consegue consultar a revisão de migração e tabelas do banco; caso contrário responde 503. Logs operacionais vão a stdout/stderr sem corpo de formulários, senha, cookie ou query string. O servidor é Gunicorn, sem debug, um worker e quatro threads; `exec` e o init do Docker encaminham os sinais de encerramento.
 
@@ -85,9 +85,9 @@ O script usa `plantuml/plantuml:1.2025.10`, profile `tools`, sem rede no contain
 
 `helpdesk/__init__.py` cria a aplicação, registra extensões, rotas, erros e cabeçalhos. `config.py` configura o estado e os cookies; `models.py` define persistência e invariantes; `forms.py` valida entrada; `security.py` centraliza permissões, sessões e limites; `routes.py` implementa os fluxos; `cli.py` provisiona. Templates Jinja2 escapam conteúdo; CSS local não depende de CDN. Migrações em `migrations/`, testes em `tests/`.
 
-Datas no SQLite são armazenadas sem offset e representam UTC; a interface identifica UTC explicitamente. Protocolo usa UUID v4 completo com prefixo HD-. A confirmação é acessível somente ao autor autenticado e não substitui a listagem futura.
+Datas no SQLite são armazenadas sem offset e representam UTC; a interface identifica UTC explicitamente. Protocolo usa UUID v4 completo com prefixo HD-. A confirmação de abertura permanece acessível somente ao autor autenticado. A listagem `/chamados` e o detalhe `/chamados/<id>/detalhes` autorizam solicitantes apenas aos próprios registros e técnicos a todos.
 
-Para futuras alterações de esquema, gere uma nova revisão com Flask-Migrate e revise-a antes de aplicar; não modifique a revisão já entregue. O status de chamado está restrito a Aberto nesta Sprint; RF04 exigirá migração para ampliar essa regra. O catálogo do Kanban aceita novos IDs e atualizações de metadados, preservando colunas e tarefas adicionais.
+Para futuras alterações de esquema, gere uma nova revisão com Flask-Migrate e revise-a antes de aplicar; não modifique a revisão já entregue. A migração da Sprint 2 preserva chamados anteriores com prioridade Média. O fluxo é Aberto → Em atendimento → Concluído; solução com 1 a 5.000 caracteres após remover espaços externos e conclusão UTC são obrigatórias ao concluir. Concluído é terminal, inclusive para prioridade. Cada mudança de status cria um evento com autor, data UTC e valores anterior/novo na mesma transação. A versão do chamado impede sobreposição de alterações concorrentes; em conflito, a página pede revisão dos dados atualizados. O catálogo do Kanban aceita novos IDs e atualizações de metadados, preservando colunas e tarefas adicionais.
 
 ## Configuração local de demonstração e publicação real
 
@@ -105,7 +105,7 @@ Uma chave externa pode ser fornecida como `SECRET_KEY` (mínimo 32 caracteres al
 2. Como solicitante, tente senha incorreta, entre e abra um chamado da categoria Rede. Mostre a validação obrigatória de campos.
 3. Envie dados válidos. Mostre protocolo, autor implícito, status Aberto e abertura UTC. Atualize a confirmação para comprovar PRG.
 4. Saia e mostre que a URL privada exige login.
-5. Entre como técnico. Mostre a mensagem de escopo e o quadro acadêmico; mova uma tarefa pelo seletor.
+5. Entre como técnico, consulte chamados e combine filtros. Abra um detalhe, defina prioridade, inicie atendimento e conclua com solução. Mostre o bloqueio de edição após concluir e o quadro acadêmico separado.
 6. Recrie os containers sem apagar volumes e confirme que o quadro persiste.
 7. Apresente os testes, os desenhos UML e os itens futuros no backlog, sem alegar implantação de RF03–RF06.
 

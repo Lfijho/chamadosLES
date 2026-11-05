@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% from '_fields.html' import field %}
+{% block title %}Detalhes do chamado{% endblock %}
+{% block content %}
+<div class="page-heading"><a href="{{ url_for('web.ticket_list') }}">Voltar aos chamados</a><h1 class="detail-title">{{ ticket.title }}</h1><p class="protocol">{{ ticket.protocol }}</p></div>
+{% if priority_form.errors or status_form.errors %}<div class="notice error" role="alert">A alteração não foi salva. Revise os campos indicados.{% if priority_form.version.errors or status_form.version.errors %} Atualize a página e tente novamente.{% endif %}</div>{% endif %}
+<div class="detail-layout">
+  <section class="ticket-summary" aria-labelledby="dados-chamado">
+    <div class="summary-header"><h2 id="dados-chamado">Dados do chamado</h2><span class="status">{{ ticket.status }}</span></div>
+    <dl class="metadata"><div><dt>Solicitante</dt><dd>{{ ticket.requester.name }}</dd></div><div><dt>Categoria</dt><dd>{{ ticket.category }}</dd></div><div><dt>Prioridade</dt><dd>{{ ticket.priority }}</dd></div><div><dt>Abertura (UTC)</dt><dd><time datetime="{{ ticket.opened_at.isoformat() }}Z">{{ ticket.opened_at.strftime('%d/%m/%Y às %H:%M') }}</time></dd></div>
+    {% if ticket.completed_at %}<div><dt>Conclusão (UTC)</dt><dd><time datetime="{{ ticket.completed_at.isoformat() }}Z">{{ ticket.completed_at.strftime('%d/%m/%Y às %H:%M') }}</time></dd></div>{% endif %}</dl>
+    <h2>Descrição</h2><p class="description">{{ ticket.description }}</p>
+    {% if ticket.solution %}<h2 class="solution-heading">Solução</h2><p class="description">{{ ticket.solution }}</p>{% endif %}
+  </section>
+  {% if g.user.role == 'tecnico' and ticket.status != 'Concluído' %}
+  <aside class="attendance" aria-label="Atualizar atendimento">
+    <form class="ticket-form" method="post" action="{{ url_for('web.ticket_priority', ticket_id=ticket.id) }}">
+      {{ priority_form.csrf_token(id='priority-csrf') }}{{ priority_form.version(id='priority-version') }}
+      <h2>Definir prioridade</h2>
+      {{ field(priority_form.priority, 'Escolha a prioridade do atendimento.', {'required': true}) }}
+      <button class="button button-secondary" type="submit">Salvar prioridade</button>
+    </form>
+    <form class="ticket-form" method="post" action="{{ url_for('web.ticket_status', ticket_id=ticket.id) }}">
+      {{ status_form.csrf_token(id='status-csrf') }}{{ status_form.version(id='status-version') }}
+      <h2>Atualizar status</h2>
+      {{ field(status_form.status, 'O atendimento segue Aberto → Em atendimento → Concluído.', {'required': true}) }}
+      {% if next_status == 'Concluído' %}{{ field(status_form.solution, 'Descreva a solução aplicada, com até 5.000 caracteres.', {'required': true, 'maxlength': 5000, 'rows': 5}) }}{% endif %}
+      <button class="button button-primary" type="submit">{{ 'Concluir chamado' if next_status == 'Concluído' else 'Iniciar atendimento' }}</button>
+    </form>
+  </aside>
+  {% endif %}
+</div>
+{% if ticket.status == 'Concluído' %}<p class="scope-note">Atendimento concluído. Os dados ficam disponíveis para consulta.</p>{% elif g.user.role == 'solicitante' %}<p class="scope-note">A equipe técnica atualiza a prioridade e o status do atendimento.</p>{% endif %}
+{% endblock %}
