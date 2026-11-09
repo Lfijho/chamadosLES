@@ -1,0 +1,55 @@
+@startuml
+hide footbox
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 240
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 16
+skinparam ParticipantPadding 16
+skinparam maxMessageSize 230
+actor Solicitante as A
+boundary "Formulário de abertura\nnew_ticket.html" as I
+participant "rotas:helpdesk.routes" as R <<módulo Flask>>
+participant "form:TicketForm" as F
+participant "chamados:helpdesk.tickets" as C <<módulo>>
+participant "db.session:Session" as P <<SQLAlchemy>>
+note over I,R : Precondição: solicitante autenticado.
+A -> I : Preencher e enviar o problema
+I -> R : new_ticket()
+activate R
+R -> F : validate_on_submit()
+activate F
+F --> R : resultado e dados validados
+deactivate F
+alt campos inválidos
+  R --> I : formulário com orientações
+else campos válidos
+  R -> C : create_ticket(user, title, description, category)
+  activate C
+  C -> P : add(Ticket(...)); commit()
+  activate P
+  P --> C : chamado persistido
+deactivate P
+  C --> R : ticket:Ticket
+  deactivate C
+  R --> I : redirecionamento para confirmação
+end
+deactivate R
+opt chamado salvo
+  I -> R : ticket_confirmation(ticket_id)
+  activate R
+  R -> C : get_ticket(ticket_id, user)
+  activate C
+  C -> C : visible_tickets(user)
+  C -> P : scalar(consulta autorizada)
+  activate P
+  P --> C : ticket:Ticket
+  deactivate P
+  C --> R : chamado do solicitante
+  deactivate C
+  R --> I : confirmation.html com protocolo
+  deactivate R
+end
+I --> A : Apresentar resultado
+note over F : validate_on_submit() é herdado de FlaskForm.
+@enduml

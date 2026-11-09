@@ -1,0 +1,52 @@
+@startuml
+hide footbox
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 240
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 16
+skinparam ParticipantPadding 16
+skinparam maxMessageSize 230
+actor "Solicitante ou técnico" as A
+boundary "Página de login\nlogin.html" as I
+participant "rotas:helpdesk.routes" as R <<módulo Flask>>
+participant "acesso:helpdesk.security" as C <<módulo>>
+entity "usuario:User" as U
+participant "db.session:Session" as P <<SQLAlchemy>>
+A -> I : Informar e-mail e senha
+I -> R : login()
+activate R
+R -> P : scalar(consulta por e-mail)
+activate P
+P --> R : usuario ou None
+deactivate P
+R -> C : authenticate(usuario, password)
+activate C
+opt conta encontrada
+  C -> U : check_password(password)
+  activate U
+  U --> C : válida ou inválida
+  deactivate U
+end
+C --> R : resultado da autenticação
+deactivate C
+alt credenciais válidas e acesso permitido
+  R -> C : start_session(usuario)
+  activate C
+  C -> P : add(LoginSession(...)); commit()
+  activate P
+  P --> C : acesso persistido
+  deactivate P
+  C --> R : sessão iniciada
+  deactivate C
+  R --> I : redirecionamento ao início
+else credenciais inválidas
+  R --> I : formulário e mensagem genérica
+end
+deactivate R
+I --> A : Apresentar resultado
+note over R,C
+Campos e limite de tentativas são verificados
+antes da concessão de acesso.
+end note
+@enduml

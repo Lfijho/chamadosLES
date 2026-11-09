@@ -1,0 +1,56 @@
+@startuml
+hide footbox
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 240
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 16
+skinparam ParticipantPadding 16
+skinparam maxMessageSize 280
+actor "Técnico" as A
+boundary "Detalhes do chamado" as I
+participant "rotas:helpdesk.routes" as R <<módulo Flask>>
+participant "chamados:helpdesk.tickets" as C <<módulo>>
+entity "chamado:Ticket" as T
+entity "evento:StatusEvent" as E
+participant "db.session:Session" as P <<SQLAlchemy>>
+note over R : A rota obtém o chamado autorizado e valida o formulário antes de atualizar.
+A -> I : Iniciar atendimento ou informar solução e concluir
+I -> R : ticket_status(ticket_id)
+activate R
+R -> C : update_status(ticket, user, new_status, solution, version)
+activate C
+C -> C : check_edit(ticket, user, version)
+opt permissão, versão e estado permitem editar
+  C -> T : change_status(new_status, solution)
+  activate T
+  T --> C : válida ou erro
+  deactivate T
+end
+alt regras de edição, transição e solução válidas
+  create E
+  C -> E : StatusEvent(ticket=..., actor=user,\nold_status=..., new_status=...)
+  activate E
+  E --> C : evento pendente
+  deactivate E
+  C -> P : add(evento); commit()
+  activate P
+  P --> C : gravação conjunta ou erro
+  deactivate P
+  C --> R : resultado da persistência
+else regra violada
+  C --> R : ValueError ou StaleDataError
+end
+deactivate C
+alt operação confirmada
+  R --> I : redirecionamento com confirmação
+else operação rejeitada ou falhou
+  R -> P : rollback()
+  activate P
+  P --> R : dados anteriores preservados
+  deactivate P
+  R --> I : orientação ou página de erro
+end
+deactivate R
+I --> A : Apresentar resultado
+@enduml

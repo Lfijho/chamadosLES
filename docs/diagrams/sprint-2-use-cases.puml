@@ -1,0 +1,38 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 240
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 16
+skinparam ParticipantPadding 16
+skinparam maxMessageSize 230
+top to bottom direction
+actor Solicitante as S
+actor "Técnico" as T
+rectangle HelpDesk {
+  usecase "UC01\nRealizar login" as U1
+  usecase "UC02\nRealizar logout" as U2
+  usecase "UC03\nAbrir chamado" as U3
+  usecase "UC04\nConsultar chamados e filtrar" as U4
+  usecase "UC05\nConsultar detalhes" as U5
+  usecase "UC06\nDefinir prioridade" as U6
+  usecase "UC07\nAtualizar status e solução" as U7
+}
+S -right- U1
+S -right- U2
+S -right- U3
+S -right- U4
+S -right- U5
+U1 -right- T
+U2 -right- T
+U4 -right- T
+U5 -right- T
+U6 -right- T
+U7 -right- T
+U1 -[hidden]down- U2
+U2 -[hidden]down- U3
+U3 -[hidden]down- U4
+U4 -[hidden]down- U5
+U5 -[hidden]down- U6
+U6 -[hidden]down- U7
+@enduml

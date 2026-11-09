@@ -12,8 +12,7 @@ Este arquivo registra o trabalho verificado no código. O quadro da aplicação 
 | Em andamento | S1-06 — Testes e CI | 47 testes locais passaram na revalidação da entrega. CI remota permanece bloqueada por faturamento da conta, reconferido em 29/10/2026 |
 | Concluído | S1-07 — Documentação | README, RF/RNF, regras, UC01–UC03, SCRUM individual, roteiro e limites revisados contra o código |
 | Concluído | S1-08 — Diagramas | Quatro fontes PlantUML com SVG/PNG renderizados, inspecionados e referenciados |
-| Concluído | S2-01, S2-02 e S2-04 a S2-09 | Consulta, filtros/paginação, prioridade, status, solução e eventos: 85 testes e fluxo de navegador |
-| Em andamento | S2-03 e S2-10 a S2-12 | Consolidação acadêmica, UML, validação da entrega e preparação da apresentação |
+| Concluído | S2-01 a S2-12 | Consulta e atendimento, 85 testes, migração/persistência, entrega acadêmica, dez desenhos UML e roteiro preparados e verificados |
 | Backlog | S3-01 a S3-13 | Três resumos originais e dez tarefas detalhadas de histórico, indicadores e entrega final; não implementados |
 | A fazer | — | — |
 
@@ -133,4 +132,13 @@ Markdown, DOCX e PDF foram atualizados da mesma fonte. A exportação tem seis p
 
 RF03 e RF04 foram implementados e verificados: visibilidade por perfil, detalhe autorizado, filtros e paginação, prioridade, fluxo de status com solução e eventos transacionais. O código preserva a confirmação de abertura e o quadro acadêmico. A migração mantém dados anteriores; o seed continua preservando colunas alteradas pelo usuário.
 
-O catálogo registra oito tarefas da Sprint 2 concluídas e quatro em andamento, correspondentes à documentação, UML, consolidação da validação e preparação da apresentação. As tarefas da Sprint 3 permanecem no Backlog. Resultados atuais e limites estão em [verificacoes-sprint-2.md](verificacoes-sprint-2.md).
+Nesse bloco de implementação, o catálogo registrou oito tarefas da Sprint 2 concluídas e quatro em andamento, correspondentes à documentação, UML, consolidação da validação e preparação da apresentação. As tarefas da Sprint 3 permanecem no Backlog. Resultados atuais e limites estão em [verificacoes-sprint-2.md](verificacoes-sprint-2.md).
+
+
+## Consolidação da entrega da Sprint 2
+
+As 12 tarefas da Sprint 2 foram concluídas no catálogo e no quadro operacional após a verificação de seus critérios. A sincronização foi executada duas vezes sem duplicação, redefinição das contas ou alteração de colunas existentes. A conclusão das tarefas foi aplicada explicitamente pelo técnico no quadro; as colunas das Sprints 1 e 3 foram preservadas.
+
+A entrega consolidada reúne UC01 a UC07, tabelas de funções reais, dez fontes PlantUML e desenhos SVG/PNG, classes com operações e atividades por responsabilidade. Markdown, DOCX e PDF foram gerados da mesma fonte; as 15 páginas foram inspecionadas. A entrega da Sprint 1 permanece intacta como registro histórico. Os identificadores não funcionais existentes foram mantidos; RNF13 explicita o controle da consulta e das alterações por perfil.
+
+O roteiro e a revisão/retrospectiva técnica estão em [roteiro-sprint-2.md](roteiro-sprint-2.md). Preparar o roteiro não equivale a realizar a apresentação. RF05, RF06, vídeo e entrega final continuam no Backlog da Sprint 3. Evidências e limites permanecem no registro técnico.

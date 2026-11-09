@@ -23,6 +23,8 @@ services:
       start_period: 30s
   diagrams:
     image: plantuml/plantuml:1.2025.10
+    environment:
+      PLANTUML_LIMIT_SIZE: "8192"
     profiles: ["tools"]
     user: "${DIAGRAM_UID:-1000}:${DIAGRAM_GID:-1000}"
     volumes:

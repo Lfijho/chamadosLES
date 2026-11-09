@@ -1,0 +1,45 @@
+@startuml
+hide footbox
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 240
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 16
+skinparam ParticipantPadding 16
+skinparam maxMessageSize 230
+actor "Solicitante ou técnico" as A
+boundary "Lista de chamados\nticket_list.html" as I
+participant "rotas:helpdesk.routes" as R <<módulo Flask>>
+participant "form:TicketFilterForm" as F
+participant "chamados:helpdesk.tickets" as C <<módulo>>
+participant "db:SQLAlchemy" as P <<persistência>>
+A -> I : Escolher status, categoria ou página
+I -> R : ticket_list()
+activate R
+R -> F : validate()
+activate F
+F --> R : filtros e página válidos ou erros
+deactivate F
+alt filtros ou página inválidos
+  R --> I : orientações de correção
+else parâmetros válidos
+  R -> C : list_tickets(user, status, category, page)
+  activate C
+  C -> C : visible_tickets(user)
+  note right of C : Solicitante: somente próprios.\nTécnico: todos.
+  C -> P : paginate(consulta filtrada, page, per_page=10)
+  activate P
+  P --> C : página de objetos Ticket
+  deactivate P
+  C --> R : resultados e paginação
+  deactivate C
+  alt há resultados visíveis
+    R --> I : lista e links com filtros preservados
+  else nenhum resultado
+    R --> I : estado vazio ou aviso sobre filtros
+  end
+end
+deactivate R
+I --> A : Apresentar consulta
+note over F : validate() é herdado de FlaskForm.
+@enduml

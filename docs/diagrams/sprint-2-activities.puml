@@ -1,0 +1,44 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 240
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 16
+skinparam ParticipantPadding 16
+skinparam maxMessageSize 230
+|Solicitante|
+start
+:Preencher título, descrição e categoria e enviar;
+|HelpDesk|
+while (Dados de abertura válidos?) is (não)
+  |Solicitante|
+  :Corrigir os dados e reenviar;
+  |HelpDesk|
+endwhile (sim)
+:Registrar chamado com status Aberto
+e prioridade Média;
+|Técnico|
+:Consultar lista e abrir detalhes;
+:Definir prioridade Baixa, Média ou Alta;
+|HelpDesk|
+:Validar perfil e persistir prioridade;
+|Técnico|
+:Iniciar atendimento;
+|HelpDesk|
+:Alterar para Em atendimento
+e registrar evento na mesma transação;
+|Técnico|
+:Registrar a solução e solicitar conclusão;
+|HelpDesk|
+while (Solução tem conteúdo válido?) is (não)
+  :Informar necessidade de correção;
+  |Técnico|
+  :Corrigir a solução;
+  |HelpDesk|
+endwhile (sim)
+:Concluir, registrar data UTC e evento
+na mesma transação;
+:Disponibilizar chamado para consulta,
+sem edição após a conclusão;
+stop
+@enduml

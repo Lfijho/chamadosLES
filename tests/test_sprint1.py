@@ -49,7 +49,8 @@ def test_ticket_correct_author_status_utc_and_prg(client, app, valid_ticket):
     login(client)
     before = utcnow()
     response = client.post("/chamados/novo", data={**valid_ticket, "requester_id": 999,
-        "status": "Encerrado", "csrf_token": csrf(client, "/chamados/novo")})
+        "status": "Encerrado", "priority": "Alta", "solution": "Não aceitar do cliente",
+        "csrf_token": csrf(client, "/chamados/novo")})
     assert response.status_code == 303
     page = client.get(response.location)
     assert page.status_code == 200 and "Chamado registrado com sucesso" in page.text
@@ -61,6 +62,7 @@ def test_ticket_correct_author_status_utc_and_prg(client, app, valid_ticket):
         ticket = tickets[0]
         assert ticket.requester_id == db.session.scalar(db.select(User.id).where(User.email == "solicitante@example.com"))
         assert ticket.status == "Aberto" and before <= ticket.opened_at <= utcnow()
+        assert ticket.priority == "Média" and ticket.solution is None and ticket.completed_at is None
         assert len(ticket.id) == 36
 
 

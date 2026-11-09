@@ -1,0 +1,62 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 240
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 16
+skinparam ParticipantPadding 16
+skinparam maxMessageSize 230
+left to right direction
+skinparam classAttributeIconSize 0
+package "helpdesk.models" {
+  class User {
+    +id: int
+    +name: str
+    +email: str
+    +role: str
+    +set_password(password): None
+    +check_password(password): bool
+  }
+  class Ticket {
+    +id: str
+    +title: str
+    +description: str
+    +category: str
+    +status: str
+    +priority: str
+    +solution: str [0..1]
+    +opened_at: datetime
+    +completed_at: datetime [0..1]
+    +version: int
+    +protocol: str {readOnly}
+    +set_priority(priority: str): None
+    +change_status(new_status: str, solution: str): None
+  }
+  class StatusEvent {
+    +id: int
+    +occurred_at: datetime
+    +old_status: str
+    +new_status: str
+  }
+}
+Ticket "0..*" --> "1" User : requester
+StatusEvent "0..*" --> "1" User : actor
+StatusEvent "0..*" --> "1" Ticket : ticket
+package "helpdesk.forms" {
+  class StatusForm {
+    +status: PortugueseSelectField
+    +solution: TextAreaField
+    +version: IntegerField
+    +validate_solution(field): None
+  }
+  class PortugueseSelectField {
+    +pre_validate(form): None
+  }
+  StatusForm --> PortugueseSelectField : status
+}
+note bottom of Ticket
+protocol é uma propriedade calculada.
+Status e prioridades são constantes de módulo,
+não enumerações Python.
+end note
+@enduml

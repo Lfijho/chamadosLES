@@ -66,7 +66,7 @@ Capturas locais ficam em `artifacts/browser/`, ignoradas no Git. O estado tempor
 
 ## Diagramas e documentação
 
-PlantUML substitui o diagrams.net inicialmente previsto para permitir fontes versionadas e renderização reproduzível. Não havia arquivo existente exigindo `.drawio`. Os quatro desenhos em SVG e PNG já estão entregues; o renderizador é opcional e independente da aplicação:
+PlantUML substitui o diagrams.net inicialmente previsto para permitir fontes versionadas e renderização reproduzível. Não havia arquivo existente exigindo `.drawio`. A consolidação da Sprint 2 contém dez desenhos UML em SVG e PNG; o renderizador é opcional e independente da aplicação:
 
 ```bash
 ./scripts/render-diagrams.sh
@@ -74,8 +74,11 @@ PlantUML substitui o diagrams.net inicialmente previsto para permitir fontes ver
 
 O script usa `plantuml/plantuml:1.2025.10`, profile `tools`, sem rede no container e com UID/GID do usuário para escrever os desenhos. Em ambientes sem shell POSIX, execute os comandos `docker compose --profile tools run --rm --no-deps diagrams -charset UTF-8 -tsvg '*.puml'` e a variante `-tpng`, ajustando DIAGRAM_UID/DIAGRAM_GID conforme o host.
 
-- [Documento acadêmico de entrega da Sprint 1](docs/entrega-sprint-1.md): [DOCX editável](docs/entrega-sprint-1.docx) e [PDF](docs/entrega-sprint-1.pdf).
-- [Documentação acadêmica, requisitos, casos de uso e diagramas](docs/sprint-1.md).
+- [Entrega consolidada da Sprint 2](docs/entrega-sprint-2.md): [DOCX editável](docs/entrega-sprint-2.docx) e [PDF](docs/entrega-sprint-2.pdf), com as correções UML e UC01 a UC07.
+- [Roteiro de apresentação e revisão técnica](docs/roteiro-sprint-2.md).
+- [Verificações da Sprint 2](docs/verificacoes-sprint-2.md).
+- [Registro histórico da entrega da Sprint 1](docs/entrega-sprint-1.md): [DOCX editável](docs/entrega-sprint-1.docx) e [PDF](docs/entrega-sprint-1.pdf).
+- [Requisitos e UML da Sprint 1 como registro histórico](docs/sprint-1.md).
 - [Catálogo inicial de tarefas e critérios](docs/backlog.yml).
 - [Acompanhamento versionado](docs/kanban.md): registro do código verificado. O quadro da aplicação mantém o estado operacional no banco, exclusivo do técnico.
 - [Registro das verificações e limites reais](docs/verificacoes.md).
@@ -83,7 +86,7 @@ O script usa `plantuml/plantuml:1.2025.10`, profile `tools`, sem rede no contain
 
 ## Arquitetura e evolução
 
-`helpdesk/__init__.py` cria a aplicação, registra extensões, rotas, erros e cabeçalhos. `config.py` configura o estado e os cookies; `models.py` define persistência e invariantes; `forms.py` valida entrada; `security.py` centraliza permissões, sessões e limites; `routes.py` implementa os fluxos; `cli.py` provisiona. Templates Jinja2 escapam conteúdo; CSS local não depende de CDN. Migrações em `migrations/`, testes em `tests/`.
+`helpdesk/__init__.py` cria a aplicação, registra extensões, rotas, erros e cabeçalhos. `config.py` configura o estado e os cookies; `models.py` define persistência e invariantes; `tickets.py` aplica a visibilidade das consultas e coordena as gravações transacionais; `forms.py` valida entrada; `security.py` centraliza permissões, sessões e limites; `routes.py` implementa os fluxos; `cli.py` provisiona. Templates Jinja2 escapam conteúdo; CSS local não depende de CDN. Migrações em `migrations/`, testes em `tests/`.
 
 Datas no SQLite são armazenadas sem offset e representam UTC; a interface identifica UTC explicitamente. Protocolo usa UUID v4 completo com prefixo HD-. A confirmação de abertura permanece acessível somente ao autor autenticado. A listagem `/chamados` e o detalhe `/chamados/<id>/detalhes` autorizam solicitantes apenas aos próprios registros e técnicos a todos.
 
@@ -107,17 +110,34 @@ Uma chave externa pode ser fornecida como `SECRET_KEY` (mínimo 32 caracteres al
 4. Saia e mostre que a URL privada exige login.
 5. Entre como técnico, consulte chamados e combine filtros. Abra um detalhe, defina prioridade, inicie atendimento e conclua com solução. Mostre o bloqueio de edição após concluir e o quadro acadêmico separado.
 6. Recrie os containers sem apagar volumes e confirme que o quadro persiste.
-7. Apresente os testes, os desenhos UML e os itens futuros no backlog, sem alegar implantação de RF03–RF06.
+7. Apresente os testes, os desenhos UML e os itens futuros no backlog, delimitando a interface de histórico e os indicadores da Sprint 3.
 
 
 ## Gerar o documento de entrega
 
-`docs/entrega-sprint-1.md` é a fonte final revisada. DOCX e PDF são produzidos em sequência a partir dela, com os mesmos textos e imagens:
+As fontes são `docs/entrega-sprint-1.md` e `docs/entrega-sprint-2.md`. Cada DOCX e PDF é produzido em sequência a partir do mesmo Markdown e das imagens nele referenciadas:
 
 ```bash
-./scripts/build-delivery-docs.sh
+./scripts/build-delivery-docs.sh 2
 ```
 
 O script constrói uma ferramenta opcional em container, separada da aplicação, com Pandoc, python-docx e LibreOffice. Aplica apenas formatação ao DOCX e exporta esse arquivo para PDF. Requer Docker e acesso à rede na primeira construção; não altera banco, código ou configuração da aplicação. A versão entregue usou Pandoc 2.17.1.1, python-docx 1.2.0 e LibreOffice 7.4.7.2. A imagem base é Python 3.13.7 em Debian Bookworm; pacotes da distribuição podem receber atualizações em construções futuras, portanto confira novamente a paginação após regenerar.
 
-A captura em `docs/figures/` contém somente um chamado sintético de ensaio. Os diagramas com prefixo `entrega-` são versões de leitura em A4 dos desenhos detalhados preservados; `scripts/render-diagrams.sh` renderiza ambos os conjuntos. O documento contém somente a versão final revisada.
+O argumento `1` gera a entrega histórica da Sprint 1; sem argumento, o script também seleciona a Sprint 1. A entrega da Sprint 2 utiliza páginas em paisagem para sequências e classes.
+
+A captura em `docs/figures/` contém somente um chamado sintético de ensaio. Os diagramas com prefixo `entrega-` são versões de leitura em A4 dos desenhos detalhados preservados; `scripts/render-diagrams.sh` renderiza ambos os conjuntos. O prefixo `sprint-2-` identifica os desenhos corrigidos e novos da consolidação. Os documentos contêm somente a redação final revisada.
+
+
+## Verificação de navegador da Sprint 2
+
+Com as dependências opcionais de navegador instaladas como acima, execute em um projeto e volume isolados:
+
+```bash
+HELPDESK_PORT=8082 docker compose -p helpdesk-sprint2-check up -d --build --wait
+NODE_PATH=/tmp/helpdesk-browser/node_modules CHECK_COMPOSE_PROJECT=helpdesk-sprint2-check CHECK_BASE_URL=http://localhost:8082 node scripts/sprint2-check.cjs
+HELPDESK_PORT=8082 docker compose -p helpdesk-sprint2-check up -d --force-recreate --wait
+NODE_PATH=/tmp/helpdesk-browser/node_modules CHECK_COMPOSE_PROJECT=helpdesk-sprint2-check CHECK_BASE_URL=http://localhost:8082 node scripts/sprint2-check.cjs --verify-persistence
+HELPDESK_PORT=8082 docker compose -p helpdesk-sprint2-check down
+```
+
+O ensaio insere dados sintéticos no volume de teste. Use um projeto novo no primeiro ensaio para conferir o estado vazio. Capturas e referência de persistência ficam em `artifacts/sprint-2/`, ignorado pelo Git. Não execute sobre o volume de uso normal.

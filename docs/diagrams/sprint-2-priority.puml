@@ -1,0 +1,48 @@
+@startuml
+hide footbox
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 240
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 16
+skinparam ParticipantPadding 16
+skinparam maxMessageSize 230
+actor "Técnico" as A
+boundary "Detalhes do chamado" as I
+participant "rotas:helpdesk.routes" as R <<módulo Flask>>
+participant "chamados:helpdesk.tickets" as C <<módulo>>
+entity "chamado:Ticket" as T
+participant "db.session:Session" as P <<SQLAlchemy>>
+A -> I : Selecionar prioridade e salvar
+I -> R : ticket_priority(ticket_id)
+activate R
+R -> C : get_ticket(ticket_id, user)
+activate C
+C --> R : chamado:Ticket ou None
+deactivate C
+alt formulário válido e chamado encontrado
+  R -> C : update_priority(ticket, user, priority, version)
+  activate C
+  C -> C : check_edit(ticket, user, version)
+  alt técnico, versão atual e chamado não concluído
+    C -> T : set_priority(priority)
+    activate T
+    T --> C : prioridade validada e atribuída
+    deactivate T
+    C -> P : commit()
+    activate P
+    P --> C : alteração persistida
+    deactivate P
+    C --> R : operação concluída
+  else prioridade, versão ou estado inválido
+    C --> R : erro de validação ou conflito
+  end
+  deactivate C
+else formulário inválido ou chamado ausente
+  note over R : Nenhuma alteração é efetuada.
+end
+R --> I : confirmação ou orientação de correção
+deactivate R
+I --> A : Apresentar resultado
+note over R,P : Em falha, rollback() preserva os dados anteriores.
+@enduml

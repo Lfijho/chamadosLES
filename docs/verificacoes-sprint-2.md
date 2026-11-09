@@ -30,3 +30,31 @@ O primeiro ensaio encontrou filtros opcionais sem valor inicial, rejeitando a co
 ## Escopo preservado
 
 A interface de histórico e o painel de indicadores não foram implementados. O Kanban continua representando tarefas do desenvolvimento. A documentação e os desenhos originais da Sprint 1 permanecem como registro histórico; as correções de modelagem são entregues na consolidação da Sprint 2.
+
+
+## Consolidação e conferência UML
+
+| Requisito | Casos de uso | Operações e objetos principais |
+|---|---|---|
+| RF01 | UC01, UC02 | login, authenticate, User.check_password, start_session, logout |
+| RF02 | UC03 | new_ticket, create_ticket, ticket_confirmation, get_ticket, Ticket |
+| RF03 | UC04, UC05 | ticket_list, visible_tickets, list_tickets, ticket_detail, ticket_detail_response |
+| RF04 | UC06, UC07 | ticket_priority, ticket_status, check_edit, update_priority, update_status, Ticket.set_priority, Ticket.change_status, StatusEvent |
+
+A conferência comparou nomes das tabelas com as definições do código e as mensagens de cada sequência. Foram revisados atores externos tradicionais, limite HelpDesk, associações diretas e separação do Kanban. As sequências usam módulos Flask e objetos reais, retornos tracejados, ativações e condições; a persistência não é tratada como entidade de domínio. As associações de Ticket e StatusEvent identificam solicitante, chamado e autor, com multiplicidades. As funções de módulo permanecem como funções. No diagrama de atividades, o HelpDesk valida os dados; solicitante e técnico fazem as correções indicadas.
+
+As dez fontes foram renderizadas em SVG e PNG. A revisão visual encontrou e corrigiu recorte de uma imagem e dimensionamento indevido no exportador. O renderizador opcional passou a aceitar imagens maiores, e o exportador aplica os limites declarados na fonte após definir a orientação das páginas. As 15 páginas finais foram abertas: oito usam paisagem; tabelas, legendas, imagens e numeração foram conferidas. A verificação do DOCX encontrou nove tabelas nativas e dez imagens com conteúdo igual aos PNGs referenciados no Markdown. A geração isolada da Sprint 1 continuou produzindo seis páginas, sem alterar os arquivos históricos do repositório.
+
+A prosa final foi revisada preservando requisitos, nomes, comandos e fatos. DOCX foi exportado pelo LibreOffice; não houve inspeção no Microsoft Word. A avaliação e a aceitação pelo professor continuam pendentes.
+
+## Inicialização limpa e atualização do volume existente
+
+Uma exportação Git sem arquivos locais ou runtime iniciou pelo comando `docker compose up -d`, com projeto Compose isolado e porta alternativa. O serviço ficou healthy, com duas contas e 33 tarefas provisionadas automaticamente. Chamados e eventos começaram vazios nesse volume novo.
+
+Antes da atualização local, foi criado um backup consistente pela API do SQLite, em arquivo privado dentro do volume. Após `docker compose up -d --build --wait`, a comparação confirmou os mesmos usuários, todos os campos anteriores dos três chamados, sessões, contadores e 33 identificadores/colunas do quadro. Chave de sessão e credenciais permaneceram idênticas. Os chamados anteriores receberam Média e não ganharam eventos inventados. A integridade SQLite e as chaves estrangeiras passaram na conferência.
+
+O seed foi repetido duas vezes com resultado idêntico e sem duplicação. Depois, as 12 tarefas verificadas da Sprint 2 foram movidas para Concluído pelo fluxo autenticado do Kanban; as colunas das demais Sprints permaneceram iguais às do backup. O técnico conseguiu consultar os três chamados anteriores pela interface. A suíte final, com o catálogo concluído, passou novamente: 85 testes, sem warnings. Nenhum volume foi apagado.
+
+Uma nova exportação consolidada iniciou (`helpdesk-sprint2-final-check`, porta 8084), seguida do fluxo completo de navegador e da recriação. As dez páginas/estados e a persistência passaram novamente. Na revisão de mensagens, um parâmetro de página não numérico ainda expunha a mensagem padrão em inglês; a rota passou a apresentar a orientação em português. O caso foi verificado no navegador nas quatro larguras e com axe, sem violações no escopo executado.
+
+Após a padronização da mensagem, a suíte completa passou novamente com 85 testes, sem warnings.

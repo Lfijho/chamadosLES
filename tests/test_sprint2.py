@@ -116,6 +116,7 @@ def test_invalid_filters(client, query):
     login(client)
     response = client.get("/chamados?" + query)
     assert response.status_code == 422 and "Revise os filtros" in response.text
+    assert "Not a valid integer" not in response.text
 
 
 @pytest.mark.parametrize("priority", ["Baixa", "Média", "Alta"])

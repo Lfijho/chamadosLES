@@ -1,0 +1,35 @@
+@startuml
+hide footbox
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 240
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 16
+skinparam ParticipantPadding 16
+skinparam maxMessageSize 230
+actor "Solicitante ou técnico" as A
+boundary "Página autenticada" as I
+participant "rotas:helpdesk.routes" as R <<módulo Flask>>
+participant "db.session:Session" as P <<SQLAlchemy>>
+note over I,R : Precondição: acesso autenticado.
+A -> I : Selecionar Sair
+I -> R : logout()
+activate R
+R -> P : get(LoginSession, identificação)
+activate P
+P --> R : registro da sessão
+deactivate P
+opt registro encontrado
+  R -> P : delete(registro); commit()
+  activate P
+  P --> R : sessão removida
+  deactivate P
+end
+R --> I : redirecionamento para login
+deactivate R
+I -> R : login()
+activate R
+R --> I : formulário e confirmação de saída
+deactivate R
+I --> A : Apresentar login
+@enduml

@@ -74,7 +74,7 @@ tasks:
     title: Testes e documentação da Sprint 2
     sprint: 2
     priority: Alta
-    column: Em andamento
+    column: Concluído
     description: Tarefa-resumo preservada do catálogo original. Testes, documentação, validação e apresentação estão detalhados em S2-09 a S2-12.
     acceptance: Verificar RF03 e RF04 e atualizar documentação e diagramas após implementação.
   - id: S3-01
@@ -175,7 +175,7 @@ tasks:
     title: Atualizar documentação e UML da Sprint 2
     sprint: 2
     priority: Alta
-    column: Em andamento
+    column: Concluído
     description: >-
       Atualizar requisitos funcionais e não funcionais, casos de uso e respectivas
       especificações e sequências de consulta e atendimento.
@@ -188,7 +188,7 @@ tasks:
     title: Validar migrações, Compose e persistência da Sprint 2
     sprint: 2
     priority: Alta
-    column: Em andamento
+    column: Concluído
     description: >-
       Verificar a evolução da aplicação preservando os dados da Sprint 1 e a experiência
       de inicialização local por Docker Compose.
@@ -201,7 +201,7 @@ tasks:
     title: Preparar apresentação e revisão da Sprint 2
     sprint: 2
     priority: Média
-    column: Em andamento
+    column: Concluído
     description: >-
       Preparar roteiro de demonstração da consulta e da gestão básica para a entrega
       de 12/11/2026, incluindo os fluxos dos dois perfis.

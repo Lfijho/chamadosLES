@@ -93,6 +93,8 @@ def ticket_confirmation(ticket_id):
 def ticket_list():
     form = TicketFilterForm(formdata=request.args)
     valid = form.validate()
+    if form.page.errors:
+        form.page.errors = ["Informe uma página válida."]
     for name in ("status", "category", "page"):
         if len(request.args.getlist(name)) > 1:
             getattr(form, name).errors.append("Informe apenas um valor para este campo.")

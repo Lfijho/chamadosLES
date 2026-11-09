@@ -1,7 +1,9 @@
 """Gera DOCX e PDF a partir da fonte Markdown final, sem acessar a aplicação."""
 from datetime import datetime, timezone
+from copy import deepcopy
 from pathlib import Path
 import hashlib
+import os
 import re
 import struct
 import subprocess
@@ -14,7 +16,10 @@ from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
 
 ROOT = Path.cwd()
-SOURCE = ROOT / "docs/entrega-sprint-1.md"
+SPRINT = int(os.environ.get("DOCUMENT_SPRINT", "1"))
+if SPRINT not in (1, 2):
+    raise ValueError("Informe a Sprint 1 ou 2.")
+SOURCE = ROOT / f"docs/entrega-sprint-{SPRINT}.md"
 OUTPUT = SOURCE.with_suffix(".docx")
 
 
@@ -38,13 +43,49 @@ def style_by_id(doc, style_id):
     return next(style for style in doc.styles if style.style_id == style_id)
 
 
+def orient_sections(doc):
+    """Converte marcadores de orientação em seções Word, mantendo a numeração."""
+    template = deepcopy(doc.sections[0]._sectPr)
+
+    def properties(landscape):
+        props = deepcopy(template)
+        size = props.find(qn("w:pgSz"))
+        if size is None:
+            size = element("w:pgSz")
+            props.append(size)
+        size.set(qn("w:w"), "16838" if landscape else "11906")
+        size.set(qn("w:h"), "11906" if landscape else "16838")
+        size.set(qn("w:orient"), "landscape" if landscape else "portrait")
+        kind = props.find(qn("w:type"))
+        if kind is None:
+            kind = element("w:type", **{"w:val": "nextPage"})
+            props.insert(0, kind)
+        else:
+            kind.set(qn("w:val"), "nextPage")
+        return props
+
+    landscape = False
+    for paragraph in doc.paragraphs:
+        if paragraph.text in ("DOCX_LANDSCAPE", "DOCX_PORTRAIT"):
+            next_landscape = paragraph.text == "DOCX_LANDSCAPE"
+            paragraph.clear()
+            paragraph.paragraph_format.space_before = Pt(0)
+            paragraph.paragraph_format.space_after = Pt(0)
+            paragraph.paragraph_format.line_spacing = Pt(1)
+            paragraph._p.get_or_add_pPr().append(properties(landscape))
+            landscape = next_landscape
+    body = doc._element.body
+    body.replace(body.sectPr, properties(landscape))
+
+
 def format_document(path):
     doc = Document(path)
+    orient_sections(doc)
+    for section in doc.sections:
+        section.top_margin = section.bottom_margin = Cm(1.2 if SPRINT == 2 else 1.65)
+        section.left_margin = section.right_margin = Cm(1.7)
+        section.header_distance = section.footer_distance = Cm(0.7)
     section = doc.sections[0]
-    section.page_width, section.page_height = Cm(21), Cm(29.7)
-    section.top_margin = section.bottom_margin = Cm(1.65)
-    section.left_margin = section.right_margin = Cm(1.7)
-    section.header_distance = section.footer_distance = Cm(0.7)
     normal = doc.styles["Normal"]
     normal.font.name = "Liberation Sans"
     normal.font.size = Pt(11)
@@ -96,25 +137,36 @@ def format_document(path):
         if paragraph.style.name in ["Caption", "Image Caption"]:
             paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
     # Pandoc recebe limites de largura/altura; a figura mantém a proporção original.
-    for shape in doc.inline_shapes:
+    image_specs = re.findall(r"!\[[^\]]*\]\([^)]+\)\{([^}]+)\}", SOURCE.read_text())
+    for index, shape in enumerate(doc.inline_shapes):
         relationship = shape._inline.graphic.graphicData.pic.blipFill.blip.embed
         blob = doc.part.related_parts[relationship].blob
         if blob.startswith(b"\x89PNG\r\n\x1a\n"):
             width, height = struct.unpack(">II", blob[16:24])
-            scale = min(shape.width / width, shape.height / height)
+            if SPRINT == 2:
+                spec = image_specs[index]
+                max_width = Cm(float(re.search(r"width=([\d.]+)cm", spec).group(1)))
+                max_height = Cm(float(re.search(r"height=([\d.]+)cm", spec).group(1)))
+                scale = min(max_width / width, max_height / height)
+            else:
+                scale = min(shape.width / width, shape.height / height)
             shape.width, shape.height = int(width * scale), int(height * scale)
     for table in doc.tables:
         table.alignment = WD_TABLE_ALIGNMENT.CENTER
         table.autofit = False
         headers = [cell.text for cell in table.rows[0].cells]
         if len(headers) == 2:
-            ratios = [0.11, 0.89] if headers[0] == "ID" else [0.27, 0.73]
+            ratios = [0.15, 0.85] if headers[0] in ("ID", "Código") else [0.27, 0.73]
+        elif len(headers) == 4 and headers[0] == "Código":
+            ratios = [0.12, 0.45, 0.12, 0.31]
         elif headers[0] == "Integrante":
             ratios = [0.29, 0.22, 0.49]
         elif headers[-1] == "Sprint":
             ratios = [0.12, 0.73, 0.15]
         elif headers[0] == "Método/função":
             ratios = [0.36, 0.26, 0.38]
+        elif headers[0] == "Método/função real":
+            ratios = [0.28, 0.29, 0.43]
         elif headers[0] == "ID":
             ratios = [0.18, 0.47, 0.35]
         else:
@@ -140,6 +192,8 @@ def format_document(path):
                     paragraph.paragraph_format.space_before = Pt(3)
                     paragraph.paragraph_format.space_after = Pt(3)
                     paragraph.paragraph_format.line_spacing = 1.05
+                    if headers[0].startswith("Método/função"):
+                        paragraph.paragraph_format.keep_with_next = row_index < len(table.rows) - 1
                     for run in paragraph.runs:
                         run.font.size = Pt(9 if run.style.style_id == "VerbatimChar" else 10.5)
                         if row_index == 0:
@@ -155,7 +209,7 @@ def format_document(path):
     doc.settings.element.append(element("w:updateFields", **{"w:val": "true"}))
     doc.core_properties.author = "Leandro Pinzon Filho"
     doc.core_properties.last_modified_by = "Leandro Pinzon Filho"
-    doc.core_properties.title = "HelpDesk: entrega da Sprint 1"
+    doc.core_properties.title = f"HelpDesk: entrega da Sprint {SPRINT}"
     doc.core_properties.subject = "Laboratório de Engenharia de Software"
     doc.core_properties.created = doc.core_properties.modified = datetime.now(timezone.utc)
     doc.save(path)
@@ -165,11 +219,13 @@ def main():
     source = SOURCE.read_text()
     assert len(re.findall(r"^## \d+\. ", source, re.M)) == 7
     images = re.findall(r"!\[[^\]]*\]\(([^)]+)\)", source)
-    assert len(images) == 4  # Quatro desenhos UML.
+    assert len(images) == (4 if SPRINT == 1 else 10)
     assert all((SOURCE.parent / image).is_file() for image in images)
     with tempfile.TemporaryDirectory(prefix="helpdesk-docs-") as temporary:
         draft = Path(temporary) / "delivery.md"
-        draft.write_text(source.replace("<!-- pagebreak -->", "DOCX_PAGEBREAK"))
+        draft.write_text(source.replace("<!-- pagebreak -->", "DOCX_PAGEBREAK")
+                         .replace("<!-- landscape -->", "DOCX_LANDSCAPE")
+                         .replace("<!-- portrait -->", "DOCX_PORTRAIT"))
         subprocess.run(["pandoc", str(draft), "--from=markdown+link_attributes-smart", "--to=docx",
                         "--no-highlight", "--resource-path=" + str(SOURCE.parent), "--output=" + str(OUTPUT)], check=True)
         format_document(OUTPUT)
