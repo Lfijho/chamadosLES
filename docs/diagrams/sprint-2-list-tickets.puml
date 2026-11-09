@@ -5,41 +5,49 @@ skinparam shadowing false
 skinparam dpi 240
 skinparam defaultFontName SansSerif
 skinparam defaultFontSize 16
-skinparam ParticipantPadding 16
-skinparam maxMessageSize 230
+skinparam ParticipantPadding 10
+skinparam maxMessageSize 250
 actor "Solicitante ou técnico" as A
 boundary "Lista de chamados\nticket_list.html" as I
 participant "rotas:helpdesk.routes" as R <<módulo Flask>>
 participant "form:TicketFilterForm" as F
 participant "chamados:helpdesk.tickets" as C <<módulo>>
-participant "db:SQLAlchemy" as P <<persistência>>
-A -> I : Escolher status, categoria ou página
+participant "db:SQLAlchemy" as P <<infraestrutura>>
+A -> I : Escolher filtros ou página
 I -> R : ticket_list()
 activate R
 R -> F : validate()
 activate F
-F --> R : filtros e página válidos ou erros
-deactivate F
-alt filtros ou página inválidos
-  R --> I : orientações de correção
+F --> R : válido ou erros
+ deactivate F
+note over R,F : A rota também rejeita parâmetros repetidos.\nvalidate() é herdado de FlaskForm.
+alt filtros ou parâmetro de página inválidos
+  R --> I : formulário com orientações; sem consulta
 else parâmetros válidos
   R -> C : list_tickets(user, status, category, page)
   activate C
   C -> C : visible_tickets(user)
-  note right of C : Solicitante: somente próprios.\nTécnico: todos.
-  C -> P : paginate(consulta filtrada, page, per_page=10)
+  note right of C : Solicitante: próprios. Técnico: todos.
+  C -> P : paginate(consulta filtrada e ordenada,\npage=page, per_page=10,\nmax_per_page=10, error_out=True)
   activate P
-  P --> C : página de objetos Ticket
+  alt page > 1 e consulta sem itens
+    P --> C : exceção NotFound
+  else página existente, inclusive page=1 vazia
+    P --> C : objeto de paginação
+  end
   deactivate P
-  C --> R : resultados e paginação
+  C --> R : paginação ou exceção NotFound propagada
   deactivate C
-  alt há resultados visíveis
-    R --> I : lista e links com filtros preservados
-  else nenhum resultado
-    R --> I : estado vazio ou aviso sobre filtros
+  alt NotFound: página inexistente
+    R --> I : página de recurso não encontrado (Flask)
+  else paginação com itens
+    R --> I : lista e links que preservam os filtros
+  else page=1 sem itens, com filtros
+    R --> I : aviso de busca sem resultados
+  else page=1 sem itens, sem filtros
+    R --> I : estado de lista vazia
   end
 end
 deactivate R
-I --> A : Apresentar consulta
-note over F : validate() é herdado de FlaskForm.
+I --> A : Apresentar resultado
 @enduml

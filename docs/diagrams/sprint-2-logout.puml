@@ -10,7 +10,7 @@ skinparam maxMessageSize 230
 actor "Solicitante ou técnico" as A
 boundary "Página autenticada" as I
 participant "rotas:helpdesk.routes" as R <<módulo Flask>>
-participant "db.session:Session" as P <<SQLAlchemy>>
+participant "db.session:Session" as P <<infraestrutura>>
 note over I,R : Precondição: acesso autenticado.
 A -> I : Selecionar Sair
 I -> R : logout()

@@ -5,52 +5,75 @@ skinparam shadowing false
 skinparam dpi 240
 skinparam defaultFontName SansSerif
 skinparam defaultFontSize 16
-skinparam ParticipantPadding 16
-skinparam maxMessageSize 280
+skinparam ParticipantPadding 2
+skinparam maxMessageSize 320
+skinparam sequenceMessageAlign center
 actor "Técnico" as A
-boundary "Detalhes do chamado" as I
-participant "rotas:helpdesk.routes" as R <<módulo Flask>>
-participant "chamados:helpdesk.tickets" as C <<módulo>>
+boundary "Detalhes" as I
+participant "rotas:\nhelpdesk.routes" as R <<módulo Flask>>
+participant "form:\nStatusForm" as F
+participant "chamados:\nhelpdesk.tickets" as C <<módulo>>
 entity "chamado:Ticket" as T
-entity "evento:StatusEvent" as E
-participant "db.session:Session" as P <<SQLAlchemy>>
-note over R : A rota obtém o chamado autorizado e valida o formulário antes de atualizar.
-A -> I : Iniciar atendimento ou informar solução e concluir
+entity "evento:\nStatusEvent" as E
+participant "db.session:\nSession" as P <<infraestrutura>>
+A -> I : Iniciar atendimento OU informar solução e concluir
 I -> R : ticket_status(ticket_id)
 activate R
+R -> C : get_ticket(ticket_id, user)
+activate C
+C --> R : Ticket ou None
+ deactivate C
+break chamado inexistente
+  R --> I : recurso não encontrado (Flask)
+end
+R -> F : validate_on_submit()
+activate F
+F -> F : validate_solution(field)
+F --> R : válido ou erros
+ deactivate F
+break formulário inválido
+  R -> R : ticket_detail_response(ticket, status_form=form, ...)
+  R --> I : campos a corrigir; sem atualização
+end
+newpage Continuação: atualização e tratamento do resultado
 R -> C : update_status(ticket, user, new_status, solution, version)
 activate C
 C -> C : check_edit(ticket, user, version)
-opt permissão, versão e estado permitem editar
+opt check_edit() sem exceção
   C -> T : change_status(new_status, solution)
   activate T
-  T --> C : válida ou erro
+  T --> C : None ou ValueError
   deactivate T
+  opt change_status() sem exceção
+    create E
+    C -> E : StatusEvent(ticket=ticket,\nactor=user, old_status=previous,\nnew_status=ticket.status)
+    C -> P : add(event); commit()
+    activate P
+    P --> C : confirmação ou exceção
+    deactivate P
+  end
 end
-alt regras de edição, transição e solução válidas
-  create E
-  C -> E : StatusEvent(ticket=..., actor=user,\nold_status=..., new_status=...)
-  activate E
-  E --> C : evento pendente
-  deactivate E
-  C -> P : add(evento); commit()
-  activate P
-  P --> C : gravação conjunta ou erro
-  deactivate P
-  C --> R : resultado da persistência
-else regra violada
-  C --> R : ValueError ou StaleDataError
-end
-deactivate C
-alt operação confirmada
-  R --> I : redirecionamento com confirmação
-else operação rejeitada ou falhou
+C --> R : None ou exceção propagada
+ deactivate C
+alt atualização confirmada
+  R --> I : redirecionar ao detalhe com confirmação
+else exceção na atualização
   R -> P : rollback()
   activate P
-  P --> R : dados anteriores preservados
+  P --> R : transação desfeita
   deactivate P
-  R --> I : orientação ou página de erro
+  alt ValueError: regra violada
+    R -> R : ticket_detail_response(ticket, status_form=form, ...)
+    R --> I : informar regra para correção
+  else StaleDataError: conflito de versão
+    R -> R : ticket_detail_response(ticket, ...)
+    R --> I : dados atuais; solicitar revisão
+  else outro SQLAlchemyError: falha ao persistir
+    R --> I : página de erro (Flask)
+  end
 end
 deactivate R
 I --> A : Apresentar resultado
+
+note over R,P : Uma requisição realiza uma transição; commit() grava Ticket e StatusEvent juntos.\nO tratamento global da falha de persistência também chama rollback().
 @enduml

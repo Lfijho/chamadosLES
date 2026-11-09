@@ -1,1 +1,361 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="2782.5px" preserveAspectRatio="none" style="width:2867px;height:2782px;background:#FFFFFF;" version="1.1" viewBox="0 0 2867 2782" width="2867.5px" zoomAndPan="magnify"><defs/><g><rect fill="none" height="46.5625" style="stroke:none;stroke-width:2.5;" width="2787.2754" x="37.5" y="30.6836"/><ellipse cx="552.9883" cy="114.7461" fill="#222222" rx="25" ry="25" style="stroke:#222222;stroke-width:2.5;"/><rect fill="#F1F1F1" height="96.5625" rx="31.25" ry="31.25" style="stroke:#181818;stroke-width:1.25;" width="1000.9766" x="52.5" y="189.7461"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="950.9766" x="77.5" y="251.875">Preencher t&#237;tulo, descri&#231;&#227;o e categoria e enviar</text><rect fill="#F1F1F1" height="96.5625" rx="31.25" ry="31.25" style="stroke:#181818;stroke-width:1.25;" width="607.5" x="249.2383" y="487.1875"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="557.5" x="274.2383" y="549.3164">Corrigir os dados e reenviar</text><line style="stroke:#000000;stroke-width:3.75;" x1="37.5" x2="37.5" y1="30.6836" y2="2753.5352"/><polygon fill="#F1F1F1" points="1233.457,336.3086,1782.9102,336.3086,1812.9102,366.3086,1782.9102,396.3086,1233.457,396.3086,1203.457,366.3086,1233.457,336.3086" style="stroke:#181818;stroke-width:1.25;"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="74.3359" x="1518.1836" y="433.4375">n&#227;o</text><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="549.4531" x="1233.457" y="380.1563">Dados de abertura v&#225;lidos?</text><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="70.918" x="1132.5391" y="356.875">sim</text><rect fill="#F1F1F1" height="143.125" rx="31.25" ry="31.25" style="stroke:#181818;stroke-width:1.25;" width="811.1914" x="1102.5879" y="688.75"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="761.1914" x="1127.5879" y="750.8789">Registrar chamado com status Aberto</text><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="375.0586" x="1127.5879" y="797.4414">e prioridade M&#233;dia</text><rect fill="#F1F1F1" height="96.5625" rx="31.25" ry="31.25" style="stroke:#181818;stroke-width:1.25;" width="736.0352" x="1140.166" y="1175"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="686.0352" x="1165.166" y="1237.1289">Validar perfil e persistir prioridade</text><rect fill="#F1F1F1" height="143.125" rx="31.25" ry="31.25" style="stroke:#181818;stroke-width:1.25;" width="844.1406" x="1086.1133" y="1468.125"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="585.1563" x="1111.1133" y="1530.2539">Alterar para Em atendimento</text><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="794.1406" x="1111.1133" y="1576.8164">e registrar evento na mesma transa&#231;&#227;o</text><rect fill="#F1F1F1" height="96.5625" rx="31.25" ry="31.25" style="stroke:#181818;stroke-width:1.25;" width="734.4141" x="1140.9766" y="1958.6914"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="684.4141" x="1165.9766" y="2020.8203">Informar necessidade de corre&#231;&#227;o</text><polygon fill="#F1F1F1" points="1206.416,1807.8125,1809.9512,1807.8125,1839.9512,1837.8125,1809.9512,1867.8125,1206.416,1867.8125,1176.416,1837.8125,1206.416,1807.8125" style="stroke:#181818;stroke-width:1.25;"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="74.3359" x="1518.1836" y="1904.9414">n&#227;o</text><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="603.5352" x="1206.416" y="1851.6602">Solu&#231;&#227;o tem conte&#250;do v&#225;lido?</text><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="70.918" x="1105.498" y="1828.3789">sim</text><rect fill="#F1F1F1" height="143.125" rx="31.25" ry="31.25" style="stroke:#181818;stroke-width:1.25;" width="796.2891" x="1110.0391" y="2312.2852"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="746.2891" x="1135.0391" y="2374.4141">Concluir, registrar data UTC e evento</text><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="421.5039" x="1135.0391" y="2420.9766">na mesma transa&#231;&#227;o</text><rect fill="#F1F1F1" height="143.125" rx="31.25" ry="31.25" style="stroke:#181818;stroke-width:1.25;" width="815.9961" x="1100.1855" y="2505.4102"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="765.9961" x="1125.1855" y="2567.5391">Disponibilizar chamado para consulta,</text><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="587.1875" x="1125.1855" y="2614.1016">sem edi&#231;&#227;o ap&#243;s a conclus&#227;o</text><ellipse cx="1508.1836" cy="2726.0352" fill="none" rx="27.5" ry="27.5" style="stroke:#222222;stroke-width:2.5;"/><ellipse cx="1508.1836" cy="2726.0352" fill="#222222" rx="15" ry="15" style="stroke:#222222;stroke-width:2.5;"/><line style="stroke:#000000;stroke-width:3.75;" x1="1063.4766" x2="1063.4766" y1="30.6836" y2="2753.5352"/><rect fill="#F1F1F1" height="96.5625" rx="31.25" ry="31.25" style="stroke:#181818;stroke-width:1.25;" width="666.4453" x="2049.8633" y="881.875"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="616.4453" x="2074.8633" y="944.0039">Consultar lista e abrir detalhes</text><rect fill="#F1F1F1" height="96.5625" rx="31.25" ry="31.25" style="stroke:#181818;stroke-width:1.25;" width="824.5703" x="1970.8008" y="1028.4375"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="774.5703" x="1995.8008" y="1090.5664">Definir prioridade Baixa, M&#233;dia ou Alta</text><rect fill="#F1F1F1" height="96.5625" rx="31.25" ry="31.25" style="stroke:#181818;stroke-width:1.25;" width="440.7813" x="2162.6953" y="1321.5625"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="390.7813" x="2187.6953" y="1383.6914">Iniciar atendimento</text><rect fill="#F1F1F1" height="96.5625" rx="31.25" ry="31.25" style="stroke:#181818;stroke-width:1.25;" width="855.6641" x="1955.2539" y="1661.25"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="805.6641" x="1980.2539" y="1723.3789">Registrar a solu&#231;&#227;o e solicitar conclus&#227;o</text><rect fill="#F1F1F1" height="96.5625" rx="31.25" ry="31.25" style="stroke:#181818;stroke-width:1.25;" width="402.0508" x="2182.0605" y="2110.7227"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="352.0508" x="2207.0605" y="2172.8516">Corrigir a solu&#231;&#227;o</text><line style="stroke:#000000;stroke-width:3.75;" x1="1940.2539" x2="1940.2539" y1="30.6836" y2="2753.5352"/><line style="stroke:#000000;stroke-width:3.75;" x1="2820.918" x2="2820.918" y1="30.6836" y2="2753.5352"/><polygon fill="#181818" points="1832.9102,492.1875,1842.9102,467.1875,1852.9102,492.1875,1842.9102,482.1875" style="stroke:#181818;stroke-width:2.5;"/><polygon fill="#181818" points="2770.293,2055.7227,2780.293,2030.7227,2790.293,2055.7227,2780.293,2045.7227" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="552.9883" x2="552.9883" y1="139.7461" y2="189.7461"/><polygon fill="#181818" points="542.9883,164.7461,552.9883,189.7461,562.9883,164.7461,552.9883,174.7461" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="1203.457" x2="1173.457" y1="366.3086" y2="366.3086"/><polygon fill="#181818" points="1163.457,472.1875,1173.457,497.1875,1183.457,472.1875,1173.457,482.1875" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="1173.457" x2="1173.457" y1="366.3086" y2="638.75"/><line style="stroke:#181818;stroke-width:2.5;" x1="1173.457" x2="1508.1836" y1="638.75" y2="638.75"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="1508.1836" y1="638.75" y2="688.75"/><polygon fill="#181818" points="1498.1836,663.75,1508.1836,688.75,1518.1836,663.75,1508.1836,673.75" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="1508.1836" y1="1867.8125" y2="1958.6914"/><polygon fill="#181818" points="1498.1836,1933.6914,1508.1836,1958.6914,1518.1836,1933.6914,1508.1836,1943.6914" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="1176.416" x2="1110.9766" y1="1837.8125" y2="1837.8125"/><polygon fill="#181818" points="1100.9766,2035.7227,1110.9766,2060.7227,1120.9766,2035.7227,1110.9766,2045.7227" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="1110.9766" x2="1110.9766" y1="1837.8125" y2="2262.2852"/><line style="stroke:#181818;stroke-width:2.5;" x1="1110.9766" x2="1508.1836" y1="2262.2852" y2="2262.2852"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="1508.1836" y1="2262.2852" y2="2312.2852"/><polygon fill="#181818" points="1498.1836,2287.2852,1508.1836,2312.2852,1518.1836,2287.2852,1508.1836,2297.2852" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="1508.1836" y1="2455.4102" y2="2505.4102"/><polygon fill="#181818" points="1498.1836,2480.4102,1508.1836,2505.4102,1518.1836,2480.4102,1508.1836,2490.4102" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="1508.1836" y1="2648.5352" y2="2698.5352"/><polygon fill="#181818" points="1498.1836,2673.5352,1508.1836,2698.5352,1518.1836,2673.5352,1508.1836,2683.5352" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="2383.0859" x2="2383.0859" y1="978.4375" y2="1028.4375"/><polygon fill="#181818" points="2373.0859,1003.4375,2383.0859,1028.4375,2393.0859,1003.4375,2383.0859,1013.4375" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="1508.1836" y1="396.3086" y2="449.5898"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="552.9883" y1="449.5898" y2="449.5898"/><line style="stroke:#181818;stroke-width:2.5;" x1="552.9883" x2="552.9883" y1="449.5898" y2="487.1875"/><polygon fill="#181818" points="542.9883,462.1875,552.9883,487.1875,562.9883,462.1875,552.9883,472.1875" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="552.9883" x2="552.9883" y1="583.75" y2="608.75"/><line style="stroke:#181818;stroke-width:2.5;" x1="552.9883" x2="1842.9102" y1="608.75" y2="608.75"/><line style="stroke:#181818;stroke-width:2.5;" x1="1842.9102" x2="1842.9102" y1="366.3086" y2="608.75"/><line style="stroke:#181818;stroke-width:2.5;" x1="1842.9102" x2="1812.9102" y1="366.3086" y2="366.3086"/><polygon fill="#181818" points="1837.9102,356.3086,1812.9102,366.3086,1837.9102,376.3086,1827.9102,366.3086" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="552.9883" x2="552.9883" y1="286.3086" y2="298.8086"/><line style="stroke:#181818;stroke-width:2.5;" x1="552.9883" x2="1508.1836" y1="298.8086" y2="298.8086"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="1508.1836" y1="298.8086" y2="336.3086"/><polygon fill="#181818" points="1498.1836,311.3086,1508.1836,336.3086,1518.1836,311.3086,1508.1836,321.3086" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="1508.1836" y1="831.875" y2="844.375"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="2383.0859" y1="844.375" y2="844.375"/><line style="stroke:#181818;stroke-width:2.5;" x1="2383.0859" x2="2383.0859" y1="844.375" y2="881.875"/><polygon fill="#181818" points="2373.0859,856.875,2383.0859,881.875,2393.0859,856.875,2383.0859,866.875" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="2383.0859" x2="2383.0859" y1="1125" y2="1137.5"/><line style="stroke:#181818;stroke-width:2.5;" x1="2383.0859" x2="1508.1836" y1="1137.5" y2="1137.5"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="1508.1836" y1="1137.5" y2="1175"/><polygon fill="#181818" points="1498.1836,1150,1508.1836,1175,1518.1836,1150,1508.1836,1160" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="1508.1836" y1="1271.5625" y2="1284.0625"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="2383.0859" y1="1284.0625" y2="1284.0625"/><line style="stroke:#181818;stroke-width:2.5;" x1="2383.0859" x2="2383.0859" y1="1284.0625" y2="1321.5625"/><polygon fill="#181818" points="2373.0859,1296.5625,2383.0859,1321.5625,2393.0859,1296.5625,2383.0859,1306.5625" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="2383.0859" x2="2383.0859" y1="1418.125" y2="1430.625"/><line style="stroke:#181818;stroke-width:2.5;" x1="2383.0859" x2="1508.1836" y1="1430.625" y2="1430.625"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="1508.1836" y1="1430.625" y2="1468.125"/><polygon fill="#181818" points="1498.1836,1443.125,1508.1836,1468.125,1518.1836,1443.125,1508.1836,1453.125" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="1508.1836" y1="1611.25" y2="1623.75"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="2383.0859" y1="1623.75" y2="1623.75"/><line style="stroke:#181818;stroke-width:2.5;" x1="2383.0859" x2="2383.0859" y1="1623.75" y2="1661.25"/><polygon fill="#181818" points="2373.0859,1636.25,2383.0859,1661.25,2393.0859,1636.25,2383.0859,1646.25" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="1508.1836" y1="2055.2539" y2="2073.2227"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="2383.0859" y1="2073.2227" y2="2073.2227"/><line style="stroke:#181818;stroke-width:2.5;" x1="2383.0859" x2="2383.0859" y1="2073.2227" y2="2110.7227"/><polygon fill="#181818" points="2373.0859,2085.7227,2383.0859,2110.7227,2393.0859,2085.7227,2383.0859,2095.7227" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="2383.0859" x2="2383.0859" y1="2207.2852" y2="2232.2852"/><line style="stroke:#181818;stroke-width:2.5;" x1="2383.0859" x2="2780.293" y1="2232.2852" y2="2232.2852"/><line style="stroke:#181818;stroke-width:2.5;" x1="2780.293" x2="2780.293" y1="1837.8125" y2="2232.2852"/><line style="stroke:#181818;stroke-width:2.5;" x1="2780.293" x2="1839.9512" y1="1837.8125" y2="1837.8125"/><polygon fill="#181818" points="1864.9512,1827.8125,1839.9512,1837.8125,1864.9512,1847.8125,1854.9512,1837.8125" style="stroke:#181818;stroke-width:2.5;"/><line style="stroke:#181818;stroke-width:2.5;" x1="2383.0859" x2="2383.0859" y1="1757.8125" y2="1770.3125"/><line style="stroke:#181818;stroke-width:2.5;" x1="2383.0859" x2="1508.1836" y1="1770.3125" y2="1770.3125"/><line style="stroke:#181818;stroke-width:2.5;" x1="1508.1836" x2="1508.1836" y1="1770.3125" y2="1807.8125"/><polygon fill="#181818" points="1498.1836,1782.8125,1508.1836,1807.8125,1518.1836,1782.8125,1508.1836,1792.8125" style="stroke:#181818;stroke-width:2.5;"/><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="211.0352" x="444.9707" y="67.8125">Solicitante</text><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="190.6055" x="1406.5625" y="67.8125">HelpDesk</text><text fill="#000000" font-family="sans-serif" font-size="40" lengthAdjust="spacing" textLength="153.9648" x="2303.6035" y="67.8125">T&#233;cnico</text><!--SRC=[XLF1RjD04BtlLup4fP5oA0LnS0-e95HmAAf8uJvPZvrHrhlMpZgjglmCue1wuCIDgt-CiUCsDbJ2YcHhTkUzD-zDPCk-neWLhD5konWQdo-22n5UNFQFaQSRii4ytB8leK0dD3h9QuQprwVZ2XNOk7GPVFg45S4AlQmeSl7ydHNV4xnyCpgynfZOSeq-NMEUTwoJymhlhaW4I-fxprwTclqgE6r9sa9x8qaHJ7OTYRpTK8JK_aoD2tFb5Hkv_T5-3q1WCL4P8gD-azynndEp_q2kNf9iz-PsmuxWPAcZYtO2hYcc9YBisc-EjVXs1YnmuXLjPW2c8W2oHOYHIuxGzVSe19sc0vCs7Bd8vmETS3KpsMSgMLB427Q3bVQ23Hf3mjG8N7H2WY6e8wjyXIQuQXzoHjL_qpvOppRiZV9xKPSLn2bODoMkeyh9AQ7Ra9oRR4a5UosDaDuXt-5y08JGm8L2J8p9lgBEhx0rnOATukg7ACK4QAhbexvrR53BVSuL-HIccCf2tRnTnl2-6byqdMsFVj2kAu57g4Wg12rwmJxIAUFHGWG9hdbCNOQKrDhWhMlaqFbFxgkddaHLTpTH-rk36DB_AtmTi0YnKbHFLhVpuAN-h2u13V8qygF0yOAC5FvdCHQzPexpaIKvQhXVRXRT6lVkcEVToPOiTV2yPiVtezNgBRV3iioDwBYK3_yIhDjV0ZZnIbAe_m00]--></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 14.0.1 (20251006.0113)
+ -->
+<!-- Title: Atendimento Pages: 1 -->
+<svg width="3324pt" height="3426pt"
+ viewBox="0.00 0.00 3324.00 3426.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(3.33333 3.33333) rotate(0) translate(8.64 1019.16)">
+<title>Atendimento</title>
+<polygon fill="white" stroke="none" points="-8.64,8.64 -8.64,-1019.16 988.64,-1019.16 988.64,8.64 -8.64,8.64"/>
+<g id="clust1" class="cluster">
+<title>cluster_s</title>
+<polygon fill="white" stroke="#444444" stroke-width="2" points="8,-18.12 8,-1002.52 280,-1002.52 280,-18.12 8,-18.12"/>
+<text xml:space="preserve" text-anchor="middle" x="144" y="-981.42" font-family="SansSerif" font-size="18.00">Solicitante</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_h</title>
+<polygon fill="white" stroke="#444444" stroke-width="2" points="310,-8 310,-996.4 616,-996.4 616,-8 310,-8"/>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-975.3" font-family="SansSerif" font-size="18.00">HelpDesk</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_t</title>
+<polygon fill="white" stroke="#444444" stroke-width="2" points="624,-18.12 624,-996.4 972,-996.4 972,-18.12 624,-18.12"/>
+<text xml:space="preserve" text-anchor="middle" x="798" y="-975.3" font-family="SansSerif" font-size="18.00">Técnico</text>
+</g>
+<!-- start -->
+<g id="node1" class="node">
+<title>start</title>
+<ellipse fill="#222222" stroke="#444444" stroke-width="3" cx="144" cy="-954.44" rx="6.48" ry="6.48"/>
+</g>
+<!-- mo -->
+<g id="node2" class="node">
+<title>mo</title>
+<polygon fill="none" stroke="#444444" stroke-width="3" points="144,-930.96 136.08,-923.04 144,-915.12 151.92,-923.04 144,-930.96"/>
+</g>
+<!-- start&#45;&gt;mo -->
+<!-- start&#45;&gt;mo -->
+<g id="edge43" class="edge">
+<title>start&#45;&gt;mo</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M148.77,-948.05C149.57,-945.46 149.98,-942.23 150,-938.98"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="152.28,-938.83 149.04,-932.74 147.78,-939.51 152.28,-938.83"/>
+</g>
+<!-- open -->
+<g id="node3" class="node">
+<title>open</title>
+<path fill="#f3f3f3" stroke="#444444" stroke-width="3" d="M256.2,-898.12C256.2,-898.12 31.8,-898.12 31.8,-898.12 25.8,-898.12 19.8,-892.12 19.8,-886.12 19.8,-886.12 19.8,-865.96 19.8,-865.96 19.8,-859.96 25.8,-853.96 31.8,-853.96 31.8,-853.96 256.2,-853.96 256.2,-853.96 262.2,-853.96 268.2,-859.96 268.2,-865.96 268.2,-865.96 268.2,-886.12 268.2,-886.12 268.2,-892.12 262.2,-898.12 256.2,-898.12"/>
+<text xml:space="preserve" text-anchor="middle" x="144" y="-880.04" font-family="SansSerif" font-size="16.00">Preencher ou corrigir título,</text>
+<text xml:space="preserve" text-anchor="middle" x="144" y="-860.84" font-family="SansSerif" font-size="16.00">descrição e categoria; enviar</text>
+</g>
+<!-- mo&#45;&gt;open -->
+<!-- mo&#45;&gt;open -->
+<g id="edge44" class="edge">
+<title>mo&#45;&gt;open</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M147.88,-917.22C148.51,-915.32 148.99,-912.96 149.34,-910.34"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="151.6,-910.57 149.73,-903.94 147.06,-910.29 151.6,-910.57"/>
+</g>
+<!-- s3 -->
+<!-- open&#45;&gt;s3 -->
+<!-- vopen -->
+<g id="node18" class="node">
+<title>vopen</title>
+<path fill="#f3f3f3" stroke="#444444" stroke-width="3" d="M561.7,-898.12C561.7,-898.12 364.3,-898.12 364.3,-898.12 358.3,-898.12 352.3,-892.12 352.3,-886.12 352.3,-886.12 352.3,-865.96 352.3,-865.96 352.3,-859.96 358.3,-853.96 364.3,-853.96 364.3,-853.96 561.7,-853.96 561.7,-853.96 567.7,-853.96 573.7,-859.96 573.7,-865.96 573.7,-865.96 573.7,-886.12 573.7,-886.12 573.7,-892.12 567.7,-898.12 561.7,-898.12"/>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-880.04" font-family="SansSerif" font-size="16.00">Validar os dados e indicar</text>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-860.84" font-family="SansSerif" font-size="16.00">correções, se necessárias</text>
+</g>
+<!-- open&#45;&gt;vopen -->
+<g id="edge45" class="edge">
+<title>open&#45;&gt;vopen</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M227.06,-899.55C259.68,-906.16 297.51,-910.59 332,-906.62 342.44,-905.42 353.26,-903.69 364,-901.67"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="364.31,-903.93 370.24,-900.43 363.42,-899.46 364.31,-903.93"/>
+</g>
+<!-- s4 -->
+<!-- s3&#45;&gt;s4 -->
+<!-- s5 -->
+<!-- s4&#45;&gt;s5 -->
+<!-- s6 -->
+<!-- s5&#45;&gt;s6 -->
+<!-- s7 -->
+<!-- s6&#45;&gt;s7 -->
+<!-- s8 -->
+<!-- s7&#45;&gt;s8 -->
+<!-- s9 -->
+<!-- s8&#45;&gt;s9 -->
+<!-- s10 -->
+<!-- s9&#45;&gt;s10 -->
+<!-- s11 -->
+<!-- s10&#45;&gt;s11 -->
+<!-- s12 -->
+<!-- s11&#45;&gt;s12 -->
+<!-- s13 -->
+<!-- s12&#45;&gt;s13 -->
+<!-- s14 -->
+<!-- s13&#45;&gt;s14 -->
+<!-- h0 -->
+<!-- h1 -->
+<!-- h0&#45;&gt;h1 -->
+<!-- h1&#45;&gt;vopen -->
+<!-- dopen -->
+<g id="node19" class="node">
+<title>dopen</title>
+<polygon fill="none" stroke="#444444" stroke-width="3" points="463,-836.96 383.6,-792.8 463,-748.64 542.4,-792.8 463,-836.96"/>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-796.8" font-family="SansSerif" font-size="16.00">Dados</text>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-777.6" font-family="SansSerif" font-size="16.00">válidos?</text>
+</g>
+<!-- vopen&#45;&gt;dopen -->
+<!-- vopen&#45;&gt;dopen -->
+<g id="edge46" class="edge">
+<title>vopen&#45;&gt;dopen</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M468.41,-852.84C468.57,-850.59 468.69,-848.24 468.78,-845.83"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="471.05,-846.11 468.91,-839.57 466.5,-846.02 471.05,-846.11"/>
+</g>
+<!-- dopen&#45;&gt;mo -->
+<g id="edge48" class="edge">
+<title>dopen&#45;&gt;mo</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M406.7,-807.18C375.4,-816.59 337.03,-831.57 308,-853.96 288.81,-868.76 296.52,-885.21 276,-898.12 241.3,-919.95 191.9,-923.07 164.43,-922.89"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="164.58,-920.61 158.02,-922.73 164.47,-925.16 164.58,-920.61"/>
+<text xml:space="preserve" text-anchor="middle" x="326" y="-871.14" font-family="SansSerif" font-size="14.00">[não]</text>
+</g>
+<!-- save -->
+<g id="node20" class="node">
+<title>save</title>
+<path fill="#f3f3f3" stroke="#444444" stroke-width="3" d="M565.7,-715.84C565.7,-715.84 360.3,-715.84 360.3,-715.84 354.3,-715.84 348.3,-709.84 348.3,-703.84 348.3,-703.84 348.3,-683.68 348.3,-683.68 348.3,-677.68 354.3,-671.68 360.3,-671.68 360.3,-671.68 565.7,-671.68 565.7,-671.68 571.7,-671.68 577.7,-677.68 577.7,-683.68 577.7,-683.68 577.7,-703.84 577.7,-703.84 577.7,-709.84 571.7,-715.84 565.7,-715.84"/>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-697.76" font-family="SansSerif" font-size="16.00">Registrar chamado Aberto,</text>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-678.56" font-family="SansSerif" font-size="16.00">com prioridade Média</text>
+</g>
+<!-- dopen&#45;&gt;save -->
+<!-- dopen&#45;&gt;save -->
+<g id="edge47" class="edge">
+<title>dopen&#45;&gt;save</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M465.1,-748.29C465.22,-742.45 465.26,-736.46 465.06,-728.18"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="467.33,-728.26 464.85,-721.83 462.79,-728.4 467.33,-728.26"/>
+<text xml:space="preserve" text-anchor="middle" x="482.72" y="-727.34" font-family="SansSerif" font-size="14.00">[sim]</text>
+</g>
+<!-- h5 -->
+<!-- save&#45;&gt;h5 -->
+<!-- consult -->
+<g id="node35" class="node">
+<title>consult</title>
+<path fill="#f3f3f3" stroke="#444444" stroke-width="3" d="M885.7,-711.76C885.7,-711.76 648.3,-711.76 648.3,-711.76 642.3,-711.76 636.3,-705.76 636.3,-699.76 636.3,-699.76 636.3,-687.76 636.3,-687.76 636.3,-681.76 642.3,-675.76 648.3,-675.76 648.3,-675.76 885.7,-675.76 885.7,-675.76 891.7,-675.76 897.7,-681.76 897.7,-687.76 897.7,-687.76 897.7,-699.76 897.7,-699.76 897.7,-705.76 891.7,-711.76 885.7,-711.76"/>
+<text xml:space="preserve" text-anchor="middle" x="767" y="-688.16" font-family="SansSerif" font-size="16.00">Consultar lista e abrir detalhes</text>
+</g>
+<!-- save&#45;&gt;consult -->
+<g id="edge49" class="edge">
+<title>save&#45;&gt;consult</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M579.08,-693.76C594.04,-693.76 609.01,-693.76 623.97,-693.76"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="623.83,-696.04 630.33,-693.76 623.83,-691.49 623.83,-696.04"/>
+</g>
+<!-- vp -->
+<g id="node22" class="node">
+<title>vp</title>
+<path fill="#f3f3f3" stroke="#444444" stroke-width="3" d="M572.7,-529.48C572.7,-529.48 353.3,-529.48 353.3,-529.48 347.3,-529.48 341.3,-523.48 341.3,-517.48 341.3,-517.48 341.3,-505.48 341.3,-505.48 341.3,-499.48 347.3,-493.48 353.3,-493.48 353.3,-493.48 572.7,-493.48 572.7,-493.48 578.7,-493.48 584.7,-499.48 584.7,-505.48 584.7,-505.48 584.7,-517.48 584.7,-517.48 584.7,-523.48 578.7,-529.48 572.7,-529.48"/>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-505.88" font-family="SansSerif" font-size="16.00">Validar e persistir prioridade</text>
+</g>
+<!-- h5&#45;&gt;vp -->
+<!-- h7 -->
+<!-- vp&#45;&gt;h7 -->
+<!-- mp -->
+<g id="node38" class="node">
+<title>mp</title>
+<polygon fill="none" stroke="#444444" stroke-width="3" points="766,-472.4 758.08,-464.48 766,-456.56 773.92,-464.48 766,-472.4"/>
+</g>
+<!-- vp&#45;&gt;mp -->
+<g id="edge53" class="edge">
+<title>vp&#45;&gt;mp</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M585.8,-492.24C647.5,-483.08 715.78,-472.94 747.69,-468.2"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="747.78,-470.49 753.88,-467.28 747.12,-465.98 747.78,-470.49"/>
+</g>
+<!-- progress -->
+<g id="node24" class="node">
+<title>progress</title>
+<path fill="#f3f3f3" stroke="#444444" stroke-width="3" d="M592.2,-439.56C592.2,-439.56 333.8,-439.56 333.8,-439.56 327.8,-439.56 321.8,-433.56 321.8,-427.56 321.8,-427.56 321.8,-407.4 321.8,-407.4 321.8,-401.4 327.8,-395.4 333.8,-395.4 333.8,-395.4 592.2,-395.4 592.2,-395.4 598.2,-395.4 604.2,-401.4 604.2,-407.4 604.2,-407.4 604.2,-427.56 604.2,-427.56 604.2,-433.56 598.2,-439.56 592.2,-439.56"/>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-421.48" font-family="SansSerif" font-size="16.00">Gravar Em atendimento e evento</text>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-402.28" font-family="SansSerif" font-size="16.00">na mesma transação</text>
+</g>
+<!-- h7&#45;&gt;progress -->
+<!-- h9 -->
+<!-- progress&#45;&gt;h9 -->
+<!-- ms -->
+<g id="node40" class="node">
+<title>ms</title>
+<polygon fill="none" stroke="#444444" stroke-width="3" points="766,-378.4 758.08,-370.48 766,-362.56 773.92,-370.48 766,-378.4"/>
+</g>
+<!-- progress&#45;&gt;ms -->
+<g id="edge57" class="edge">
+<title>progress&#45;&gt;ms</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M605.63,-395.3C661.52,-387 719.02,-378.46 747.58,-374.22"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="747.67,-376.5 753.76,-373.3 747,-372 747.67,-376.5"/>
+</g>
+<!-- vsolution -->
+<g id="node26" class="node">
+<title>vsolution</title>
+<path fill="#f3f3f3" stroke="#444444" stroke-width="3" d="M563.7,-345.56C563.7,-345.56 362.3,-345.56 362.3,-345.56 356.3,-345.56 350.3,-339.56 350.3,-333.56 350.3,-333.56 350.3,-313.4 350.3,-313.4 350.3,-307.4 356.3,-301.4 362.3,-301.4 362.3,-301.4 563.7,-301.4 563.7,-301.4 569.7,-301.4 575.7,-307.4 575.7,-313.4 575.7,-313.4 575.7,-333.56 575.7,-333.56 575.7,-339.56 569.7,-345.56 563.7,-345.56"/>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-327.48" font-family="SansSerif" font-size="16.00">Validar a solução e indicar</text>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-308.28" font-family="SansSerif" font-size="16.00">correções, se necessárias</text>
+</g>
+<!-- h9&#45;&gt;vsolution -->
+<!-- ds -->
+<g id="node27" class="node">
+<title>ds</title>
+<polygon fill="none" stroke="#444444" stroke-width="3" points="463,-284.4 385.6,-240.24 463,-196.08 540.4,-240.24 463,-284.4"/>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-244.24" font-family="SansSerif" font-size="16.00">Solução</text>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-225.04" font-family="SansSerif" font-size="16.00">válida?</text>
+</g>
+<!-- vsolution&#45;&gt;ds -->
+<!-- vsolution&#45;&gt;ds -->
+<g id="edge60" class="edge">
+<title>vsolution&#45;&gt;ds</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M468.41,-300.28C468.57,-298.03 468.69,-295.68 468.78,-293.27"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="471.05,-293.55 468.91,-287.01 466.5,-293.46 471.05,-293.55"/>
+</g>
+<!-- finish -->
+<g id="node28" class="node">
+<title>finish</title>
+<path fill="#f3f3f3" stroke="#444444" stroke-width="3" d="M586.7,-163.28C586.7,-163.28 339.3,-163.28 339.3,-163.28 333.3,-163.28 327.3,-157.28 327.3,-151.28 327.3,-151.28 327.3,-131.12 327.3,-131.12 327.3,-125.12 333.3,-119.12 339.3,-119.12 339.3,-119.12 586.7,-119.12 586.7,-119.12 592.7,-119.12 598.7,-125.12 598.7,-131.12 598.7,-131.12 598.7,-151.28 598.7,-151.28 598.7,-157.28 592.7,-163.28 586.7,-163.28"/>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-145.2" font-family="SansSerif" font-size="16.00">Gravar Concluído, solução, data</text>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-126" font-family="SansSerif" font-size="16.00">e evento na mesma transação</text>
+</g>
+<!-- ds&#45;&gt;finish -->
+<!-- ds&#45;&gt;finish -->
+<g id="edge61" class="edge">
+<title>ds&#45;&gt;finish</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M465.1,-195.73C465.22,-189.89 465.26,-183.9 465.06,-175.62"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="467.33,-175.7 464.85,-169.27 462.79,-175.84 467.33,-175.7"/>
+<text xml:space="preserve" text-anchor="middle" x="482.72" y="-174.78" font-family="SansSerif" font-size="14.00">[sim]</text>
+</g>
+<!-- ds&#45;&gt;ms -->
+<g id="edge62" class="edge">
+<title>ds&#45;&gt;ms</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M512.61,-257.72C543.21,-267.17 583.47,-278.33 620,-284.4 650.53,-289.47 876.8,-278.86 898,-301.4 911.45,-315.7 910.58,-330.5 898,-345.56 883.9,-362.44 818.76,-367.43 785.56,-368.89"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="785.53,-366.62 779.11,-369.13 785.69,-371.16 785.53,-366.62"/>
+<text xml:space="preserve" text-anchor="middle" x="925.76" y="-318.58" font-family="SansSerif" font-size="14.00">[não]</text>
+</g>
+<!-- read -->
+<g id="node29" class="node">
+<title>read</title>
+<path fill="#f3f3f3" stroke="#444444" stroke-width="3" d="M575.7,-102.12C575.7,-102.12 350.3,-102.12 350.3,-102.12 344.3,-102.12 338.3,-96.12 338.3,-90.12 338.3,-90.12 338.3,-69.96 338.3,-69.96 338.3,-63.96 344.3,-57.96 350.3,-57.96 350.3,-57.96 575.7,-57.96 575.7,-57.96 581.7,-57.96 587.7,-63.96 587.7,-69.96 587.7,-69.96 587.7,-90.12 587.7,-90.12 587.7,-96.12 581.7,-102.12 575.7,-102.12"/>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-84.04" font-family="SansSerif" font-size="16.00">Disponibilizar para consulta,</text>
+<text xml:space="preserve" text-anchor="middle" x="463" y="-64.84" font-family="SansSerif" font-size="16.00">sem edição após a conclusão</text>
+</g>
+<!-- finish&#45;&gt;read -->
+<!-- finish&#45;&gt;read -->
+<g id="edge63" class="edge">
+<title>finish&#45;&gt;read</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M468.84,-117.83C468.89,-116.66 468.93,-115.46 468.96,-114.26"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="471.24,-114.45 468.89,-107.98 466.69,-114.5 471.24,-114.45"/>
+</g>
+<!-- stop -->
+<g id="node30" class="node">
+<title>stop</title>
+<ellipse fill="#222222" stroke="#444444" stroke-width="3" cx="463" cy="-30.48" rx="6.48" ry="6.48"/>
+<ellipse fill="none" stroke="#444444" stroke-width="3" cx="463" cy="-30.48" rx="10.48" ry="10.48"/>
+</g>
+<!-- read&#45;&gt;stop -->
+<!-- read&#45;&gt;stop -->
+<g id="edge64" class="edge">
+<title>read&#45;&gt;stop</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M468.99,-56.65C469.01,-55.13 469,-53.61 468.95,-52.1"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="471.24,-52.08 468.38,-45.81 466.7,-52.49 471.24,-52.08"/>
+</g>
+<!-- t0 -->
+<!-- t1 -->
+<!-- t0&#45;&gt;t1 -->
+<!-- t2 -->
+<!-- t1&#45;&gt;t2 -->
+<!-- t3 -->
+<!-- t2&#45;&gt;t3 -->
+<!-- t3&#45;&gt;consult -->
+<!-- dp -->
+<g id="node36" class="node">
+<title>dp</title>
+<polygon fill="none" stroke="#444444" stroke-width="3" points="767,-654.68 662.6,-610.52 767,-566.36 871.4,-610.52 767,-654.68"/>
+<text xml:space="preserve" text-anchor="middle" x="767" y="-614.52" font-family="SansSerif" font-size="16.00">Alterar</text>
+<text xml:space="preserve" text-anchor="middle" x="767" y="-595.32" font-family="SansSerif" font-size="16.00">prioridade?</text>
+</g>
+<!-- consult&#45;&gt;dp -->
+<!-- consult&#45;&gt;dp -->
+<g id="edge50" class="edge">
+<title>consult&#45;&gt;dp</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M772.12,-674.33C772.39,-671.33 772.59,-668.11 772.74,-664.75"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="775.01,-664.83 772.89,-658.28 770.46,-664.73 775.01,-664.83"/>
+</g>
+<!-- priority -->
+<g id="node37" class="node">
+<title>priority</title>
+<path fill="#f3f3f3" stroke="#444444" stroke-width="3" d="M879.7,-533.56C879.7,-533.56 652.3,-533.56 652.3,-533.56 646.3,-533.56 640.3,-527.56 640.3,-521.56 640.3,-521.56 640.3,-501.4 640.3,-501.4 640.3,-495.4 646.3,-489.4 652.3,-489.4 652.3,-489.4 879.7,-489.4 879.7,-489.4 885.7,-489.4 891.7,-495.4 891.7,-501.4 891.7,-501.4 891.7,-521.56 891.7,-521.56 891.7,-527.56 885.7,-533.56 879.7,-533.56"/>
+<text xml:space="preserve" text-anchor="middle" x="766" y="-515.48" font-family="SansSerif" font-size="16.00">Escolher Baixa, Média ou Alta</text>
+<text xml:space="preserve" text-anchor="middle" x="766" y="-496.28" font-family="SansSerif" font-size="16.00">e salvar prioridade</text>
+</g>
+<!-- dp&#45;&gt;priority -->
+<!-- dp&#45;&gt;priority -->
+<g id="edge51" class="edge">
+<title>dp&#45;&gt;priority</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M768.28,-565.28C768.31,-559.66 768.29,-553.92 768.07,-545.96"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="770.35,-545.97 767.86,-539.55 765.8,-546.13 770.35,-545.97"/>
+<text xml:space="preserve" text-anchor="middle" x="785.79" y="-545.06" font-family="SansSerif" font-size="14.00">[sim]</text>
+</g>
+<!-- dp&#45;&gt;mp -->
+<g id="edge54" class="edge">
+<title>dp&#45;&gt;mp</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M821.64,-588.04C871.26,-565.42 932.16,-527.81 900,-489.4 885.61,-472.21 818.96,-467.36 785.41,-466"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="785.81,-463.74 779.24,-465.8 785.66,-468.29 785.81,-463.74"/>
+<text xml:space="preserve" text-anchor="middle" x="926.97" y="-506.58" font-family="SansSerif" font-size="14.00">[não]</text>
+</g>
+<!-- priority&#45;&gt;vp -->
+<g id="edge52" class="edge">
+<title>priority&#45;&gt;vp</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M638.8,-511.48C624.8,-511.48 610.8,-511.48 596.8,-511.48"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="597.13,-509.21 590.63,-511.48 597.13,-513.76 597.13,-509.21"/>
+</g>
+<!-- priority&#45;&gt;mp -->
+<!-- begin -->
+<g id="node39" class="node">
+<title>begin</title>
+<path fill="#f3f3f3" stroke="#444444" stroke-width="3" d="M884.2,-435.48C884.2,-435.48 647.8,-435.48 647.8,-435.48 641.8,-435.48 635.8,-429.48 635.8,-423.48 635.8,-423.48 635.8,-411.48 635.8,-411.48 635.8,-405.48 641.8,-399.48 647.8,-399.48 647.8,-399.48 884.2,-399.48 884.2,-399.48 890.2,-399.48 896.2,-405.48 896.2,-411.48 896.2,-411.48 896.2,-423.48 896.2,-423.48 896.2,-429.48 890.2,-435.48 884.2,-435.48"/>
+<text xml:space="preserve" text-anchor="middle" x="766" y="-411.88" font-family="SansSerif" font-size="16.00">Selecionar Iniciar atendimento</text>
+</g>
+<!-- mp&#45;&gt;begin -->
+<!-- mp&#45;&gt;begin -->
+<g id="edge55" class="edge">
+<title>mp&#45;&gt;begin</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M769.88,-458.66C770.82,-455.79 771.45,-451.87 771.76,-447.6"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="774.04,-447.74 771.84,-441.21 769.49,-447.68 774.04,-447.74"/>
+</g>
+<!-- begin&#45;&gt;progress -->
+<g id="edge56" class="edge">
+<title>begin&#45;&gt;progress</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M634.44,-417.48C628.44,-417.48 622.43,-417.48 616.43,-417.48"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="616.66,-415.21 610.16,-417.48 616.66,-419.76 616.66,-415.21"/>
+</g>
+<!-- begin&#45;&gt;ms -->
+<!-- solution -->
+<g id="node41" class="node">
+<title>solution</title>
+<path fill="#f3f3f3" stroke="#444444" stroke-width="3" d="M877.7,-345.56C877.7,-345.56 654.3,-345.56 654.3,-345.56 648.3,-345.56 642.3,-339.56 642.3,-333.56 642.3,-333.56 642.3,-313.4 642.3,-313.4 642.3,-307.4 648.3,-301.4 654.3,-301.4 654.3,-301.4 877.7,-301.4 877.7,-301.4 883.7,-301.4 889.7,-307.4 889.7,-313.4 889.7,-313.4 889.7,-333.56 889.7,-333.56 889.7,-339.56 883.7,-345.56 877.7,-345.56"/>
+<text xml:space="preserve" text-anchor="middle" x="766" y="-327.48" font-family="SansSerif" font-size="16.00">Informar ou corrigir solução;</text>
+<text xml:space="preserve" text-anchor="middle" x="766" y="-308.28" font-family="SansSerif" font-size="16.00">selecionar Concluir chamado</text>
+</g>
+<!-- ms&#45;&gt;solution -->
+<!-- ms&#45;&gt;solution -->
+<g id="edge58" class="edge">
+<title>ms&#45;&gt;solution</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M769.88,-364.66C770.51,-362.76 770.99,-360.4 771.34,-357.78"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="773.6,-358.01 771.73,-351.38 769.06,-357.73 773.6,-358.01"/>
+</g>
+<!-- solution&#45;&gt;vsolution -->
+<g id="edge59" class="edge">
+<title>solution&#45;&gt;vsolution</title>
+<path fill="none" stroke="#333333" stroke-width="3" d="M640.81,-323.48C623.17,-323.48 605.54,-323.48 587.9,-323.48"/>
+<polygon fill="#333333" stroke="#333333" stroke-width="3" points="587.96,-321.21 581.46,-323.48 587.96,-325.76 587.96,-321.21"/>
+</g>
+<!-- t11 -->
+<!-- solution&#45;&gt;t11 -->
+<!-- t12 -->
+<!-- t11&#45;&gt;t12 -->
+<!-- t13 -->
+<!-- t12&#45;&gt;t13 -->
+<!-- t14 -->
+<!-- t13&#45;&gt;t14 -->
+</g>
+</svg>

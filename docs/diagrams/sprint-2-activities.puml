@@ -1,44 +1,101 @@
-@startuml
-skinparam backgroundColor #FFFFFF
-skinparam shadowing false
-skinparam dpi 240
-skinparam defaultFontName SansSerif
-skinparam defaultFontSize 16
-skinparam ParticipantPadding 16
-skinparam maxMessageSize 230
-|Solicitante|
-start
-:Preencher título, descrição e categoria e enviar;
-|HelpDesk|
-while (Dados de abertura válidos?) is (não)
-  |Solicitante|
-  :Corrigir os dados e reenviar;
-  |HelpDesk|
-endwhile (sim)
-:Registrar chamado com status Aberto
-e prioridade Média;
-|Técnico|
-:Consultar lista e abrir detalhes;
-:Definir prioridade Baixa, Média ou Alta;
-|HelpDesk|
-:Validar perfil e persistir prioridade;
-|Técnico|
-:Iniciar atendimento;
-|HelpDesk|
-:Alterar para Em atendimento
-e registrar evento na mesma transação;
-|Técnico|
-:Registrar a solução e solicitar conclusão;
-|HelpDesk|
-while (Solução tem conteúdo válido?) is (não)
-  :Informar necessidade de correção;
-  |Técnico|
-  :Corrigir a solução;
-  |HelpDesk|
-endwhile (sim)
-:Concluir, registrar data UTC e evento
-na mesma transação;
-:Disponibilizar chamado para consulta,
-sem edição após a conclusão;
-stop
-@enduml
+@startdot
+digraph Atendimento {
+graph [newrank=true, ranksep=0.08, nodesep=0.22, dpi=240, bgcolor="white", pad=0.12];
+node [fontname="SansSerif", fontsize=16, color="#444444", penwidth=3, margin="0.10,0.04"];
+edge [fontname="SansSerif", fontsize=14, color="#333333", penwidth=3, arrowsize=0.65];
+subgraph cluster_s {
+label="Solicitante"; fontname="SansSerif"; fontsize=18; color="#444444"; penwidth=2; margin=12;
+start [shape=circle, label="", style=filled, fillcolor="#222222", width=0.18, height=0.18, fixedsize=true];
+mo [shape=diamond, label="", width=0.22, height=0.22, fixedsize=true];
+open [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Preencher ou corrigir título,\ndescrição e categoria; enviar"];
+s3 [shape=point, width=0, height=0, style=invis];
+s4 [shape=point, width=0, height=0, style=invis];
+s5 [shape=point, width=0, height=0, style=invis];
+s6 [shape=point, width=0, height=0, style=invis];
+s7 [shape=point, width=0, height=0, style=invis];
+s8 [shape=point, width=0, height=0, style=invis];
+s9 [shape=point, width=0, height=0, style=invis];
+s10 [shape=point, width=0, height=0, style=invis];
+s11 [shape=point, width=0, height=0, style=invis];
+s12 [shape=point, width=0, height=0, style=invis];
+s13 [shape=point, width=0, height=0, style=invis];
+s14 [shape=point, width=0, height=0, style=invis];
+start -> mo -> open -> s3 -> s4 -> s5 -> s6 -> s7 -> s8 -> s9 -> s10 -> s11 -> s12 -> s13 -> s14 [style=invis, weight=100];
+}
+subgraph cluster_h {
+label="HelpDesk"; fontname="SansSerif"; fontsize=18; color="#444444"; penwidth=2; margin=12;
+h0 [shape=point, width=0, height=0, style=invis];
+h1 [shape=point, width=0, height=0, style=invis];
+vopen [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Validar os dados e indicar\ncorreções, se necessárias"];
+dopen [shape=diamond, label="Dados\nválidos?", width=1.2, height=0.65];
+save [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Registrar chamado Aberto,\ncom prioridade Média"];
+h5 [shape=point, width=0, height=0, style=invis];
+vp [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Validar e persistir prioridade"];
+h7 [shape=point, width=0, height=0, style=invis];
+progress [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Gravar Em atendimento e evento\nna mesma transação"];
+h9 [shape=point, width=0, height=0, style=invis];
+vsolution [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Validar a solução e indicar\ncorreções, se necessárias"];
+ds [shape=diamond, label="Solução\nválida?", width=1.2, height=0.65];
+finish [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Gravar Concluído, solução, data\ne evento na mesma transação"];
+read [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Disponibilizar para consulta,\nsem edição após a conclusão"];
+stop [shape=doublecircle, label="", style=filled, fillcolor="#222222", width=0.18, height=0.18, fixedsize=true];
+h0 -> h1 -> vopen -> dopen -> save -> h5 -> vp -> h7 -> progress -> h9 -> vsolution -> ds -> finish -> read -> stop [style=invis, weight=100];
+}
+subgraph cluster_t {
+label="Técnico"; fontname="SansSerif"; fontsize=18; color="#444444"; penwidth=2; margin=12;
+t0 [shape=point, width=0, height=0, style=invis];
+t1 [shape=point, width=0, height=0, style=invis];
+t2 [shape=point, width=0, height=0, style=invis];
+t3 [shape=point, width=0, height=0, style=invis];
+consult [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Consultar lista e abrir detalhes"];
+dp [shape=diamond, label="Alterar\nprioridade?", width=1.2, height=0.65];
+priority [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Escolher Baixa, Média ou Alta\ne salvar prioridade"];
+mp [shape=diamond, label="", width=0.22, height=0.22, fixedsize=true];
+begin [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Selecionar Iniciar atendimento"];
+ms [shape=diamond, label="", width=0.22, height=0.22, fixedsize=true];
+solution [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Informar ou corrigir solução;\nselecionar Concluir chamado"];
+t11 [shape=point, width=0, height=0, style=invis];
+t12 [shape=point, width=0, height=0, style=invis];
+t13 [shape=point, width=0, height=0, style=invis];
+t14 [shape=point, width=0, height=0, style=invis];
+t0 -> t1 -> t2 -> t3 -> consult -> dp -> priority -> mp -> begin -> ms -> solution -> t11 -> t12 -> t13 -> t14 [style=invis, weight=100];
+}
+{rank=same; start; h0; t0;}
+{rank=same; mo; h1; t1;}
+{rank=same; open; vopen; t2;}
+{rank=same; s3; dopen; t3;}
+{rank=same; s4; save; consult;}
+{rank=same; s5; h5; dp;}
+{rank=same; s6; vp; priority;}
+{rank=same; s7; h7; mp;}
+{rank=same; s8; progress; begin;}
+{rank=same; s9; h9; ms;}
+{rank=same; s10; vsolution; solution;}
+{rank=same; s11; ds; t11;}
+{rank=same; s12; finish; t12;}
+{rank=same; s13; read; t13;}
+{rank=same; s14; stop; t14;}
+start -> mo [label=""];
+mo -> open [label=""];
+open -> vopen [label=""];
+vopen -> dopen [label=""];
+dopen -> save [label="[sim]"];
+dopen -> mo [label="[não]", constraint=false];
+save -> consult [label=""];
+consult -> dp [label=""];
+dp -> priority [label="[sim]"];
+priority -> vp [label=""];
+vp -> mp [label=""];
+dp -> mp [label="[não]", constraint=false];
+mp -> begin [label=""];
+begin -> progress [label=""];
+progress -> ms [label=""];
+ms -> solution [label=""];
+solution -> vsolution [label=""];
+vsolution -> ds [label=""];
+ds -> finish [label="[sim]"];
+ds -> ms [label="[não]", constraint=false];
+finish -> read [label=""];
+read -> stop [label=""];
+}
+@enddot

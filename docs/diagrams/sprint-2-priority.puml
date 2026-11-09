@@ -5,44 +5,71 @@ skinparam shadowing false
 skinparam dpi 240
 skinparam defaultFontName SansSerif
 skinparam defaultFontSize 16
-skinparam ParticipantPadding 16
-skinparam maxMessageSize 230
+skinparam ParticipantPadding 2
+skinparam maxMessageSize 320
+skinparam sequenceMessageAlign center
 actor "Técnico" as A
-boundary "Detalhes do chamado" as I
-participant "rotas:helpdesk.routes" as R <<módulo Flask>>
-participant "chamados:helpdesk.tickets" as C <<módulo>>
+boundary "Detalhes" as I
+participant "rotas:\nhelpdesk.routes" as R <<módulo Flask>>
+participant "form:\nPriorityForm" as F
+participant "chamados:\nhelpdesk.tickets" as C <<módulo>>
 entity "chamado:Ticket" as T
-participant "db.session:Session" as P <<SQLAlchemy>>
-A -> I : Selecionar prioridade e salvar
+participant "db.session:\nSession" as P <<infraestrutura>>
+A -> I : Escolher prioridade e salvar
 I -> R : ticket_priority(ticket_id)
 activate R
 R -> C : get_ticket(ticket_id, user)
 activate C
-C --> R : chamado:Ticket ou None
-deactivate C
-alt formulário válido e chamado encontrado
-  R -> C : update_priority(ticket, user, priority, version)
-  activate C
-  C -> C : check_edit(ticket, user, version)
-  alt técnico, versão atual e chamado não concluído
-    C -> T : set_priority(priority)
-    activate T
-    T --> C : prioridade validada e atribuída
-    deactivate T
+C --> R : Ticket ou None
+ deactivate C
+break chamado inexistente
+  R --> I : recurso não encontrado (Flask)
+end
+R -> F : validate_on_submit()
+activate F
+F --> R : válido ou erros
+ deactivate F
+break formulário inválido
+  R -> R : ticket_detail_response(ticket, priority_form=form, ...)
+  R --> I : campos a corrigir; sem atualização
+end
+newpage Continuação: atualização e tratamento do resultado
+R -> C : update_priority(ticket, user, priority, version)
+activate C
+C -> C : check_edit(ticket, user, version)
+opt check_edit() sem exceção
+  C -> T : set_priority(priority)
+  activate T
+  T --> C : None ou ValueError
+  deactivate T
+  opt set_priority() sem exceção
     C -> P : commit()
     activate P
-    P --> C : alteração persistida
+    P --> C : confirmação ou exceção
     deactivate P
-    C --> R : operação concluída
-  else prioridade, versão ou estado inválido
-    C --> R : erro de validação ou conflito
   end
-  deactivate C
-else formulário inválido ou chamado ausente
-  note over R : Nenhuma alteração é efetuada.
 end
-R --> I : confirmação ou orientação de correção
+C --> R : None ou exceção propagada
+ deactivate C
+alt atualização confirmada
+  R --> I : redirecionar ao detalhe com confirmação
+else exceção na atualização
+  R -> P : rollback()
+  activate P
+  P --> R : transação desfeita
+  deactivate P
+  alt ValueError: regra violada
+    R -> R : ticket_detail_response(ticket, priority_form=form, ...)
+    R --> I : informar regra para correção
+  else StaleDataError: conflito de versão
+    R -> R : ticket_detail_response(ticket, ...)
+    R --> I : dados atuais; solicitar revisão
+  else outro SQLAlchemyError: falha ao persistir
+    R --> I : página de erro (Flask)
+  end
+end
 deactivate R
 I --> A : Apresentar resultado
-note over R,P : Em falha, rollback() preserva os dados anteriores.
+
+note over R,P : O tratamento global da falha de persistência\ntambém chama rollback().
 @enduml

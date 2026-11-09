@@ -28,9 +28,9 @@ package "helpdesk.models" {
     +opened_at: datetime
     +completed_at: datetime [0..1]
     +version: int
-    +protocol: str {readOnly}
+    +/protocol: str {readOnly}
     +set_priority(priority: str): None
-    +change_status(new_status: str, solution: str): None
+    +change_status(new_status: str, solution: str = ""): None
   }
   class StatusEvent {
     +id: int

@@ -72,7 +72,7 @@ PlantUML substitui o diagrams.net inicialmente previsto para permitir fontes ver
 ./scripts/render-diagrams.sh
 ```
 
-O script usa `plantuml/plantuml:1.2025.10`, profile `tools`, sem rede no container e com UID/GID do usuário para escrever os desenhos. Em ambientes sem shell POSIX, execute os comandos `docker compose --profile tools run --rm --no-deps diagrams -charset UTF-8 -tsvg '*.puml'` e a variante `-tpng`, ajustando DIAGRAM_UID/DIAGRAM_GID conforme o host.
+O script constrói `helpdesk-diagrams:1.2025.10` a partir de `plantuml/plantuml:1.2025.10`, acrescentando libgd para a exportação PNG das atividades. A renderização usa um container sem rede, com UID/GID do usuário e acesso somente à pasta de desenhos. Em ambientes sem shell POSIX, construa a imagem com `docker build -f scripts/diagrams/Dockerfile -t helpdesk-diagrams:1.2025.10 .` e execute-a montando `docs/diagrams` em `/work`, com os argumentos `-charset UTF-8 -failfast2 -tsvg *.puml` e a variante `-tpng`. A aplicação e o serviço opcional do Compose permanecem independentes desse comando.
 
 - [Entrega consolidada da Sprint 2](docs/entrega-sprint-2.md): [DOCX editável](docs/entrega-sprint-2.docx) e [PDF](docs/entrega-sprint-2.pdf), com as correções UML e UC01 a UC07.
 - [Roteiro de apresentação e revisão técnica](docs/roteiro-sprint-2.md).

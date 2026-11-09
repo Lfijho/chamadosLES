@@ -12,7 +12,7 @@ boundary "Página de login\nlogin.html" as I
 participant "rotas:helpdesk.routes" as R <<módulo Flask>>
 participant "acesso:helpdesk.security" as C <<módulo>>
 entity "usuario:User" as U
-participant "db.session:Session" as P <<SQLAlchemy>>
+participant "db.session:Session" as P <<infraestrutura>>
 A -> I : Informar e-mail e senha
 I -> R : login()
 activate R

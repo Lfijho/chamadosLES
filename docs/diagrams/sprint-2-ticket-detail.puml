@@ -11,13 +11,14 @@ actor "Solicitante ou técnico" as A
 boundary "Lista / detalhes" as I
 participant "rotas:helpdesk.routes" as R <<módulo Flask>>
 participant "chamados:helpdesk.tickets" as C <<módulo>>
-participant "db.session:Session" as P <<SQLAlchemy>>
-A -> I : Abrir um chamado
+participant "db.session:Session" as P <<infraestrutura>>
+A -> I : Selecionar um chamado existente
 I -> R : ticket_detail(ticket_id)
 activate R
 R -> C : get_ticket(ticket_id, user)
 activate C
 C -> C : visible_tickets(user)
+note right of C : Solicitante: próprios. Técnico: todos.
 C -> P : scalar(consulta por id e permissão)
 activate P
 P --> C : ticket:Ticket ou None
@@ -27,7 +28,7 @@ deactivate C
 alt chamado visível
   R -> R : ticket_detail_response(ticket)
   R --> I : dados e ações do perfil
-else ausente ou não pertence ao solicitante
+else chamado inexistente ou não visível ao usuário atual
   R --> I : página de chamado não encontrado
 end
 deactivate R

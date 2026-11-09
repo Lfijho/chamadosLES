@@ -219,7 +219,7 @@ def main():
     source = SOURCE.read_text()
     assert len(re.findall(r"^## \d+\. ", source, re.M)) == 7
     images = re.findall(r"!\[[^\]]*\]\(([^)]+)\)", source)
-    assert len(images) == (4 if SPRINT == 1 else 10)
+    assert len(images) == (4 if SPRINT == 1 else 12)
     assert all((SOURCE.parent / image).is_file() for image in images)
     with tempfile.TemporaryDirectory(prefix="helpdesk-docs-") as temporary:
         draft = Path(temporary) / "delivery.md"

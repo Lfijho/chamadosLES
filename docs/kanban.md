@@ -149,3 +149,12 @@ O roteiro e a revisão/retrospectiva técnica estão em [roteiro-sprint-2.md](ro
 A [PR #1](https://github.com/Lfijho/chamadosLES/pull/1) reúne as entregas das duas Sprints para integração na master, solicitada pelo responsável. A base já contém RF01 e RF02; a PR completa os documentos da Sprint 1 e incorpora RF03, RF04, o catálogo e a documentação consolidada da Sprint 2. O estado da integração é mantido no GitHub.
 
 Na preparação da PR, o Compose e o diff foram conferidos, e os oito commits pendentes apresentavam autor e committer Leandro Pinzon Filho. A suíte local tem 85 testes aprovados. A execução remota consultada não executou etapas por bloqueio de faturamento da conta, portanto não foi tratada como teste aprovado.
+
+
+## Revisão documental da Sprint 2
+
+As Figuras 5 a 8 agora distinguem consulta vazia, parâmetros inválidos, página inexistente, visibilidade do chamado e os resultados das rotas de atualização. A ordem representada é busca autorizada, validação do formulário e operação de atualização. Os caminhos de regra violada, conflito e falha de persistência mostram o rollback da rota; chamado ausente e formulário inválido não passam por essa chamada. UC07 diferencia iniciar e concluir em envios separados, com uma transição por requisição e persistência conjunta do chamado e do evento.
+
+A Figura 9 explicita o argumento padrão de solution e a propriedade derivada protocol. A Figura 10 mantém as três raias, torna a prioridade opcional e apresenta decisões com guardas e junções próprias para os retornos de correção. As tabelas dos casos de uso foram conferidas com as funções das sequências. O texto de organização descreve backlog, planejamento, Kanban e revisão/retrospectiva técnica adaptados ao desenvolvimento individual.
+
+A Figura 1 e os arquivos históricos da Sprint 1 foram preservados por comparação de conteúdo. A exportação atual tem 18 páginas numeradas, com as Figuras 7 e 8 em duas partes para leitura. As fontes, SVG, PNG e as imagens incorporadas no DOCX foram conferidos; todas as páginas do PDF foram inspecionadas. O renderizador opcional recebeu libgd para exportar as atividades em PNG. A configuração da aplicação, sua implementação e os dados não foram alterados. Esta revisão não modifica as colunas do quadro operacional nem o andamento das Sprints.

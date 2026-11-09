@@ -10,7 +10,7 @@ Repositório: <https://github.com/Lfijho/chamadosLES>
 
 O HelpDesk centraliza solicitações de suporte de TI que, quando dispersas, dificultam o registro dos problemas e o acompanhamento do atendimento. O solicitante registra e consulta os próprios chamados. O técnico consulta as solicitações e conduz o atendimento até a conclusão.
 
-Leandro Pinzon Filho desenvolve o projeto individualmente, como Tech Lead e responsável por requisitos, planejamento, implementação, testes, documentação e apresentação. O trabalho está organizado em três Sprints. Um Kanban acompanha as tarefas do desenvolvimento nas colunas Backlog, A fazer, Em andamento e Concluído. Esse quadro é separado do atendimento dos chamados.
+Leandro Pinzon Filho desenvolve o projeto individualmente, como Tech Lead e responsável por requisitos, planejamento, implementação, testes, documentação e apresentação. O trabalho adota práticas de Scrum adaptadas ao desenvolvimento individual: backlog, planejamento em três Sprints, acompanhamento pelo Kanban e revisão e retrospectiva técnicas. O quadro usa as colunas Backlog, A fazer, Em andamento e Concluído e acompanha o desenvolvimento, separado do atendimento dos chamados.
 
 A Sprint 1 entregou acesso e abertura de chamados. A Sprint 2 acrescenta consulta e atendimento e consolida a documentação com a modelagem UML corrigida. A entrega anterior permanece como registro histórico.
 
@@ -53,7 +53,7 @@ As regras de atendimento são:
 
 ## 4. Casos de uso e funções envolvidas
 
-UC01, UC02 e UC03 pertencem à Sprint 1. UC04, UC05, UC06 e UC07 foram acrescentados na Sprint 2. As tabelas identificam funções implementadas no projeto. Funções de módulo estão indicadas pelo nome do módulo, sem atribuição a uma classe de controller.
+UC01, UC02 e UC03 pertencem à Sprint 1. UC04, UC05, UC06 e UC07 foram acrescentados na Sprint 2. As tabelas identificam funções implementadas no projeto. Funções de módulo estão indicadas pelo nome do módulo, sem atribuição a uma classe de controller. Nas sequências, validate() e validate_on_submit() são operações herdadas de FlaskForm.
 
 ### UC01: realizar login
 
@@ -91,6 +91,7 @@ Pós-condição: o usuário precisa se autenticar novamente para voltar às fun�
 | Método/função real | Classe ou módulo | Responsabilidade |
 |---|---|---|
 | `logout` | `helpdesk.routes` | Encerrar o acesso e retornar ao login |
+| `login` | `helpdesk.routes` | Apresentar o formulário após a saída |
 
 ### UC03: abrir chamado
 
@@ -111,6 +112,7 @@ Pós-condição: o chamado fica registrado e disponível na consulta do solicita
 | `create_ticket` | `helpdesk.tickets` | Registrar o chamado do solicitante |
 | `ticket_confirmation` | `helpdesk.routes` | Apresentar a confirmação privada |
 | `get_ticket` | `helpdesk.tickets` | Buscar o chamado com permissão de consulta |
+| `visible_tickets` | `helpdesk.tickets` | Restringir a confirmação ao solicitante |
 
 <!-- pagebreak -->
 
@@ -141,7 +143,7 @@ Ator: solicitante ou técnico. Objetivo: consultar os dados de um chamado. Preco
 2. O sistema verifica a permissão e busca os dados.
 3. O sistema apresenta o detalhe e as ações permitidas ao perfil.
 
-Alternativas: chamado inexistente ou de outro solicitante não é exibido, inclusive por acesso direto ao endereço. Chamados concluídos apresentam a solução e não oferecem edição.
+Alternativas: chamado inexistente ou não visível ao usuário atual não é exibido, inclusive por acesso direto ao endereço. O técnico pode consultar chamados de qualquer solicitante. Chamados concluídos apresentam a solução e não oferecem edição.
 
 Pós-condição: o usuário consulta o chamado sem modificar seus dados.
 
@@ -149,6 +151,7 @@ Pós-condição: o usuário consulta o chamado sem modificar seus dados.
 |---|---|---|
 | `ticket_detail` | `helpdesk.routes` | Coordenar a abertura do detalhe |
 | `get_ticket` | `helpdesk.tickets` | Buscar somente um registro autorizado |
+| `visible_tickets` | `helpdesk.tickets` | Aplicar a visibilidade do perfil |
 | `ticket_detail_response` | `helpdesk.routes` | Apresentar os dados e as ações disponíveis |
 
 <!-- pagebreak -->
@@ -167,19 +170,25 @@ Pós-condição: a prioridade válida fica persistida; uma rejeição mantém os
 
 | Método/função real | Classe ou módulo | Responsabilidade |
 |---|---|---|
-| `ticket_priority` | `helpdesk.routes` | Receber o formulário e apresentar o resultado |
+| `ticket_priority` | `helpdesk.routes` | Coordenar a alteração da prioridade |
+| `get_ticket` | `helpdesk.tickets` | Buscar o chamado autorizado |
+| `ticket_detail_response` | `helpdesk.routes` | Apresentar o detalhe em caso de rejeição |
 | `update_priority` | `helpdesk.tickets` | Coordenar a gravação autorizada |
 | `check_edit` | `helpdesk.tickets` | Verificar perfil, versão e estado do chamado |
 | `set_priority` | `Ticket`, em `helpdesk.models` | Validar e atribuir a prioridade |
+
+<!-- pagebreak -->
 
 ### UC07: atualizar status e registrar solução
 
 Ator: técnico. Objetivo: conduzir e concluir o atendimento. Precondições: estar autenticado como técnico e consultar um chamado não concluído.
 
-1. O técnico seleciona Iniciar atendimento para um chamado Aberto.
-2. O sistema registra o status Em atendimento.
-3. O técnico informa a solução e seleciona Concluir chamado.
+1. O técnico seleciona Iniciar atendimento para um chamado Aberto e envia essa ação.
+2. O sistema registra Em atendimento e confirma a alteração.
+3. Mais tarde, o técnico informa a solução e envia uma nova ação: Concluir chamado.
 4. O sistema valida a solução, registra Concluído e a data de conclusão e apresenta a confirmação.
+
+Iniciar e concluir são ações separadas. Cada envio solicita somente a próxima transição permitida.
 
 Alternativas: solução vazia, composta apenas por espaços ou acima do limite exige correção. Saltos, retrocessos, alterações em chamados concluídos e operações do solicitante são rejeitados. Em conflito ou falha de gravação, a operação não confirma alterações parciais.
 
@@ -187,7 +196,10 @@ Pós-condição: a mudança de status e seu evento com autoria e data UTC ficam 
 
 | Método/função real | Classe ou módulo | Responsabilidade |
 |---|---|---|
-| `ticket_status` | `helpdesk.routes` | Receber a alteração e apresentar o resultado |
+| `ticket_status` | `helpdesk.routes` | Coordenar uma transição por requisição |
+| `get_ticket` | `helpdesk.tickets` | Buscar o chamado autorizado |
+| `validate_solution` | `StatusForm`, em `helpdesk.forms` | Exigir conteúdo na solução ao concluir |
+| `ticket_detail_response` | `helpdesk.routes` | Apresentar o detalhe em caso de rejeição |
 | `check_edit` | `helpdesk.tickets` | Verificar perfil, versão e estado do chamado |
 | `update_status` | `helpdesk.tickets` | Gravar a mudança e o evento juntos |
 | `change_status` | `Ticket`, em `helpdesk.models` | Validar a transição e atribuir solução e conclusão |
@@ -232,7 +244,7 @@ O formulário valida os campos, e as funções do módulo de chamados registram 
 
 ![Figura 5. Consultar chamados e filtrar.](diagrams/sprint-2-list-tickets.png){width=26cm height=15cm}
 
-A consulta restringe os registros pelo perfil antes de aplicar filtros e paginação. O retorno permite apresentar resultados ou um estado vazio.
+A consulta restringe os registros pelo perfil antes de aplicar filtros e paginação. A primeira página aceita consulta vazia; filtros inválidos impedem a consulta, e uma página além dos resultados é tratada como inexistente.
 
 <!-- pagebreak -->
 
@@ -246,17 +258,33 @@ A busca considera a permissão do usuário junto com a identificação do chamad
 
 ### 5.7. Sequência da prioridade
 
-![Figura 7. Definir prioridade.](diagrams/sprint-2-priority.png){width=26cm height=15cm}
+![Figura 7. Definir prioridade: busca e formulário.](diagrams/sprint-2-priority.png){width=26cm height=15cm}
 
-A função de atualização verifica a possibilidade de editar, e o objeto Ticket valida a prioridade. A confirmação depende da persistência da alteração.
+A busca autorizada antecede a validação do formulário e a atualização.
+
+<!-- pagebreak -->
+
+### 5.7. Sequência da prioridade (continuação)
+
+![Figura 7 (continuação). Atualização e tratamento do resultado.](diagrams/sprint-2-priority_001.png){width=26cm height=15cm}
+
+Regra violada, conflito e falha de persistência acionam rollback() na rota; chamado ausente e formulário inválido não passam por essa operação.
 
 <!-- pagebreak -->
 
 ### 5.8. Sequência do status e da solução
 
-![Figura 8. Atualizar status e registrar solução.](diagrams/sprint-2-status.png){width=26cm height=15cm}
+![Figura 8. Atualizar status: busca e formulário.](diagrams/sprint-2-status.png){width=26cm height=15cm}
 
-O objeto Ticket valida a transição e a solução. A alteração e o StatusEvent são gravados na mesma transação; uma falha impede a confirmação parcial.
+Cada requisição executa uma única transição, após a busca e a validação do formulário.
+
+<!-- pagebreak -->
+
+### 5.8. Sequência do status e da solução (continuação)
+
+![Figura 8 (continuação). Transição e persistência do evento.](diagrams/sprint-2-status_001.png){width=26cm height=15cm}
+
+A alteração do Ticket e o StatusEvent são gravados na mesma transação; erros impedem a confirmação parcial.
 
 <!-- pagebreak -->
 
