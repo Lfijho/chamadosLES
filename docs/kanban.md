@@ -142,3 +142,10 @@ As 12 tarefas da Sprint 2 foram concluídas no catálogo e no quadro operacional
 A entrega consolidada reúne UC01 a UC07, tabelas de funções reais, dez fontes PlantUML e desenhos SVG/PNG, classes com operações e atividades por responsabilidade. Markdown, DOCX e PDF foram gerados da mesma fonte; as 15 páginas foram inspecionadas. A entrega da Sprint 1 permanece intacta como registro histórico. Os identificadores não funcionais existentes foram mantidos; RNF13 explicita o controle da consulta e das alterações por perfil.
 
 O roteiro e a revisão/retrospectiva técnica estão em [roteiro-sprint-2.md](roteiro-sprint-2.md). Preparar o roteiro não equivale a realizar a apresentação. RF05, RF06, vídeo e entrega final continuam no Backlog da Sprint 3. Evidências e limites permanecem no registro técnico.
+
+
+## Integração das Sprints 1 e 2
+
+A [PR #1](https://github.com/Lfijho/chamadosLES/pull/1) reúne as entregas das duas Sprints para integração na master, solicitada pelo responsável. A base já contém RF01 e RF02; a PR completa os documentos da Sprint 1 e incorpora RF03, RF04, o catálogo e a documentação consolidada da Sprint 2. O estado da integração é mantido no GitHub.
+
+Na preparação da PR, o Compose e o diff foram conferidos, e os oito commits pendentes apresentavam autor e committer Leandro Pinzon Filho. A suíte local tem 85 testes aprovados. A execução remota consultada não executou etapas por bloqueio de faturamento da conta, portanto não foi tratada como teste aprovado.
