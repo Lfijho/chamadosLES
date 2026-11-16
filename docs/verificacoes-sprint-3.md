@@ -32,4 +32,20 @@ O exame mecânico dos templates não resolveu a referência Jinja ao CSS. Os avi
 
 `flask backup-db` usa a API de backup do SQLite e verifica integridade. Não copia diretamente o banco ativo. Arquivos de destino são criados exclusivamente, com modo 0600; o comando recusa sobrescrita e recusa o próprio banco como destino. Um teste restaura a cópia em outro arquivo temporário, confere integridade, chaves estrangeiras e todas as linhas das tabelas de negócio, usuários, tarefas e revisão.
 
-A operação CLI também criou uma cópia privada no volume de teste. O procedimento de restauração e a validação final de inicialização constarão no fechamento da entrega. Gravação de vídeo, apresentação e publicação no LEX permanecem pendentes.
+A operação CLI também criou uma cópia privada no volume de teste. O procedimento completo está em [backup-restauracao.md](backup-restauracao.md). Gravação de vídeo, apresentação e publicação no LEX permanecem pendentes.
+
+
+## Fechamento da validação
+
+A instância existente foi atualizada com `docker compose up -d --build --wait`, seguida de `docker compose up -d`, e ficou saudável em `http://localhost:8080`. Antes da migração foi criado um snapshot privado pela API do SQLite. Uma comparação de conteúdo antes/depois confirmou preservação integral de chamados, eventos, usuários, tarefas, chave de sessão e credenciais. A comparação não publicou conteúdo sensível.
+
+Uma árvore limpa do commit de implementação, exportada por `git archive` sem estado local, iniciou pelo Compose no projeto `helpdesk-sprint3-clean-check`. Foi usada a porta 8085 para evitar conflito com a instância de uso. Healthcheck e acesso HTTP foram aprovados. Isso verifica a inicialização sem dependências Python/Node no host; o comando padrão na instância normal foi conferido em 8080. O código da aplicação não mudou após esse bloco; os arquivos posteriores consolidam documentação, catálogo e ferramentas opcionais de entrega.
+
+O bundle de teste foi criado com o comando de backup e cópia dos arquivos auxiliares com o serviço parado. A restauração em volume novo `helpdesk-restore-verified-check` passou: integridade, arquivos privados, healthcheck, login, chamado concluído, prioridade, solução, três anotações e dois eventos preservados. Uma segunda tentativa foi recusada por já existir estado, e a aplicação permaneceu saudável. O primeiro ensaio do auxiliar revelou que o serviço remove todas as capacidades; foram necessárias capacidades de arquivos explícitas no auxiliar de preparação. O comando documentado foi corrigido e o ensaio repetido em outro volume, sem apagar o anterior. O servidor normal permanece com usuário sem privilégios e sem capacidades adicionais.
+
+A documentação final foi gerada da mesma fonte Markdown para DOCX e PDF, com 26 páginas numeradas. As 13 figuras UML ocupam 17 imagens por causa das continuações; fontes, SVG e PNG estão versionados. Foram conferidas as funções do código, a ordem das chamadas, guardas, retorno e ativação, associações e multiplicidades, a inclusão somente no ramo válido e a preservação das tabelas aprovadas dos casos anteriores. Todas as páginas do PDF foram abertas para inspeção de texto, tabelas, cortes e legibilidade. Os documentos e desenhos históricos das Sprints 1 e 2 permaneceram intactos. A prosa final foi revisada mantendo comandos, identificadores e fatos.
+
+Roteiro do vídeo e checklist do LEX estão preparados. As tarefas de código, testes, documentação, revisão e validação têm aceite verificado. S3-12 permanece no Backlog: gravação, apresentação, revisão do vídeo e postagem ainda precisam ser realizadas pelo responsável. Não foram medidos desempenho sob carga ou uso com grandes históricos; avaliação com leitor de tela e dispositivos físicos não foi realizada. A aplicação continua configurada para demonstração local, conforme o README.
+
+
+O catálogo final passou novamente nos quatro testes de sincronização. No quadro operacional de localhost:8080, o técnico atualizou 12 tarefas da Sprint 3 para Concluído e manteve S3-12 no Backlog. Duas execuções subsequentes do seed preservaram integralmente as colunas, as contas, chamados, eventos, anotações e arquivos de estado; não houve duplicação. Colunas das Sprints 1 e 2 foram preservadas.

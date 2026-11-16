@@ -165,3 +165,15 @@ A Figura 1 e os arquivos históricos da Sprint 1 foram preservados por comparaç
 RF05 e RF06 estão implementados: histórico autorizado com eventos e anotações, inclusão exclusiva do técnico, ordenação estável e indicadores agregados por status/prioridade. A migração é aditiva e preserva os dados da Sprint 2. Anotações após a conclusão não alteram o atendimento. A recuperação das credenciais e a persistência foram verificadas em volumes isolados.
 
 As tarefas S3-01, S3-02 e S3-04 a S3-07 tiveram seus critérios implementados e verificados com 104 testes e o fluxo dos dois perfis no navegador. A documentação final, UML, validação completa da entrega e roteiro permanecem em andamento. S3-12 continua no Backlog: vídeo, apresentação e postagem não foram realizados. Os registros técnicos estão em [verificacoes-sprint-3.md](verificacoes-sprint-3.md). O catálogo não sobrescreve colunas do quadro operacional ao sincronizar.
+
+
+## Consolidação final da Sprint 3
+
+As tarefas S3-03 e S3-08 a S3-11 e S3-13 tiveram os critérios verificados: regressão de 104 testes, segurança dos fluxos, migração e inicialização, persistência, backup/restauração em volume novo, documentação final e revisão técnica. RF01 a RF06 estão disponíveis. A atualização da instância normal preservou integralmente os dados e os arquivos de estado anteriores.
+
+A entrega final reúne UC01 a UC10, funções reais, classes e atividades. Markdown, DOCX e PDF foram gerados da mesma fonte, com 26 páginas inspecionadas e 13 figuras em 17 imagens SVG/PNG. Os registros históricos foram preservados. O roteiro está em [roteiro-video-final.md](roteiro-video-final.md), e o pacote exigido pela disciplina está relacionado em [checklist-lex.md](checklist-lex.md).
+
+S3-12 permanece no Backlog. Preparar e conferir arquivos não equivale a gravar, apresentar ou postar no LEX. A conclusão da revisão técnica não declara a entrega acadêmica realizada. O catálogo registra o acompanhamento versionado; o quadro da aplicação mantém o estado operacional no banco, sem ter suas colunas sobrescritas pelo seed.
+
+
+No fechamento deste bloco, o quadro operacional também foi atualizado pelo fluxo autenticado do técnico: 12 tarefas da Sprint 3 concluídas e S3-12 no Backlog. A sincronização foi executada duas vezes, sem duplicação ou sobrescrita das colunas; os dados de negócio e as Sprints anteriores foram preservados.

@@ -1,0 +1,180 @@
+@startdot
+digraph Atendimento {
+graph [newrank=true, ranksep=0.08, nodesep=0.22, dpi=240, bgcolor="white", pad=0.12];
+node [fontname="SansSerif", fontsize=16, color="#333333", penwidth=3, margin="0.10,0.04"];
+edge [fontname="SansSerif", fontsize=14, color="#333333", penwidth=3, arrowsize=0.65];
+subgraph cluster_s {
+label="Solicitante"; fontname="SansSerif"; fontsize=18; color="#444444"; penwidth=2; margin=12;
+start [shape=circle, label="", style=filled, fillcolor="#222222", width=0.18, height=0.18, fixedsize=true];
+opening_merge [shape=diamond, label="", width=0.22, height=0.22, fixedsize=true];
+opening [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Preencher ou corrigir título,\ndescrição e categoria; enviar"];
+s3 [shape=point, width=0, height=0, style=invis];
+s4 [shape=point, width=0, height=0, style=invis];
+s5 [shape=point, width=0, height=0, style=invis];
+s6 [shape=point, width=0, height=0, style=invis];
+s7 [shape=point, width=0, height=0, style=invis];
+s8 [shape=point, width=0, height=0, style=invis];
+s9 [shape=point, width=0, height=0, style=invis];
+start -> opening_merge -> opening -> s3 -> s4 -> s5 -> s6 -> s7 -> s8 -> s9 [style=invis, weight=100];
+}
+subgraph cluster_h {
+label="HelpDesk"; fontname="SansSerif"; fontsize=18; color="#444444"; penwidth=2; margin=12;
+h0 [shape=point, width=0, height=0, style=invis];
+h1 [shape=point, width=0, height=0, style=invis];
+validate_opening [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Validar os dados e informar\ncorreção, se necessária"];
+valid_opening [shape=diamond, label="Dados\nválidos?", width=1.2, height=0.65];
+save [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Registrar Aberto, prioridade Média\ne confirmar o protocolo"];
+h5 [shape=point, width=0, height=0, style=invis];
+save_priority [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Validar e persistir prioridade"];
+h7 [shape=point, width=0, height=0, style=invis];
+in_progress [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Gravar Em atendimento e evento\nna mesma transação"];
+continue_a [shape=circle, label="A", width=0.35, height=0.35, fixedsize=true];
+h0 -> h1 -> validate_opening -> valid_opening -> save -> h5 -> save_priority -> h7 -> in_progress -> continue_a [style=invis, weight=100];
+}
+subgraph cluster_t {
+label="Técnico"; fontname="SansSerif"; fontsize=18; color="#444444"; penwidth=2; margin=12;
+t0 [shape=point, width=0, height=0, style=invis];
+t1 [shape=point, width=0, height=0, style=invis];
+t2 [shape=point, width=0, height=0, style=invis];
+t3 [shape=point, width=0, height=0, style=invis];
+read [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Consultar lista e abrir detalhes"];
+change_priority [shape=diamond, label="Alterar\nprioridade?", width=1.2, height=0.65];
+priority [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Escolher prioridade e salvar"];
+priority_merge [shape=diamond, label="", width=0.22, height=0.22, fixedsize=true];
+begin [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Selecionar Iniciar atendimento"];
+t9 [shape=point, width=0, height=0, style=invis];
+t0 -> t1 -> t2 -> t3 -> read -> change_priority -> priority -> priority_merge -> begin -> t9 [style=invis, weight=100];
+}
+{rank=same; start; h0; t0;}
+{rank=same; opening_merge; h1; t1;}
+{rank=same; opening; validate_opening; t2;}
+{rank=same; s3; valid_opening; t3;}
+{rank=same; s4; save; read;}
+{rank=same; s5; h5; change_priority;}
+{rank=same; s6; save_priority; priority;}
+{rank=same; s7; h7; priority_merge;}
+{rank=same; s8; in_progress; begin;}
+{rank=same; s9; continue_a; t9;}
+start -> opening_merge [label=""];
+opening_merge -> opening [label=""];
+opening -> validate_opening [label=""];
+validate_opening -> valid_opening [label=""];
+valid_opening -> opening_merge [label="[não]", constraint=false];
+valid_opening -> save [label="[sim]"];
+save -> read [label=""];
+read -> change_priority [label=""];
+change_priority -> priority [label="[sim]"];
+priority -> save_priority [label=""];
+save_priority -> priority_merge [label=""];
+change_priority -> priority_merge [label="[não]", constraint=false];
+priority_merge -> begin [label=""];
+begin -> in_progress [label=""];
+in_progress -> continue_a [label=""];
+}
+@enddot
+
+@startdot
+digraph Atendimento {
+graph [newrank=true, ranksep=0.08, nodesep=0.22, dpi=240, bgcolor="white", pad=0.12];
+node [fontname="SansSerif", fontsize=16, color="#333333", penwidth=3, margin="0.10,0.04"];
+edge [fontname="SansSerif", fontsize=14, color="#333333", penwidth=3, arrowsize=0.65];
+subgraph cluster_s {
+label="Solicitante"; fontname="SansSerif"; fontsize=18; color="#444444"; penwidth=2; margin=12;
+s0 [shape=point, width=0, height=0, style=invis];
+s1 [shape=point, width=0, height=0, style=invis];
+s2 [shape=point, width=0, height=0, style=invis];
+s3 [shape=point, width=0, height=0, style=invis];
+s4 [shape=point, width=0, height=0, style=invis];
+s5 [shape=point, width=0, height=0, style=invis];
+s6 [shape=point, width=0, height=0, style=invis];
+s7 [shape=point, width=0, height=0, style=invis];
+s8 [shape=point, width=0, height=0, style=invis];
+s9 [shape=point, width=0, height=0, style=invis];
+s10 [shape=point, width=0, height=0, style=invis];
+s11 [shape=point, width=0, height=0, style=invis];
+read_own [shape=diamond, label="Consultar próprio\nhistórico?", width=1.2, height=0.65];
+select_own [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Abrir chamado próprio"];
+owner_merge [shape=diamond, label="", width=0.22, height=0.22, fixedsize=true];
+s0 -> s1 -> s2 -> s3 -> s4 -> s5 -> s6 -> s7 -> s8 -> s9 -> s10 -> s11 -> read_own -> select_own -> owner_merge [style=invis, weight=100];
+}
+subgraph cluster_h {
+label="HelpDesk"; fontname="SansSerif"; fontsize=18; color="#444444"; penwidth=2; margin=12;
+continue_a [shape=circle, label="A", width=0.35, height=0.35, fixedsize=true];
+h1 [shape=point, width=0, height=0, style=invis];
+h2 [shape=point, width=0, height=0, style=invis];
+validate_note [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Validar anotação;\nindicar erros, se houver"];
+valid_note [shape=diamond, label="Conteúdo\nválido?", width=1.2, height=0.65];
+save_note [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Gravar anotação, autor e UTC;\nmanter o chamado"];
+h6 [shape=point, width=0, height=0, style=invis];
+h7 [shape=point, width=0, height=0, style=invis];
+validate_solution [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Validar solução;\nindicar erros, se houver"];
+valid_solution [shape=diamond, label="Solução\nválida?", width=1.2, height=0.65];
+complete [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Gravar conclusão, solução,\ndata UTC e evento juntos"];
+show_tech [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Apresentar histórico registrado"];
+h12 [shape=point, width=0, height=0, style=invis];
+show_owner [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Conferir propriedade;\nmostrar registros reais"];
+stop [shape=doublecircle, label="", style=filled, fillcolor="#222222", width=0.18, height=0.18, fixedsize=true];
+continue_a -> h1 -> h2 -> validate_note -> valid_note -> save_note -> h6 -> h7 -> validate_solution -> valid_solution -> complete -> show_tech -> h12 -> show_owner -> stop [style=invis, weight=100];
+}
+subgraph cluster_t {
+label="Técnico"; fontname="SansSerif"; fontsize=18; color="#444444"; penwidth=2; margin=12;
+t0 [shape=point, width=0, height=0, style=invis];
+note_merge [shape=diamond, label="", width=0.22, height=0.22, fixedsize=true];
+want_note [shape=diamond, label="Adicionar\nanotação?", width=1.2, height=0.65];
+note [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Escrever ou corrigir anotação;\nenviar"];
+t4 [shape=point, width=0, height=0, style=invis];
+t5 [shape=point, width=0, height=0, style=invis];
+optional_merge [shape=diamond, label="", width=0.22, height=0.22, fixedsize=true];
+solution_merge [shape=diamond, label="", width=0.22, height=0.22, fixedsize=true];
+solution [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Informar ou corrigir solução;\nconcluir"];
+t9 [shape=point, width=0, height=0, style=invis];
+read_history [shape=diamond, label="Consultar\nhistórico?", width=1.2, height=0.65];
+select_any [shape=box, style="rounded,filled", fillcolor="#F3F3F3", label="Abrir chamado"];
+tech_merge [shape=diamond, label="", width=0.22, height=0.22, fixedsize=true];
+t13 [shape=point, width=0, height=0, style=invis];
+t14 [shape=point, width=0, height=0, style=invis];
+t0 -> note_merge -> want_note -> note -> t4 -> t5 -> optional_merge -> solution_merge -> solution -> t9 -> read_history -> select_any -> tech_merge -> t13 -> t14 [style=invis, weight=100];
+}
+{rank=same; s0; continue_a; t0;}
+{rank=same; s1; h1; note_merge;}
+{rank=same; s2; h2; want_note;}
+{rank=same; s3; validate_note; note;}
+{rank=same; s4; valid_note; t4;}
+{rank=same; s5; save_note; t5;}
+{rank=same; s6; h6; optional_merge;}
+{rank=same; s7; h7; solution_merge;}
+{rank=same; s8; validate_solution; solution;}
+{rank=same; s9; valid_solution; t9;}
+{rank=same; s10; complete; read_history;}
+{rank=same; s11; show_tech; select_any;}
+{rank=same; read_own; h12; tech_merge;}
+{rank=same; select_own; show_owner; t13;}
+{rank=same; owner_merge; stop; t14;}
+continue_a -> note_merge [label=""];
+note_merge -> want_note [label=""];
+want_note -> note [label="[sim]"];
+note -> validate_note [label=""];
+validate_note -> valid_note [label=""];
+valid_note -> note_merge [label="[não]", constraint=false];
+valid_note -> save_note [label="[sim]"];
+save_note -> optional_merge [label=""];
+want_note -> optional_merge [label="[não]", constraint=false];
+optional_merge -> solution_merge [label=""];
+solution_merge -> solution [label=""];
+solution -> validate_solution [label=""];
+validate_solution -> valid_solution [label=""];
+valid_solution -> solution_merge [label="[não]", constraint=false];
+valid_solution -> complete [label="[sim]"];
+complete -> read_history [label=""];
+read_history -> select_any [label="[sim]"];
+select_any -> show_tech [label=""];
+show_tech -> tech_merge [label=""];
+read_history -> tech_merge [label="[não]", constraint=false];
+tech_merge -> read_own [label=""];
+read_own -> select_own [label="[sim]"];
+select_own -> show_owner [label=""];
+show_owner -> owner_merge [label=""];
+read_own -> owner_merge [label="[não]", constraint=false];
+owner_merge -> stop [label=""];
+}
+@enddot

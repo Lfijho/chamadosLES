@@ -1,8 +1,8 @@
 # HelpDesk — Sistema de Controle de Chamados de TI
 
-Projeto de Laboratório de Engenharia de Software, desenvolvido individualmente por **Leandro Pinzon Filho**. Entregas: Sprint 1 em **29/10/2026** e Sprint 2 em **12/11/2026**.
+Projeto de Laboratório de Engenharia de Software, desenvolvido individualmente por **Leandro Pinzon Filho**. Entregas: Sprint 1 em **29/10/2026**, Sprint 2 em **12/11/2026** e entrega final em **03/12/2026**.
 
-A Sprint 1 implementa RF01 (autenticação) e RF02 (abertura). A Sprint 2 entrega RF03 (consulta com filtros e paginação por perfil) e RF04 (prioridade, status e solução pelo técnico). O Kanban acompanha tarefas do desenvolvimento. A interface de histórico e os indicadores permanecem para a Sprint 3.
+A Sprint 1 implementa RF01 (autenticação) e RF02 (abertura). A Sprint 2 entrega RF03 (consulta com filtros e paginação por perfil) e RF04 (prioridade, status e solução pelo técnico). A Sprint 3 entrega RF05 (histórico de status e anotações) e RF06 (indicadores por status e prioridade). O Kanban acompanha tarefas do desenvolvimento, separado dos chamados.
 
 ## Iniciar
 
@@ -23,7 +23,7 @@ O segundo comando mostra localmente os e-mails e as senhas aleatórias iniciais 
 
 ## Persistência e operação
 
-O volume nomeado `<projeto-compose>_helpdesk_state` contém SQLite, chave de sessão e credenciais iniciais. Permissões são preparadas pela imagem; a aplicação e o provisionamento executam como UID/GID 10001. O seed não redefine senhas, não duplica contas/tarefas nem altera colunas existentes do quadro. Metadados de tarefas, incluindo descrição e critérios de aceite, são sincronizados de `docs/backlog.yml`. O catálogo detalha o trabalho futuro das Sprints 2 e 3; prazos, metas e relação entre tarefas-resumo e detalhadas estão em [docs/kanban.md](docs/kanban.md).
+O volume nomeado `<projeto-compose>_helpdesk_state` contém SQLite, chave de sessão e credenciais iniciais. Permissões são preparadas pela imagem; a aplicação e o provisionamento executam como UID/GID 10001. O seed não redefine senhas, não duplica contas/tarefas nem altera colunas existentes do quadro. Metadados de tarefas, incluindo descrição e critérios de aceite, são sincronizados de `docs/backlog.yml`. O catálogo registra as tarefas das Sprints 2 e 3 e mantém vídeo/apresentação/postagem pendentes; prazos, metas e relação entre tarefas-resumo e detalhadas estão em [docs/kanban.md](docs/kanban.md).
 
 ```bash
 docker compose logs --tail 50 app
@@ -66,7 +66,7 @@ Capturas locais ficam em `artifacts/browser/`, ignoradas no Git. O estado tempor
 
 ## Diagramas e documentação
 
-PlantUML substitui o diagrams.net inicialmente previsto para permitir fontes versionadas e renderização reproduzível. Não havia arquivo existente exigindo `.drawio`. A consolidação da Sprint 2 contém dez desenhos UML em SVG e PNG; o renderizador é opcional e independente da aplicação:
+PlantUML substitui o diagrams.net inicialmente previsto para permitir fontes versionadas e renderização reproduzível. Não havia arquivo existente exigindo `.drawio`. A entrega final reúne 13 figuras UML em 17 imagens SVG/PNG, incluindo as continuações; o renderizador é opcional e independente da aplicação:
 
 ```bash
 ./scripts/render-diagrams.sh
@@ -74,6 +74,9 @@ PlantUML substitui o diagrams.net inicialmente previsto para permitir fontes ver
 
 O script constrói `helpdesk-diagrams:1.2025.10` a partir de `plantuml/plantuml:1.2025.10`, acrescentando libgd para a exportação PNG das atividades. A renderização usa um container sem rede, com UID/GID do usuário e acesso somente à pasta de desenhos. Em ambientes sem shell POSIX, construa a imagem com `docker build -f scripts/diagrams/Dockerfile -t helpdesk-diagrams:1.2025.10 .` e execute-a montando `docs/diagrams` em `/work`, com os argumentos `-charset UTF-8 -failfast2 -tsvg *.puml` e a variante `-tpng`. A aplicação e o serviço opcional do Compose permanecem independentes desse comando.
 
+- [Entrega final da Sprint 3](docs/entrega-sprint-3.md): [DOCX editável](docs/entrega-sprint-3.docx) e [PDF final](docs/entrega-sprint-3.pdf).
+- [Roteiro do vídeo final](docs/roteiro-video-final.md) e [checklist do LEX](docs/checklist-lex.md).
+- [Verificações da Sprint 3](docs/verificacoes-sprint-3.md) e [backup/restauração local](docs/backup-restauracao.md).
 - [Entrega consolidada da Sprint 2](docs/entrega-sprint-2.md): [DOCX editável](docs/entrega-sprint-2.docx) e [PDF](docs/entrega-sprint-2.pdf), com as correções UML e UC01 a UC07.
 - [Roteiro de apresentação e revisão técnica](docs/roteiro-sprint-2.md).
 - [Verificações da Sprint 2](docs/verificacoes-sprint-2.md).
@@ -86,11 +89,11 @@ O script constrói `helpdesk-diagrams:1.2025.10` a partir de `plantuml/plantuml:
 
 ## Arquitetura e evolução
 
-`helpdesk/__init__.py` cria a aplicação, registra extensões, rotas, erros e cabeçalhos. `config.py` configura o estado e os cookies; `models.py` define persistência e invariantes; `tickets.py` aplica a visibilidade das consultas e coordena as gravações transacionais; `forms.py` valida entrada; `security.py` centraliza permissões, sessões e limites; `routes.py` implementa os fluxos; `cli.py` provisiona. Templates Jinja2 escapam conteúdo; CSS local não depende de CDN. Migrações em `migrations/`, testes em `tests/`.
+`helpdesk/__init__.py` cria a aplicação, registra extensões, rotas, erros e cabeçalhos. `config.py` configura o estado e os cookies; `models.py` define persistência e invariantes; `tickets.py` aplica a visibilidade, coordena as gravações, reúne o histórico e calcula os indicadores; `forms.py` valida entrada; `security.py` centraliza permissões, sessões e limites; `routes.py` implementa os fluxos; `cli.py` provisiona. Templates Jinja2 escapam conteúdo; CSS local não depende de CDN. Migrações em `migrations/`, testes em `tests/`.
 
 Datas no SQLite são armazenadas sem offset e representam UTC; a interface identifica UTC explicitamente. Protocolo usa UUID v4 completo com prefixo HD-. A confirmação de abertura permanece acessível somente ao autor autenticado. A listagem `/chamados` e o detalhe `/chamados/<id>/detalhes` autorizam solicitantes apenas aos próprios registros e técnicos a todos.
 
-Para futuras alterações de esquema, gere uma nova revisão com Flask-Migrate e revise-a antes de aplicar; não modifique a revisão já entregue. A migração da Sprint 2 preserva chamados anteriores com prioridade Média. O fluxo é Aberto → Em atendimento → Concluído; solução com 1 a 5.000 caracteres após remover espaços externos e conclusão UTC são obrigatórias ao concluir. Concluído é terminal, inclusive para prioridade. Cada mudança de status cria um evento com autor, data UTC e valores anterior/novo na mesma transação. A versão do chamado impede sobreposição de alterações concorrentes; em conflito, a página pede revisão dos dados atualizados. O catálogo do Kanban aceita novos IDs e atualizações de metadados, preservando colunas e tarefas adicionais.
+Para futuras alterações de esquema, gere uma nova revisão com Flask-Migrate e revise-a antes de aplicar; não modifique a revisão já entregue. A migração da Sprint 2 preserva chamados anteriores com prioridade Média. O fluxo é Aberto → Em atendimento → Concluído; solução com 1 a 5.000 caracteres após remover espaços externos e conclusão UTC são obrigatórias ao concluir. Concluído é terminal, inclusive para prioridade. Cada mudança de status cria um evento com autor, data UTC e valores anterior/novo na mesma transação. A versão do chamado impede sobreposição de alterações concorrentes; em conflito, a página pede revisão dos dados atualizados. A migração da Sprint 3 cria TicketNote sem modificar chamados ou StatusEvent. O detalhe reúne eventos e anotações em ordem de data UTC; empates são resolvidos por tipo (status antes de anotação) e identificador. Anotações têm de 1 a 5.000 caracteres, não têm edição/exclusão e podem ser acrescentadas após a conclusão sem alterar o atendimento. O painel `/indicadores` é exclusivo do técnico e agrega somente chamados, com valores zero para status/prioridades ausentes. O catálogo do Kanban aceita novos IDs e atualizações de metadados, preservando colunas e tarefas adicionais.
 
 ## Configuração local de demonstração e publicação real
 
@@ -108,24 +111,24 @@ Uma chave externa pode ser fornecida como `SECRET_KEY` (mínimo 32 caracteres al
 2. Como solicitante, tente senha incorreta, entre e abra um chamado da categoria Rede. Mostre a validação obrigatória de campos.
 3. Envie dados válidos. Mostre protocolo, autor implícito, status Aberto e abertura UTC. Atualize a confirmação para comprovar PRG.
 4. Saia e mostre que a URL privada exige login.
-5. Entre como técnico, consulte chamados e combine filtros. Abra um detalhe, defina prioridade, inicie atendimento e conclua com solução. Mostre o bloqueio de edição após concluir e o quadro acadêmico separado.
+5. Entre como técnico, consulte chamados e combine filtros. Abra um detalhe, defina prioridade, inicie atendimento, registre uma anotação e conclua com solução. Mostre histórico, indicadores e o quadro acadêmico separado.
 6. Recrie os containers sem apagar volumes e confirme que o quadro persiste.
-7. Apresente os testes, os desenhos UML e os itens futuros no backlog, delimitando a interface de histórico e os indicadores da Sprint 3.
+7. Volte ao solicitante e mostre o histórico do próprio chamado. Use o roteiro do vídeo final e confira as pendências de gravação, apresentação e postagem no checklist do LEX.
 
 
 ## Gerar o documento de entrega
 
-As fontes são `docs/entrega-sprint-1.md` e `docs/entrega-sprint-2.md`. Cada DOCX e PDF é produzido em sequência a partir do mesmo Markdown e das imagens nele referenciadas:
+As fontes são `docs/entrega-sprint-1.md`, `docs/entrega-sprint-2.md` e `docs/entrega-sprint-3.md`. Cada DOCX e PDF é produzido em sequência a partir do mesmo Markdown e das imagens nele referenciadas:
 
 ```bash
-./scripts/build-delivery-docs.sh 2
+./scripts/build-delivery-docs.sh 3
 ```
 
 O script constrói uma ferramenta opcional em container, separada da aplicação, com Pandoc, python-docx e LibreOffice. Aplica apenas formatação ao DOCX e exporta esse arquivo para PDF. Requer Docker e acesso à rede na primeira construção; não altera banco, código ou configuração da aplicação. A versão entregue usou Pandoc 2.17.1.1, python-docx 1.2.0 e LibreOffice 7.4.7.2. A imagem base é Python 3.13.7 em Debian Bookworm; pacotes da distribuição podem receber atualizações em construções futuras, portanto confira novamente a paginação após regenerar.
 
-O argumento `1` gera a entrega histórica da Sprint 1; sem argumento, o script também seleciona a Sprint 1. A entrega da Sprint 2 utiliza páginas em paisagem para sequências e classes.
+Os argumentos `1` e `2` geram as entregas históricas correspondentes; sem argumento, o script seleciona a Sprint 1. As consolidações das Sprints 2 e 3 usam páginas em paisagem para os desenhos maiores. Não regenere os documentos históricos sem necessidade.
 
-A captura em `docs/figures/` contém somente um chamado sintético de ensaio. Os diagramas com prefixo `entrega-` são versões de leitura em A4 dos desenhos detalhados preservados; `scripts/render-diagrams.sh` renderiza ambos os conjuntos. O prefixo `sprint-2-` identifica os desenhos corrigidos e novos da consolidação. Os documentos contêm somente a redação final revisada.
+A captura em `docs/figures/` contém somente um chamado sintético de ensaio. Os diagramas com prefixo `entrega-` são versões de leitura em A4 dos desenhos detalhados preservados; `scripts/render-diagrams.sh` renderiza ambos os conjuntos. Os prefixos `sprint-2-` e `sprint-3-` identificam as respectivas consolidações; a entrega final reutiliza os desenhos anteriores cujo fluxo foi preservado. Os documentos contêm somente a redação final revisada.
 
 
 ## Verificação de navegador da Sprint 2
@@ -141,3 +144,20 @@ HELPDESK_PORT=8082 docker compose -p helpdesk-sprint2-check down
 ```
 
 O ensaio insere dados sintéticos no volume de teste. Use um projeto novo no primeiro ensaio para conferir o estado vazio. Capturas e referência de persistência ficam em `artifacts/sprint-2/`, ignorado pelo Git. Não execute sobre o volume de uso normal.
+
+
+## Verificação de navegador da Sprint 3
+
+O primeiro ensaio exige projeto e volume novos para conferir indicadores vazios. Se já executou o exemplo, escolha outro nome de projeto; não apague volumes para repetir. Use as dependências opcionais de navegador descritas acima:
+
+```bash
+HELPDESK_PORT=8083 docker compose -p helpdesk-sprint3-local-check up -d --build --wait
+NODE_PATH=/tmp/helpdesk-browser/node_modules CHECK_COMPOSE_PROJECT=helpdesk-sprint3-local-check CHECK_BASE_URL=http://localhost:8083 node scripts/sprint3-check.cjs
+HELPDESK_PORT=8083 docker compose -p helpdesk-sprint3-local-check up -d --force-recreate --wait
+NODE_PATH=/tmp/helpdesk-browser/node_modules CHECK_COMPOSE_PROJECT=helpdesk-sprint3-local-check CHECK_BASE_URL=http://localhost:8083 node scripts/sprint3-check.cjs --verify-persistence
+docker compose -p helpdesk-sprint3-local-check down
+```
+
+O ensaio insere somente dados sintéticos. Capturas e referência de persistência ficam em `artifacts/sprint-3/`, ignorado pelo Git. Ele não deve usar o volume da instância de demonstração normal. O script recupera credenciais somente em memória e não as publica.
+
+Para backup consistente, use `docker compose exec app flask backup-db /data/backups/entrega.sqlite`. O comando não sobrescreve arquivos e não copia diretamente o banco ativo. O procedimento completo, incluindo restauração em volume novo, está em [backup-restauracao.md](docs/backup-restauracao.md).

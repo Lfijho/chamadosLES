@@ -17,8 +17,8 @@ from docx.shared import Cm, Pt, RGBColor
 
 ROOT = Path.cwd()
 SPRINT = int(os.environ.get("DOCUMENT_SPRINT", "1"))
-if SPRINT not in (1, 2):
-    raise ValueError("Informe a Sprint 1 ou 2.")
+if SPRINT not in (1, 2, 3):
+    raise ValueError("Informe a Sprint 1, 2 ou 3.")
 SOURCE = ROOT / f"docs/entrega-sprint-{SPRINT}.md"
 OUTPUT = SOURCE.with_suffix(".docx")
 
@@ -82,7 +82,7 @@ def format_document(path):
     doc = Document(path)
     orient_sections(doc)
     for section in doc.sections:
-        section.top_margin = section.bottom_margin = Cm(1.2 if SPRINT == 2 else 1.65)
+        section.top_margin = section.bottom_margin = Cm(1.2 if SPRINT >= 2 else 1.65)
         section.left_margin = section.right_margin = Cm(1.7)
         section.header_distance = section.footer_distance = Cm(0.7)
     section = doc.sections[0]
@@ -143,7 +143,7 @@ def format_document(path):
         blob = doc.part.related_parts[relationship].blob
         if blob.startswith(b"\x89PNG\r\n\x1a\n"):
             width, height = struct.unpack(">II", blob[16:24])
-            if SPRINT == 2:
+            if SPRINT >= 2:
                 spec = image_specs[index]
                 max_width = Cm(float(re.search(r"width=([\d.]+)cm", spec).group(1)))
                 max_height = Cm(float(re.search(r"height=([\d.]+)cm", spec).group(1)))
@@ -219,7 +219,7 @@ def main():
     source = SOURCE.read_text()
     assert len(re.findall(r"^## \d+\. ", source, re.M)) == 7
     images = re.findall(r"!\[[^\]]*\]\(([^)]+)\)", source)
-    assert len(images) == (4 if SPRINT == 1 else 12)
+    assert len(images) == {1: 4, 2: 12, 3: 17}[SPRINT]
     assert all((SOURCE.parent / image).is_file() for image in images)
     with tempfile.TemporaryDirectory(prefix="helpdesk-docs-") as temporary:
         draft = Path(temporary) / "delivery.md"
