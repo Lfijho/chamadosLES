@@ -73,3 +73,10 @@ class StatusForm(FlaskForm):
     def validate_solution(self, field):
         if self.status.data == "Concluído" and not (field.data or "").strip():
             raise ValidationError("Informe a solução para concluir o chamado.")
+
+
+class NoteForm(FlaskForm):
+    content = TextAreaField("Anotação de atendimento", filters=[stripped], validators=[
+        DataRequired(message="Escreva a anotação antes de enviar."),
+        Length(max=5000, message="Use no máximo 5.000 caracteres."),
+    ])

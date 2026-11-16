@@ -115,6 +115,19 @@ class StatusEvent(db.Model):
         "(old_status = 'Em atendimento' AND new_status = 'Concluído')", name="event_transition"),)
 
 
+class TicketNote(db.Model):
+    __tablename__ = "ticket_notes"
+    id = db.Column(db.Integer, primary_key=True)
+    ticket_id = db.Column(db.String(36), db.ForeignKey("tickets.id"), nullable=False, index=True)
+    author_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    occurred_at = db.Column(db.DateTime, nullable=False, default=utcnow)
+    ticket = db.relationship(Ticket)
+    author = db.relationship(User)
+    __table_args__ = (db.CheckConstraint(
+        "length(trim(content)) BETWEEN 1 AND 5000", name="note_content_length"),)
+
+
 class Task(db.Model):
     __tablename__ = "tasks"
     id = db.Column(db.String(20), primary_key=True)

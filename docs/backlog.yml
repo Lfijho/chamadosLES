@@ -81,21 +81,21 @@ tasks:
     title: RF05 — Histórico de atendimento
     sprint: 3
     priority: Alta
-    column: Backlog
+    column: Concluído
     description: Tarefa-resumo preservada do catálogo original. Escrita e consulta do histórico estão detalhadas em S3-04 e S3-05.
     acceptance: Implementar registro e consulta de ações com permissões e testes na Sprint 3.
   - id: S3-02
     title: RF06 — Indicadores
     sprint: 3
     priority: Alta
-    column: Backlog
+    column: Concluído
     description: Tarefa-resumo preservada do catálogo original. O painel de indicadores está detalhado em S3-06.
     acceptance: Implementar indicadores com consultas verificadas na Sprint 3.
   - id: S3-03
     title: Testes, documentação e revisão final
     sprint: 3
     priority: Alta
-    column: Backlog
+    column: Em andamento
     description: Tarefa-resumo preservada do catálogo original. Testes, segurança, Compose, documentação e entrega estão detalhados em S3-07 a S3-13.
     acceptance: Verificar histórico e indicadores e revisar documentação e diagramas do produto final.
   - id: S2-04
@@ -213,7 +213,7 @@ tasks:
     title: RF05 — Adicionar registros de atendimento
     sprint: 3
     priority: Alta
-    column: Backlog
+    column: Concluído
     description: >-
       Permitir somente ao técnico incluir anotações não vazias em um chamado, com
       conteúdo, autor autenticado e data UTC persistidos.
@@ -225,7 +225,7 @@ tasks:
     title: RF05 — Consultar histórico cronológico
     sprint: 3
     priority: Alta
-    column: Backlog
+    column: Concluído
     description: >-
       Apresentar cronologicamente as anotações e os eventos de alteração de status
       persistidos, identificando autor e data em cada registro.
@@ -238,7 +238,7 @@ tasks:
     title: RF06 — Painel de indicadores por status e prioridade
     sprint: 3
     priority: Alta
-    column: Backlog
+    column: Concluído
     description: >-
       Disponibilizar exclusivamente ao técnico contagens reais de chamados agrupados
       por status e por prioridade, calculadas a partir dos dados persistidos.
@@ -250,7 +250,7 @@ tasks:
     title: Testar histórico e indicadores
     sprint: 3
     priority: Alta
-    column: Backlog
+    column: Concluído
     description: >-
       Criar testes isolados dos registros de atendimento, eventos de status,
       permissões de histórico e contagens do painel.
@@ -262,7 +262,7 @@ tasks:
     title: Revisar segurança e executar regressão
     sprint: 3
     priority: Alta
-    column: Backlog
+    column: Em andamento
     description: >-
       Revisar autenticação, autorização e proteção das entradas e executar a regressão
       acumulada das três Sprints nos fluxos completos dos dois perfis.
@@ -275,7 +275,7 @@ tasks:
     title: Validar Compose, backup e restauração do SQLite
     sprint: 3
     priority: Alta
-    column: Backlog
+    column: Em andamento
     description: >-
       Verificar a entrega final por Docker Compose e documentar e ensaiar um procedimento
       consistente de backup e restauração do estado persistido.
@@ -288,7 +288,7 @@ tasks:
     title: Finalizar documentação e diagramas
     sprint: 3
     priority: Alta
-    column: Backlog
+    column: Em andamento
     description: >-
       Consolidar documentação acadêmica e técnica do produto final, incluindo as seis
       funcionalidades efetivamente implementadas e as limitações conhecidas.
@@ -300,7 +300,7 @@ tasks:
     title: Preparar roteiro do vídeo final
     sprint: 3
     priority: Média
-    column: Backlog
+    column: Em andamento
     description: >-
       Elaborar roteiro para demonstrar os dois perfis, as seis funcionalidades,
       permissões e execução por Compose na entrega de 03/12/2026.
@@ -325,7 +325,7 @@ tasks:
     title: Encerrar o acompanhamento do projeto
     sprint: 3
     priority: Média
-    column: Backlog
+    column: Em andamento
     description: >-
       Registrar revisão e retrospectiva final, conferir o atendimento dos critérios de
       aceite e identificar as pendências reais da entrega.

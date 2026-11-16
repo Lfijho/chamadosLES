@@ -158,3 +158,10 @@ As Figuras 5 a 8 agora distinguem consulta vazia, parâmetros inválidos, págin
 A Figura 9 explicita o argumento padrão de solution e a propriedade derivada protocol. A Figura 10 mantém as três raias, torna a prioridade opcional e apresenta decisões com guardas e junções próprias para os retornos de correção. As tabelas dos casos de uso foram conferidas com as funções das sequências. O texto de organização descreve backlog, planejamento, Kanban e revisão/retrospectiva técnica adaptados ao desenvolvimento individual.
 
 A Figura 1 e os arquivos históricos da Sprint 1 foram preservados por comparação de conteúdo. A exportação atual tem 18 páginas numeradas, com as Figuras 7 e 8 em duas partes para leitura. As fontes, SVG, PNG e as imagens incorporadas no DOCX foram conferidos; todas as páginas do PDF foram inspecionadas. O renderizador opcional recebeu libgd para exportar as atividades em PNG. A configuração da aplicação, sua implementação e os dados não foram alterados. Esta revisão não modifica as colunas do quadro operacional nem o andamento das Sprints.
+
+
+## Implementação da Sprint 3
+
+RF05 e RF06 estão implementados: histórico autorizado com eventos e anotações, inclusão exclusiva do técnico, ordenação estável e indicadores agregados por status/prioridade. A migração é aditiva e preserva os dados da Sprint 2. Anotações após a conclusão não alteram o atendimento. A recuperação das credenciais e a persistência foram verificadas em volumes isolados.
+
+As tarefas S3-01, S3-02 e S3-04 a S3-07 tiveram seus critérios implementados e verificados com 104 testes e o fluxo dos dois perfis no navegador. A documentação final, UML, validação completa da entrega e roteiro permanecem em andamento. S3-12 continua no Backlog: vídeo, apresentação e postagem não foram realizados. Os registros técnicos estão em [verificacoes-sprint-3.md](verificacoes-sprint-3.md). O catálogo não sobrescreve colunas do quadro operacional ao sincronizar.

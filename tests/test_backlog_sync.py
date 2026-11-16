@@ -15,7 +15,7 @@ def catalog():
     return yaml.safe_load((Path(__file__).resolve().parents[1] / "docs/backlog.yml").read_text())
 
 
-def test_future_catalog_has_complete_metadata_and_backlog():
+def test_catalog_has_complete_metadata_and_pending_final_submission():
     content = catalog()
     tasks = content["tasks"]
     assert len({task["id"] for task in tasks}) == len(tasks) == 33
@@ -26,7 +26,7 @@ def test_future_catalog_has_complete_metadata_and_backlog():
     medium = {"S2-12", "S3-11", "S3-13"}
     for task_id, task in detailed.items():
         assert task["column"] in {"Backlog", "Em andamento", "Concluído"}
-        if task["sprint"] == 3:
+        if task_id == "S3-12":
             assert task["column"] == "Backlog"
         assert task["sprint"] == int(task_id[1])
         assert task["title"].strip() and len(task["title"]) <= 160

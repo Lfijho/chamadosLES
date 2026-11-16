@@ -756,3 +756,65 @@ textarea[aria-invalid="true"] {
     margin-bottom: 24px;
   }
 }
+
+.ticket-history {
+  margin-top: 48px;
+  max-width: 80ch;
+  scroll-margin-top: 24px;
+}
+.timeline {
+  margin: 24px 0;
+  padding: 0;
+  list-style: none;
+}
+.timeline li {
+  padding-block: 20px;
+  border-top: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+.timeline h3 {
+  margin-bottom: 8px;
+}
+.history-meta {
+  font-size: .875rem;
+  color: var(--muted);
+}
+.history-empty {
+  padding-block: 20px;
+}
+.note-form {
+  margin-top: 32px;
+}
+.indicators-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+.indicator-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+}
+.indicator-table caption {
+  text-align: left;
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.indicator-table th,
+.indicator-table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+.indicator-table thead {
+  background: var(--tint);
+}
+.indicator-table td {
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 700px) {
+  .indicators-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

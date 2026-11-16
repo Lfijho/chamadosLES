@@ -200,7 +200,7 @@ def test_login_field_limits(client):
         data = {"email": "solicitante@example.com", "password": "test-password", field: value,
                 "csrf_token": csrf(client, "/login")}
         assert client.post("/login", data=data).status_code == 422
-    assert client.post("/login", data=b"x" * 40000, content_type="application/x-www-form-urlencoded").status_code == 413
+    assert client.post("/login", data=b"x" * (client.application.config["MAX_CONTENT_LENGTH"] + 1), content_type="application/x-www-form-urlencoded").status_code == 413
 
 
 def test_secret_persisted_and_https_configuration(tmp_path, monkeypatch):

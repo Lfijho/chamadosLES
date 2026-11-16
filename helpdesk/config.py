@@ -35,6 +35,6 @@ def configuration():
         SESSION_COOKIE_SECURE=os.environ.get("COOKIE_SECURE", "false").lower() == "true",
         PERMANENT_SESSION_LIFETIME=timedelta(hours=8),
         SESSION_REFRESH_EACH_REQUEST=False,
-        MAX_CONTENT_LENGTH=32 * 1024,
+        MAX_CONTENT_LENGTH=64 * 1024,
         WTF_CSRF_TIME_LIMIT=8 * 60 * 60,
     )
