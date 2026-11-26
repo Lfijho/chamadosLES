@@ -49,3 +49,12 @@ Roteiro do vídeo e checklist do LEX estão preparados. As tarefas de código, t
 
 
 O catálogo final passou novamente nos quatro testes de sincronização. No quadro operacional de localhost:8080, o técnico atualizou 12 tarefas da Sprint 3 para Concluído e manteve S3-12 no Backlog. Duas execuções subsequentes do seed preservaram integralmente as colunas, as contas, chamados, eventos, anotações e arquivos de estado; não houve duplicação. Colunas das Sprints 1 e 2 foram preservadas.
+
+
+## Revisão e retrospectiva técnica preservadas
+
+A revisão final compara as seis funcionalidades com os fluxos dos dois perfis, os registros persistidos e os diagramas. A implementação manteve o histórico de status da Sprint 2 e acrescentou anotações sem reconstruir eventos ausentes. As contagens consultam chamados sem juntá-los ao histórico, evitando multiplicação dos totais.
+
+A revisão da interface encontrou uma repetição do histórico no título HTML. A correção recebeu teste específico e foi conferida novamente no navegador. O trabalho reforçou a necessidade de comparar o documento, os desenhos e a aplicação renderizada, além de conferir a execução. Gravação, apresentação e avaliação acadêmica não são substituídas por essa revisão técnica.
+
+O roteiro foi posteriormente corrigido a partir do trecho da atividade informado pelo responsável: o vídeo de 03/12 apresenta as atualizações da Sprint 3. As Sprints 1 e 2 já foram apresentadas. O roteiro cronometrado cobre RF05/RF06 e os artefatos documentais atualizados; 6min30 é uma sugestão, não uma duração exigida. O documento acadêmico consolidado e a implementação foram preservados.

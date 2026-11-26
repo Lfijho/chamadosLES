@@ -13,13 +13,13 @@ Projeto: HelpDesk. Responsável: Leandro Pinzon Filho. Prazo previsto: 03/12/202
 
 ## Ações que dependem da realização efetiva
 
-- [ ] Gravar o vídeo demonstrando os dois perfis e RF01 a RF06.
+- [ ] Gravar o vídeo das atualizações da Sprint 3: RF05, RF06 e documentação atualizada, usando os dois perfis para demonstrar as novas permissões.
 - [ ] Rever o vídeo e confirmar que não expõe credenciais ou dados pessoais reais.
-- [ ] Realizar a apresentação ao professor.
+- [ ] Realizar a apresentação da Sprint 3 conforme a atividade.
 - [ ] Postar PDF, implementação e vídeo no LEX, conforme o formato solicitado pela disciplina.
 - [ ] Conferir os arquivos após a postagem e guardar a confirmação do envio.
 
-Nenhuma gravação, apresentação ou postagem foi realizada nesta implementação. S3-12 permanece pendente no quadro. Preparar este checklist ou o roteiro não conclui essas ações.
+As Sprints 1 e 2 já foram apresentadas, conforme informado pelo responsável. Gravação, apresentação e postagem referentes à Sprint 3 permanecem pendentes em S3-12. Preparar este checklist ou o roteiro não conclui essas ações.
 
 Depois do último commit, um pacote de arquivos versionados pode ser gerado sem incluir estado local:
 

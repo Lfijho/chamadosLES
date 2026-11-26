@@ -177,3 +177,12 @@ S3-12 permanece no Backlog. Preparar e conferir arquivos não equivale a gravar,
 
 
 No fechamento deste bloco, o quadro operacional também foi atualizado pelo fluxo autenticado do técnico: 12 tarefas da Sprint 3 concluídas e S3-12 no Backlog. A sincronização foi executada duas vezes, sem duplicação ou sobrescrita das colunas; os dados de negócio e as Sprints anteriores foram preservados.
+
+
+## Ajuste do escopo do vídeo da Sprint 3
+
+O responsável informou o trecho da atividade e confirmou que as Sprints 1 e 2 já foram apresentadas. O roteiro anterior abrangia o projeto inteiro e foi corrigido para mostrar as atualizações da Sprint 3: RF05/RF06, requisitos, casos de uso e especificações, sequências, classes, atividades e implementação. A distribuição de 00:00 a 06:30 é sugerida; o trecho da atividade não define duração.
+
+S3-11 teve descrição e aceite alinhados a esse escopo. S3-12 permanece no Backlog, e nenhuma coluna existente é alterada pela sincronização do catálogo. O checklist distingue as apresentações anteriores da entrega ainda pendente da Sprint 3. Código, diagramas e documento consolidado foram preservados.
+
+A conferência validou os dez intervalos contínuos de 00:00 a 06:30, a cobertura dos artefatos pedidos e os nomes das funções. Os quatro testes do catálogo/sincronização passaram com banco temporário. A aplicação, os diagramas e os arquivos Markdown/DOCX/PDF consolidados das três Sprints permaneceram inalterados.

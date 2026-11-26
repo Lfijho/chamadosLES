@@ -302,12 +302,14 @@ tasks:
     priority: Média
     column: Concluído
     description: >-
-      Elaborar roteiro para demonstrar os dois perfis, as seis funcionalidades,
-      permissões e execução por Compose na entrega de 03/12/2026.
+      Elaborar roteiro cronometrado das atualizações da Sprint 3 para a entrega de
+      03/12/2026: RF05, RF06, requisitos, casos de uso e especificações, sequências,
+      classes, atividades e implementação. As Sprints 1 e 2 já foram apresentadas.
     acceptance: >-
-      Roteiro cobre os fluxos dos dois perfis, RF01 a RF06, tentativas não autorizadas e
-      inicialização por Compose. A preparação do roteiro não constitui evidência de
-      gravação ou postagem do vídeo e não conclui S3-12.
+      Roteiro apresenta as atualizações documentais e a implementação de RF05 e RF06,
+      com os dois perfis para demonstrar as novas permissões. Tempos são sugeridos,
+      pois a atividade não informa duração. Não reapresentar RF01 a RF04. Preparar
+      o roteiro não constitui gravação ou postagem e não conclui S3-12.
   - id: S3-12
     title: Gravar vídeo, apresentar e entregar pacote final no LEX
     sprint: 3
