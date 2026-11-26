@@ -1,7 +1,9 @@
 import json
+from contextlib import closing
 import os
 from pathlib import Path
 import secrets
+import sqlite3
 import click
 import yaml
 from flask import current_app
@@ -53,7 +55,39 @@ def seed():
     db.session.commit()
 
 
+def backup_database(output):
+    """Snapshot consistente do SQLite pela API de backup, sem sobrescrever arquivos."""
+    if db.engine.url.get_backend_name() != "sqlite":
+        raise click.ClickException("Este comando requer SQLite.")
+    source = Path(db.engine.url.database).resolve()
+    output = output.resolve()
+    if output == source:
+        raise click.ClickException("O destino não pode ser o banco em uso.")
+    output.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+    try:
+        fd = os.open(output, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+    except FileExistsError as error:
+        raise click.ClickException("O destino já existe. Escolha um novo arquivo.") from error
+    os.close(fd)
+    try:
+        with closing(sqlite3.connect(source.as_uri() + "?mode=ro", uri=True)) as origin:
+            with closing(sqlite3.connect(output)) as destination:
+                origin.backup(destination)
+                if destination.execute("PRAGMA integrity_check").fetchone()[0] != "ok":
+                    raise sqlite3.DatabaseError("Verificação de integridade recusada.")
+    except (OSError, sqlite3.Error) as error:
+        output.unlink(missing_ok=True)
+        raise click.ClickException("Não foi possível criar uma cópia consistente do banco.") from error
+
+
 def register_commands(app):
+    @app.cli.command("backup-db")
+    @click.argument("output", type=click.Path(path_type=Path))
+    def backup_db(output):
+        """Cria um snapshot consistente do SQLite no arquivo OUTPUT (privado)."""
+        backup_database(output)
+        click.echo("Backup consistente criado. Guarde o arquivo em local privado.")
+
     @app.cli.command("seed")
     def seed_command():
         """Provisiona a demonstração e sincroniza o catálogo sem redefinir estado."""

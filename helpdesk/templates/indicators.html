@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Indicadores{% endblock %}
+{% block content %}
+<div class="page-heading"><h1>Indicadores dos chamados</h1><p>Contagens dos chamados registrados, atualizadas a cada acesso a esta página.</p></div>
+<div class="indicators-layout">
+  {% for group, caption, column in [('status', 'Chamados por status', 'Status'), ('priority', 'Chamados por prioridade', 'Prioridade')] %}
+  <table class="indicator-table">
+    <caption>{{ caption }}</caption>
+    <thead><tr><th scope="col">{{ column }}</th><th scope="col">Quantidade</th></tr></thead>
+    <tbody>{% for name, count in counts[group].items() %}<tr><th scope="row">{{ name }}</th><td>{{ count }}</td></tr>{% endfor %}</tbody>
+  </table>
+  {% endfor %}
+</div>
+<p class="scope-note"><a href="{{ url_for('web.ticket_list') }}">Consultar chamados</a> para abrir os detalhes e organizar o atendimento.</p>
+{% endblock %}

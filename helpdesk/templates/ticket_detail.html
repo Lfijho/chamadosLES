@@ -3,7 +3,7 @@
 {% block title %}Detalhes do chamado{% endblock %}
 {% block content %}
 <div class="page-heading"><a href="{{ url_for('web.ticket_list') }}">Voltar aos chamados</a><h1 class="detail-title">{{ ticket.title }}</h1><p class="protocol">{{ ticket.protocol }}</p></div>
-{% if priority_form.errors or status_form.errors %}<div class="notice error" role="alert">A alteração não foi salva. Revise os campos indicados.{% if priority_form.version.errors or status_form.version.errors %} Atualize a página e tente novamente.{% endif %}</div>{% endif %}
+{% if priority_form.errors or status_form.errors or note_form.errors %}<div class="notice error" role="alert">A alteração não foi salva. Revise os campos indicados.{% if priority_form.version.errors or status_form.version.errors %} Atualize a página e tente novamente.{% endif %}</div>{% endif %}
 <div class="detail-layout">
   <section class="ticket-summary" aria-labelledby="dados-chamado">
     <div class="summary-header"><h2 id="dados-chamado">Dados do chamado</h2><span class="status">{{ ticket.status }}</span></div>
@@ -30,5 +30,30 @@
   </aside>
   {% endif %}
 </div>
-{% if ticket.status == 'Concluído' %}<p class="scope-note">Atendimento concluído. Os dados ficam disponíveis para consulta.</p>{% elif g.user.role == 'solicitante' %}<p class="scope-note">A equipe técnica atualiza a prioridade e o status do atendimento.</p>{% endif %}
+{% if ticket.status == 'Concluído' %}<p class="scope-note">Atendimento concluído. Status, prioridade e solução ficam disponíveis somente para consulta.</p>{% elif g.user.role == 'solicitante' %}<p class="scope-note">A equipe técnica atualiza a prioridade e o status do atendimento.</p>{% endif %}
+<section id="historico" class="ticket-history" aria-labelledby="titulo-historico">
+  <h2 id="titulo-historico">Histórico do chamado</h2>
+  <p class="field-hint">Registros em ordem cronológica. Todas as datas estão em UTC.</p>
+  {% if history %}
+  <ol class="timeline" role="list">
+    {% for entry in history %}
+    <li>
+      <h3>{{ 'Mudança de status' if entry.kind == 'status' else 'Anotação de atendimento' }}</h3>
+      <p class="history-meta"><time datetime="{{ entry.occurred_at.isoformat() }}Z">{{ entry.occurred_at.strftime('%d/%m/%Y às %H:%M:%S') }} UTC</time> · {{ entry.author }}</p>
+      {% if entry.kind == 'status' %}<p>{{ entry.old_status }} → {{ entry.new_status }}</p>
+      {% else %}<p class="description">{{ entry.content }}</p>{% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+  {% else %}<p class="history-empty">Ainda não há registros de atendimento neste chamado. O histórico mostrará as anotações e mudanças de status registradas a partir de agora.</p>{% endif %}
+  {% if g.user.role == 'tecnico' %}
+  <form class="ticket-form note-form" method="post" action="{{ url_for('web.ticket_note', ticket_id=ticket.id) }}">
+    {{ note_form.csrf_token(id='note-csrf') }}
+    <h3>Adicionar anotação</h3>
+    <p>Registre uma ação ou observação do atendimento. Anotações não podem ser editadas ou excluídas e não alteram os dados do chamado, inclusive após a conclusão.</p>
+    {{ field(note_form.content, 'Use até 5.000 caracteres. Não inclua senhas ou informações confidenciais.', {'required': true, 'maxlength': 5000, 'rows': 5}) }}
+    <button class="button button-primary" type="submit">Registrar anotação</button>
+  </form>
+  {% endif %}
+</section>
 {% endblock %}

@@ -2,8 +2,8 @@ from flask import Blueprint, abort, flash, g, redirect, render_template, request
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm.exc import StaleDataError
-from .forms import LoginForm, MoveTaskForm, TicketForm, TicketFilterForm, PriorityForm, StatusForm
-from .models import COLUMNS, db, LoginBucket, LoginSession, StatusEvent, Task, Ticket, User, utcnow
+from .forms import LoginForm, MoveTaskForm, TicketForm, TicketFilterForm, PriorityForm, StatusForm, NoteForm
+from .models import COLUMNS, db, LoginBucket, LoginSession, StatusEvent, Task, Ticket, TicketNote, User, utcnow
 from .security import (authenticate, bucket_keys, failed_login, is_limited,
                        require_user, safe_next, start_session, token_hash)
 from . import tickets
@@ -104,13 +104,16 @@ def ticket_list():
                            filtered=bool(form.status.data or form.category.data)), 200 if valid else 422
 
 
-def ticket_detail_response(ticket, priority_form=None, status_form=None, code=200):
+def ticket_detail_response(ticket, priority_form=None, status_form=None, code=200, note_form=None):
     priority_form = priority_form or PriorityForm(formdata=None, priority=ticket.priority, version=ticket.version)
     next_status = {"Aberto": "Em atendimento", "Em atendimento": "Concluído"}.get(ticket.status)
     status_form = status_form or StatusForm(formdata=None, status=next_status, version=ticket.version)
     status_form.status.choices = [(next_status, next_status)] if next_status else []
+    note_form = note_form if note_form is not None else NoteForm(formdata=None)
+    history = tickets.get_history(ticket, g.user)
     return render_template("ticket_detail.html", ticket=ticket, priority_form=priority_form,
-                           status_form=status_form, next_status=next_status), code
+                           status_form=status_form, next_status=next_status,
+                           note_form=note_form, history=history), code
 
 
 @bp.get("/chamados/<uuid:ticket_id>/detalhes")
@@ -174,6 +177,34 @@ def ticket_status(ticket_id):
     return redirect(url_for("web.ticket_detail", ticket_id=ticket.id), code=303)
 
 
+@bp.post("/chamados/<uuid:ticket_id>/anotacoes")
+@require_user("tecnico")
+def ticket_note(ticket_id):
+    ticket = tickets.get_ticket(ticket_id, g.user)
+    if ticket is None:
+        abort(404)
+    form = NoteForm()
+    if not form.validate_on_submit():
+        return ticket_detail_response(ticket, note_form=form, code=422)
+    try:
+        tickets.add_note(ticket, g.user, form.content.data)
+    except ValueError as error:
+        db.session.rollback()
+        form.content.errors.append(str(error))
+        return ticket_detail_response(ticket, note_form=form, code=422)
+    except SQLAlchemyError:
+        db.session.rollback()
+        abort(500)
+    flash("Anotação registrada no histórico.", "success")
+    return redirect(url_for("web.ticket_detail", ticket_id=ticket.id, _anchor="historico"), code=303)
+
+
+@bp.get("/indicadores")
+@require_user("tecnico")
+def indicators():
+    return render_template("indicators.html", counts=tickets.get_indicators(g.user))
+
+
 @bp.get("/kanban")
 @require_user("tecnico")
 def kanban():
@@ -203,6 +234,7 @@ def health():
         db.session.execute(db.select(Task.id).limit(1)).first()
         db.session.execute(db.select(Ticket.priority).limit(1)).first()
         db.session.execute(db.select(StatusEvent.id).limit(1)).first()
+        db.session.execute(db.select(TicketNote.id).limit(1)).first()
     except SQLAlchemyError:
         db.session.rollback()
         return {"status": "unavailable"}, 503
