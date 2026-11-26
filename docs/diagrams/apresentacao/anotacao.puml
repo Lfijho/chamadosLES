@@ -1,0 +1,51 @@
+@startuml
+hide footbox
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 160
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 24
+skinparam ParticipantPadding 5
+skinparam maxMessageSize 600
+skinparam sequenceMessageAlign center
+skinparam ArrowColor #18353e
+skinparam ParticipantBackgroundColor #e8f3ee
+skinparam ParticipantBorderColor #126759
+skinparam LifeLineBorderColor #aabbb4
+skinparam sequenceGroupBackgroundColor #f5f8f6
+skinparam sequenceMessageSpacing 4
+actor "Técnico" as A
+boundary "tela:ticket_detail.html" as I
+participant "rotas:helpdesk.routes" as R <<módulo Flask>>
+participant "form:NoteForm" as F
+participant "operacoes:helpdesk.tickets" as C <<módulo>>
+participant "db.session:Session" as P <<infraestrutura>>
+A -> I : Escrever anotação e enviar
+I -> R : ticket_note(ticket_id)
+activate R
+R -> C : get_ticket(ticket_id, user)
+activate C
+C --> R : Ticket autorizado
+deactivate C
+R -> F : validate_on_submit()
+activate F
+F --> R : válido ou erros
+deactivate F
+alt formulário válido
+ R -> C : add_note(ticket, user, content)
+ activate C
+ note right of C : Cria TicketNote com autor e UTC.
+ C -> P : add(note)
+ C -> P : commit()
+ activate P
+ P --> C : confirmação
+ deactivate P
+ C --> R : TicketNote
+ deactivate C
+ R --> I : Redirecionar ao detalhe e histórico
+else formulário inválido
+ R --> I : Orientar correção; sem inclusão
+end
+deactivate R
+I --> A : Apresentar resultado
+@enduml

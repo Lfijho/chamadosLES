@@ -58,3 +58,13 @@ A revisão final compara as seis funcionalidades com os fluxos dos dois perfis, 
 A revisão da interface encontrou uma repetição do histórico no título HTML. A correção recebeu teste específico e foi conferida novamente no navegador. O trabalho reforçou a necessidade de comparar o documento, os desenhos e a aplicação renderizada, além de conferir a execução. Gravação, apresentação e avaliação acadêmica não são substituídas por essa revisão técnica.
 
 O roteiro foi posteriormente corrigido a partir do trecho da atividade informado pelo responsável: o vídeo de 03/12 apresenta as atualizações da Sprint 3. As Sprints 1 e 2 já foram apresentadas. O roteiro cronometrado cobre RF05/RF06 e os artefatos documentais atualizados; 6min30 é uma sugestão, não uma duração exigida. O documento acadêmico consolidado e a implementação foram preservados.
+
+## Apresentação de 10 minutos
+
+Foram gerados `docs/apresentacao-helpdesk.html`, `docs/apresentacao-helpdesk.pdf` e o roteiro em `docs/apresentacao/roteiro-10-minutos.md`, com 16 intervalos contínuos totalizando 600 segundos. O conteúdo vem de `slides.json`; o PDF é exportado do HTML. As sete fontes PlantUML de projeção receberam SVG e PNG; a renderização também foi repetida em diretório temporário vazio, produzindo os 14 arquivos. Os desenhos completos já entregues foram preservados.
+
+A conferência no Chromium percorreu os 16 slides em 1280×720: uma seção ativa por vez, imagens carregadas, ausência de conteúdo fora do palco e nenhum erro JavaScript ou pedido HTTP. O PDF foi renderizado em 16 páginas 16:9 e inspecionado visualmente, incluindo a leitura das sequências e dos recortes de atividades. Em 390×844, o palco manteve 390×219,375 pixels, preservando 16:9 com margens, sem reorganizar o conteúdo.
+
+Também foram verificados teclas de navegação, roteiro, abertura/ampliação de diagramas, diagrama completo UC01–UC10, navegação por roda e deslize, edição com persistência local e download do HTML editado. Uma cópia do HTML foi aberta isoladamente em `/tmp`, com requisições HTTP bloqueadas; fontes e imagens continuaram disponíveis. As capturas e relatórios temporários estão em `artifacts/slides/`, ignorado no Git.
+
+A mudança envolve apresentação, fontes de figuras e documentação. Não foi executada nova regressão da aplicação neste bloco, nem foram alterados código, migrações, dados ou documentos acadêmicos anteriores. A inspeção ocorreu em Chromium; outros navegadores e o projetor da apresentação não foram verificados. O roteiro não foi cronometrado com uma fala real do apresentador. Gravação, apresentação e postagem permanecem pendentes.

@@ -75,6 +75,7 @@ PlantUML substitui o diagrams.net inicialmente previsto para permitir fontes ver
 O script constrói `helpdesk-diagrams:1.2025.10` a partir de `plantuml/plantuml:1.2025.10`, acrescentando libgd para a exportação PNG das atividades. A renderização usa um container sem rede, com UID/GID do usuário e acesso somente à pasta de desenhos. Em ambientes sem shell POSIX, construa a imagem com `docker build -f scripts/diagrams/Dockerfile -t helpdesk-diagrams:1.2025.10 .` e execute-a montando `docs/diagrams` em `/work`, com os argumentos `-charset UTF-8 -failfast2 -tsvg *.puml` e a variante `-tpng`. A aplicação e o serviço opcional do Compose permanecem independentes desse comando.
 
 - [Entrega final da Sprint 3](docs/entrega-sprint-3.md): [DOCX editável](docs/entrega-sprint-3.docx) e [PDF final](docs/entrega-sprint-3.pdf).
+- [Slides para apresentação em 10 minutos](docs/apresentacao-helpdesk.html): [PDF dos slides](docs/apresentacao-helpdesk.pdf), [roteiro com falas e tempos](docs/apresentacao/roteiro-10-minutos.md) e [instruções de uso e edição](docs/apresentacao/README.md).
 - [Roteiro cronometrado do vídeo da Sprint 3](docs/roteiro-video-final.md) e [checklist do LEX](docs/checklist-lex.md).
 - [Verificações da Sprint 3](docs/verificacoes-sprint-3.md) e [backup/restauração local](docs/backup-restauracao.md).
 - [Entrega consolidada da Sprint 2](docs/entrega-sprint-2.md): [DOCX editável](docs/entrega-sprint-2.docx) e [PDF](docs/entrega-sprint-2.pdf), com as correções UML e UC01 a UC07.

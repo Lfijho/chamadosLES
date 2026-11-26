@@ -1,0 +1,24 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 160
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 25
+skinparam ActorBorderColor #18353e
+skinparam UsecaseBorderColor #126759
+skinparam UsecaseBackgroundColor #edf5ee
+left to right direction
+actor Solicitante as S
+actor "Técnico" as T
+rectangle HelpDesk {
+ usecase "UC08\nConsultar histórico" as U8
+ usecase "UC09\nAdicionar anotação" as U9
+ usecase "UC10\nConsultar indicadores" as U10
+ U8 -[hidden]down- U9
+ U9 -[hidden]down- U10
+}
+S -- U8
+U8 -- T
+U9 -- T
+U10 -- T
+@enduml

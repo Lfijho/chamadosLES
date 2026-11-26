@@ -1,0 +1,44 @@
+@startuml
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 160
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 24
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #f4f8f5
+skinparam classBorderColor #126759
+skinparam ArrowColor #18353e
+left to right direction
+class User {
+ +id: int
+ +name: str
+ +role: str
+ +check_password(password): bool
+}
+class Ticket {
+ +id: str
+ +title: str
+ +status: str
+ +priority: str
+ +solution: str [0..1]
+ +/protocol: str {readOnly}
+ +set_priority(priority: str): None
+ +change_status(new_status: str, solution: str = ""): None
+}
+class StatusEvent {
+ +id: int
+ +old_status: str
+ +new_status: str
+ +occurred_at: datetime
+}
+class TicketNote #e0f2e5 {
+ +id: int
+ +content: str
+ +occurred_at: datetime
+}
+Ticket "0..*" --> "1" User : requester
+StatusEvent "0..*" --> "1" User : actor
+StatusEvent "0..*" --> "1" Ticket : ticket
+TicketNote "0..*" --> "1" User : author
+TicketNote "0..*" --> "1" Ticket : ticket
+@enduml

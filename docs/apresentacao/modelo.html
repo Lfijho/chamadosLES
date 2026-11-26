@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="Leandro Pinzon Filho">
+<title>HelpDesk — apresentação da Sprint 3</title>
+<style>
+/* === FONTES INCORPORADAS: FUNCIONAMENTO SEM REDE === */
+{{FONTS}}
+/* === PALCO FIXO DE PROJEÇÃO === */
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === TROCA IMEDIATA DE SLIDE E ESCALA; MOVIMENTO SOMENTE NO CONTEÚDO === */
+.slide,.deck-stage{transition:none!important}
+@media(prefers-reduced-motion:reduce){.reveal{transition:none!important;animation:none!important}}
+/* === IDENTIDADE E TIPOGRAFIA === */
+:root{--slide-bg:#f7f9f7;--stage-bg:#101f26;--ink:#142f37;--green:#126759;--mint:#dcece2;--muted:#526a70;--line:#c6d8ce}
+*{box-sizing:border-box}body{font-family:Manrope,sans-serif;color:var(--ink)}
+.slide{padding:80px 100px 86px}.slide h2{font-size:64px;line-height:1.13;letter-spacing:-2.3px;margin:20px 0 36px;font-weight:800}
+p{margin:0}h3{font-size:40px;line-height:1.25;margin:25px 0 20px;letter-spacing:-1.1px}b,strong{font-weight:800}
+.eyebrow,.label{font-size:23px;font-weight:800;letter-spacing:3px;text-transform:uppercase}.eyebrow{color:var(--green)}
+p{font-size:34px;line-height:1.5}.lead{font-size:48px;line-height:1.35;letter-spacing:-1px}.context{font-size:24px;line-height:1.4;color:var(--muted);position:absolute;left:100px;right:100px;bottom:92px}
+.slide-footer{position:absolute;bottom:40px;left:100px;right:100px;display:flex;justify-content:space-between;font-size:20px;color:var(--muted);border-top:1px solid var(--line);padding-top:17px;letter-spacing:.3px}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .3s ease,transform .3s ease}.visible .reveal{opacity:1;transform:none}
+.visible .reveal:nth-child(2){transition-delay:.05s}.visible .reveal:nth-child(3){transition-delay:.1s}
+/* === ABERTURA E ENCERRAMENTO === */
+.title h1{font-size:180px;line-height:1;margin:115px 0 35px;letter-spacing:-9px;font-weight:800}.title .eyebrow{color:var(--ink)}
+.hero-sub{font-size:48px;line-height:1.35;font-weight:600}.date{position:absolute;right:100px;top:80px;font-size:24px;font-weight:800}
+.hero-name{position:absolute;left:100px;bottom:110px;font-size:29px;line-height:1.7;font-weight:800}.hero-name span{font-size:25px;font-weight:400}
+.hero-block{position:absolute;right:0;bottom:0;background:var(--green);color:#eff8ee;width:650px;height:510px;padding:78px 70px;display:flex;flex-direction:column;justify-content:flex-end}.hero-block strong{font-size:100px;letter-spacing:-5px;line-height:1.2}.hero-block span{font-size:25px;letter-spacing:3px;text-transform:uppercase;color:#c9e5d4}.hero-block p{font-size:30px;margin-top:20px}
+.title .slide-footer{display:none}.closing{background:var(--green);color:#f4f8ee}.closing .eyebrow{color:#c7e5d1}.closing h2{font-size:100px;line-height:1.16;margin-top:140px;letter-spacing:-4px}.closing p{font-size:40px;color:#dcebdc;margin-top:42px}.closing-meta{position:absolute;bottom:140px;font-size:28px;line-height:1.7}.closing-tag{position:absolute;right:105px;bottom:150px;font-size:28px}.closing .slide-footer{color:#d8e8df;border-color:#b6d3c244}
+/* === CONTEXTO, ESCOPO E REQUISITOS === */
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-top:60px}.roles article{border-top:3px solid var(--green);padding-top:32px}.roles p{max-width:680px}.roles .label{color:var(--green)}.takeaway{margin-top:54px;font-size:32px;font-weight:600;background:var(--mint);padding:24px 30px}
+.sprints{display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:58px}.sprints article{padding:0 45px 20px 0}.sprints article+article{padding-left:45px;border-left:1px solid var(--line)}.sprints h3{min-height:110px}.number{display:block;font-size:100px;letter-spacing:-5px;line-height:1.1;font-weight:800;color:#9eb4ab;margin-bottom:25px}.sprints .label{font-size:24px;color:var(--muted)}.sprints p{font-size:29px;line-height:1.7}.emphasis .number,.emphasis h3{color:var(--green)}.organization{font-size:28px;line-height:1.7;margin-top:80px;max-width:1670px}
+.requirements{display:grid;grid-template-columns:1fr 1fr;gap:85px;margin-top:55px}.requirements article{padding:35px 0 38px;border-top:3px solid var(--green)}.requirements .label{color:var(--green)}.requirements h3{font-size:52px}.requirements p{max-width:730px}.mini{display:block;font-size:28px;margin-top:32px;color:var(--green);font-weight:600}.rule-strip{margin-top:50px;border-top:1px solid var(--line);padding-top:34px;display:flex;gap:45px}.rule-strip p{font-size:26px;max-width:490px}
+/* === CASOS DE USO E RASTREABILIDADE === */
+.usecase-image{margin:90px 0 55px;height:350px;background:white;display:flex;align-items:center;padding:25px}.usecase-image .diagram-button{width:100%;height:100%}.usecase-rules{display:grid;grid-template-columns:1fr 1fr;gap:65px}.usecase-rules p{font-size:32px}.usecases .context{bottom:142px}.text-button{background:none;color:var(--green);font:600 24px Manrope;border:0;border-bottom:1px solid var(--green);padding:6px 0;cursor:pointer}.complete-uml{position:absolute;bottom:92px;left:100px}
+.specs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:55px;margin-top:58px}.specs article{border-top:3px solid var(--green);padding-top:30px}.specs .label{font-size:20px;letter-spacing:1px;color:var(--green)}.specs h3{font-size:38px;min-height:100px}.specs p{font-size:30px;line-height:1.6;min-height:180px}.specs code{display:block;font-size:22px;line-height:1.8;white-space:normal;margin-top:30px;color:var(--green);overflow-wrap:anywhere}
+/* === CAPTURAS REAIS DA APLICAÇÃO === */
+.evidence-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:35px}.evidence-grid figure{margin:0}.evidence-grid figcaption{font-size:26px;font-weight:800;margin-bottom:25px}.evidence-grid img{width:100%;height:570px;object-fit:contain;object-position:top left}.evidence-grid figure:nth-child(2) img{height:470px}.evidence-rule{font-size:27px;line-height:1.5;margin-top:18px;color:var(--green);font-weight:600}.indicator-image{margin:55px 0 42px;height:485px}.indicator-image img{width:100%;height:100%;object-fit:contain;object-position:left top}.indicator-points{display:grid;grid-template-columns:1fr 1fr 1fr;gap:55px}.indicator-points p{font-size:28px;line-height:1.6}
+/* === DESENHOS UML PARA PROJEÇÃO === */
+.diagram{padding-top:58px}.diagram h2{font-size:59px;margin:14px 0 25px}.diagram .diagram-button{position:absolute;left:80px;right:80px;top:178px;bottom:155px;width:1760px;height:747px}.diagram-button{padding:0;border:0;background:#fff;cursor:zoom-in;display:flex;justify-content:center;align-items:center}.diagram-button img{width:100%;height:100%;object-fit:contain}.diagram-caption{position:absolute;left:100px;right:100px;bottom:90px;font-size:25px;line-height:1.4;max-height:70px;color:var(--muted)}
+.classes>.diagram-button{height:500px;width:1720px;margin-top:65px}.model-notes{display:grid;grid-template-columns:1fr 1fr;gap:70px;margin-top:28px}.model-notes p{font-size:28px;line-height:1.5}
+/* === INSTRUÇÕES MÍNIMAS === */
+.commands{margin-top:65px;border-left:6px solid var(--green);padding:25px 40px;background:#e9f0eb;display:grid;gap:36px}.commands code{font-size:40px}.address{margin-top:42px;font-size:58px;color:var(--green);font-weight:800;letter-spacing:-2px}.execution-note{font-size:29px;color:var(--muted);margin-top:32px;line-height:1.6}
+/* === CONTROLES: NAVEGAÇÃO, NOTAS E EDIÇÃO === */
+.deck-controls{display:flex;gap:8px;padding:8px;background:#102d34eb;border-radius:12px;opacity:0;transition:opacity .2s;pointer-events:none}.deck-controls:hover,.deck-controls:focus-within,.deck-controls.show{opacity:1;pointer-events:auto}
+.deck-controls button,.viewer-tools button,.notes-tools button{font:600 14px Manrope,sans-serif;background:#f5f9f5;color:#142f37;border:0;border-radius:6px;min-width:40px;min-height:36px;padding:8px 12px;cursor:pointer}.deck-controls output{font-size:14px;color:white;align-self:center;padding:0 10px;min-width:76px;text-align:center}button:focus-visible,a:focus-visible{outline:4px solid #e8b83c;outline-offset:5px}
+.edit-hotzone{position:fixed;top:0;left:0;width:70px;height:65px;z-index:10001}.edit-toggle{position:fixed;top:15px;left:15px;z-index:10002;opacity:0;pointer-events:none;border:0;border-radius:7px;padding:10px;font:600 14px Manrope;background:#126759;color:white;transition:opacity .2s}.edit-toggle.show,.edit-toggle.active,.edit-toggle:focus{opacity:1;pointer-events:auto}[contenteditable=true]{outline:2px dashed #a95d00;outline-offset:8px;cursor:text}.editing .diagram-button{cursor:default}
+#notesPanel{display:none;position:fixed;right:20px;top:20px;bottom:90px;width:min(480px,calc(100vw - 40px));z-index:11000;background:#fff;color:#142f37;padding:26px;border:1px solid #b0c9bb;border-radius:10px;box-shadow:0 20px 70px #0005;overflow:auto}#notesPanel.open{display:block}#notesPanel p{font-size:17px;line-height:1.65;margin-top:20px}#notesPanel h2{font-size:22px;line-height:1.3}.notes-tools{display:flex;justify-content:space-between;align-items:center;gap:10px}.notes-tools output{font-size:18px;color:#126759;font-weight:800}.notes-action{padding-top:18px;border-top:1px solid #ccdcd0}
+#viewer{max-width:none;max-height:none;width:96vw;height:94vh;border:0;border-radius:10px;padding:16px;background:white;color:var(--ink)}#viewer::backdrop{background:#0b1c24e8}.viewer-tools{height:55px;display:flex;align-items:center;gap:10px}.viewer-tools strong{margin-right:auto;font-size:17px}.zoom-canvas{height:calc(100% - 55px);overflow:auto;text-align:center}.zoom-canvas img{width:100%;height:100%;max-width:none;max-height:none;object-fit:contain}.zoom-canvas.enlarged img{width:200%;height:200%;object-fit:contain}
+/* === EXPORTAÇÃO: UMA PÁGINA 16:9 POR SLIDE === */
+@page{size:1920px 1080px;margin:0}
+@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}.slide{break-inside:avoid}.reveal{opacity:1!important;transform:none!important}.edit-hotzone,.edit-toggle,#notesPanel,#viewer,.complete-uml{display:none!important}.diagram-button{cursor:default}.slide-footer{color:var(--muted)}}
+</style>
+</head>
+<body>
+<div class="deck-viewport"><main class="deck-stage" id="deckStage" aria-label="Apresentação HelpDesk">{{SLIDES}}</main></div>
+<div class="edit-hotzone" aria-hidden="true"></div><button class="edit-toggle" id="editToggle" aria-label="Ativar edição de texto, tecla E">Editar · E</button>
+<nav class="deck-controls" aria-label="Controles da apresentação">
+<button id="prev" aria-label="Slide anterior">←</button><output id="pageCount" aria-live="polite"></output><button id="next" aria-label="Próximo slide">→</button>
+<button id="notesToggle" aria-label="Mostrar roteiro e tempo, tecla N">Roteiro · N</button><button id="fullscreen" aria-label="Tela cheia, tecla F">Tela cheia · F</button>
+</nav>
+<aside id="notesPanel" aria-label="Notas de apresentação" aria-hidden="true"><div class="notes-tools"><output id="notesTime"></output><button id="notesClose" aria-label="Fechar roteiro">Fechar</button></div><h2 id="notesTitle"></h2><p id="notesSpeech"></p><p class="notes-action" id="notesAction"></p></aside>
+<dialog id="viewer" aria-label="Ampliar diagrama"><div class="viewer-tools"><strong id="viewerTitle"></strong><button id="zoomToggle">Ampliar 2×</button><button id="viewerClose">Fechar · Esc</button></div><div class="zoom-canvas" tabindex="0" aria-label="Área rolável do diagrama ampliado"><img id="viewerImage" alt=""></div></dialog>
+<script id="deckData" type="application/json">{{NOTES_JSON}}</script>
+<script>
+/* === APRESENTAÇÃO: TECLADO, TOQUE, RODA E PALCO FIXO === */
+class SlidePresentation{
+ constructor(){this.slides=[...document.querySelectorAll('.slide')];this.data=JSON.parse(document.getElementById('deckData').textContent);this.stage=document.getElementById('deckStage');this.currentSlide=0;this.editing=false;this.storageKey='helpdesk-slides-10min-v1';this.restoreText();this.setupStageScale();this.setupKeyboardNav();this.setupTouchNav();this.setupEditing();this.setupViewer();this.setupControls();const requested=Number(location.hash.slice(1))||1;this.showSlide(requested-1)}
+ setupStageScale(){const fit=()=>{const s=Math.min(innerWidth/1920,innerHeight/1080);this.stage.style.transform=`translate(${(innerWidth-1920*s)/2}px,${(innerHeight-1080*s)/2}px) scale(${s})`};addEventListener('resize',fit);fit()}
+ showSlide(index){this.currentSlide=Math.max(0,Math.min(index,this.slides.length-1));this.slides.forEach((s,i)=>{const active=i===this.currentSlide;s.classList.toggle('active',active);s.classList.toggle('visible',active);s.inert=!active;s.setAttribute('aria-hidden',String(!active))});document.getElementById('pageCount').textContent=`${this.currentSlide+1} / ${this.slides.length}`;const n=this.data[this.currentSlide];document.getElementById('notesTime').textContent=n.range;document.getElementById('notesTitle').textContent=n.title;document.getElementById('notesSpeech').textContent=n.notes;document.getElementById('notesAction').textContent=n.action;history.replaceState(null,'','#'+(this.currentSlide+1))}
+ setupKeyboardNav(){addEventListener('keydown',e=>{const typing=e.target.isContentEditable||['INPUT','TEXTAREA'].includes(e.target.tagName);if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();this.saveFile();return}if(e.key==='Escape'){if(this.editing)this.toggleEdit();if(document.getElementById('notesPanel').classList.contains('open'))this.toggleNotes(false);return}if(typing||document.getElementById('viewer').open)return;if(e.key.toLowerCase()==='e'){e.preventDefault();this.toggleEdit();return}if(this.editing)return;if(e.key.toLowerCase()==='n'){this.toggleNotes();return}if(e.key.toLowerCase()==='f'){this.toggleFullscreen();return}if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();this.showSlide(this.currentSlide+1)}if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();this.showSlide(this.currentSlide-1)}if(e.key==='Home'){e.preventDefault();this.showSlide(0)}if(e.key==='End'){e.preventDefault();this.showSlide(this.slides.length-1)}})}
+ setupTouchNav(){let x=0,y=0;this.stage.addEventListener('touchstart',e=>{x=e.touches[0].clientX;y=e.touches[0].clientY},{passive:true});this.stage.addEventListener('touchend',e=>{if(this.editing||document.getElementById('viewer').open)return;let dx=e.changedTouches[0].clientX-x,dy=e.changedTouches[0].clientY-y;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy))this.showSlide(this.currentSlide+(dx<0?1:-1))},{passive:true});let last=0;this.stage.addEventListener('wheel',e=>{if(this.editing)return;if(Math.abs(e.deltaY)>15&&Date.now()-last>650){last=Date.now();this.showSlide(this.currentSlide+(e.deltaY>0?1:-1))}e.preventDefault()},{passive:false})}
+ setupControls(){document.getElementById('prev').onclick=()=>this.showSlide(this.currentSlide-1);document.getElementById('next').onclick=()=>this.showSlide(this.currentSlide+1);document.getElementById('notesToggle').onclick=()=>this.toggleNotes();document.getElementById('notesClose').onclick=()=>this.toggleNotes(false);document.getElementById('fullscreen').onclick=()=>this.toggleFullscreen();let timer;addEventListener('pointermove',()=>{const c=document.querySelector('.deck-controls');c.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>c.classList.remove('show'),1700)})}
+ toggleNotes(value){let el=document.getElementById('notesPanel');let state=value===undefined?!el.classList.contains('open'):value;el.classList.toggle('open',state);el.setAttribute('aria-hidden',String(!state))}
+ toggleFullscreen(){if(document.fullscreenElement){document.exitFullscreen?.()}else{document.documentElement.requestFullscreen?.().catch(()=>{})}}
+ /* === EDIÇÃO LOCAL: E PARA EDITAR, CTRL+S PARA BAIXAR HTML === */
+ restoreText(){let saved;try{saved=JSON.parse(localStorage.getItem(this.storageKey)||'null')}catch{}if(Array.isArray(saved))document.querySelectorAll('[data-edit]').forEach((el,i)=>{if(typeof saved[i]==='string')el.innerHTML=saved[i]})}
+ setupEditing(){let timer;const hot=document.querySelector('.edit-hotzone'),toggle=document.getElementById('editToggle');const enter=()=>{clearTimeout(timer);toggle.classList.add('show')};const leave=()=>{timer=setTimeout(()=>{if(!this.editing)toggle.classList.remove('show')},400)};hot.addEventListener('mouseenter',enter);toggle.addEventListener('mouseenter',enter);hot.addEventListener('mouseleave',leave);toggle.addEventListener('mouseleave',leave);hot.onclick=toggle.onclick=()=>this.toggleEdit();document.querySelectorAll('[data-edit]').forEach(el=>{el.addEventListener('input',()=>{try{localStorage.setItem(this.storageKey,JSON.stringify([...document.querySelectorAll('[data-edit]')].map(e=>e.innerHTML)))}catch{}});el.addEventListener('paste',event=>{event.preventDefault();const text=event.clipboardData.getData('text/plain');const selection=getSelection();if(selection.rangeCount){const range=selection.getRangeAt(0);range.deleteContents();const node=document.createTextNode(text);range.insertNode(node);range.setStartAfter(node);range.collapse(true);selection.removeAllRanges();selection.addRange(range);el.dispatchEvent(new Event('input'))}})})}
+ toggleEdit(){this.editing=!this.editing;document.body.classList.toggle('editing',this.editing);document.getElementById('editToggle').classList.toggle('active',this.editing);document.getElementById('editToggle').textContent=this.editing?'Concluir edição · Esc':'Editar · E';document.querySelectorAll('[data-edit]').forEach(el=>el.contentEditable=String(this.editing))}
+ saveFile(){if(this.editing)this.toggleEdit();const clone=document.documentElement.cloneNode(true);clone.querySelectorAll('[data-edit]').forEach(e=>e.removeAttribute('contenteditable'));clone.querySelector('#viewer').removeAttribute('open');clone.querySelector('#notesPanel').classList.remove('open');clone.querySelector('#notesPanel').setAttribute('aria-hidden','true');clone.querySelectorAll('.slide').forEach((e,i)=>{e.classList.toggle('active',i===0);e.classList.toggle('visible',i===0);e.toggleAttribute('inert',i!==0);e.setAttribute('aria-hidden',String(i!==0))});const url=URL.createObjectURL(new Blob(['<!doctype html>\n'+clone.outerHTML],{type:'text/html;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='apresentacao-helpdesk.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+ /* === AMPLIAÇÃO DOS DESENHOS SEM NAVEGAR PARA OUTRO ARQUIVO === */
+ setupViewer(){const dialog=document.getElementById('viewer'),image=document.getElementById('viewerImage'),canvas=document.querySelector('.zoom-canvas'),zoom=document.getElementById('zoomToggle');const show=(src,title)=>{if(this.editing)return;image.src=src;image.alt=title;document.getElementById('viewerTitle').textContent=title;canvas.classList.remove('enlarged');zoom.textContent='Ampliar 2×';dialog.showModal()};document.querySelectorAll('.diagram-button').forEach(b=>b.onclick=()=>show(b.querySelector('img').src,b.querySelector('img').alt));document.querySelectorAll('[data-full-diagram]').forEach(b=>b.onclick=()=>show(b.dataset.fullDiagram,'HelpDesk · casos de uso UC01–UC10'));document.getElementById('viewerClose').onclick=()=>dialog.close();zoom.onclick=()=>{let enlarged=canvas.classList.toggle('enlarged');zoom.textContent=enlarged?'Ajustar à tela':'Ampliar 2×'}}
+}
+window.presentation=new SlidePresentation();
+</script>
+</body>
+</html>

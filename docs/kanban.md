@@ -186,3 +186,11 @@ O responsável informou o trecho da atividade e confirmou que as Sprints 1 e 2 j
 S3-11 teve descrição e aceite alinhados a esse escopo. S3-12 permanece no Backlog, e nenhuma coluna existente é alterada pela sincronização do catálogo. O checklist distingue as apresentações anteriores da entrega ainda pendente da Sprint 3. Código, diagramas e documento consolidado foram preservados.
 
 A conferência validou os dez intervalos contínuos de 00:00 a 06:30, a cobertura dos artefatos pedidos e os nomes das funções. Os quatro testes do catálogo/sincronização passaram com banco temporário. A aplicação, os diagramas e os arquivos Markdown/DOCX/PDF consolidados das três Sprints permaneceram inalterados.
+
+## Slides para a apresentação da Sprint 3
+
+A preparação de S3-11 recebeu uma apresentação de 16 slides, com visão breve do sistema e foco nas atualizações de RF05/RF06 e da modelagem. O roteiro distribui as falas e as ações de 00:00 a 10:00. O HTML funciona sem rede, incorpora capturas de ensaio e diagramas, permite ampliação e oferece edição local do texto. O PDF tem uma página por slide.
+
+Foram conferidos os 16 slides e as 16 páginas renderizadas do PDF, além da navegação, das notas, da edição e da exportação. Os recortes UML mantêm os nomes reais de funções e as permissões do código. Os documentos acadêmicos e os diagramas anteriores foram preservados. As fontes e instruções estão em [apresentacao/README.md](apresentacao/README.md), com o [roteiro de 10 minutos](apresentacao/roteiro-10-minutos.md).
+
+S3-12 permanece no Backlog: preparar slides não equivale a gravar, apresentar ou postar no LEX. Esta alteração não modifica o catálogo, o banco nem as colunas do quadro operacional.
