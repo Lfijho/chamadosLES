@@ -1,166 +1,45 @@
-# HelpDesk — Sistema de Controle de Chamados de TI
+# HelpDesk
 
-Projeto de Laboratório de Engenharia de Software, desenvolvido individualmente por **Leandro Pinzon Filho**. Entregas: Sprint 1 em **29/10/2026**, Sprint 2 em **12/11/2026** e entrega final em **03/12/2026**.
+Aplicação web de controle de chamados de TI em Flask, HTML/CSS e SQLite. Permite autenticação, abertura e consulta de chamados, atendimento com prioridade/status/solução, histórico com anotações e indicadores. Solicitantes consultam os próprios chamados; técnicos conduzem o atendimento. O Kanban auxiliar acompanha as tarefas de desenvolvimento.
 
-A Sprint 1 implementa RF01 (autenticação) e RF02 (abertura). A Sprint 2 entrega RF03 (consulta com filtros e paginação por perfil) e RF04 (prioridade, status e solução pelo técnico). A Sprint 3 entrega RF05 (histórico de status e anotações) e RF06 (indicadores por status e prioridade). O Kanban acompanha tarefas do desenvolvimento, separado dos chamados.
+## Executar
 
-## Iniciar
-
-Pré-requisitos no host: Docker Engine e Docker Compose com suporte a `compose.yml`. Na raiz de um clone:
+Requer Docker e Docker Compose. Na raiz do repositório:
 
 ```bash
 docker compose up -d
 ```
 
-Acesse **http://localhost:8080**. A primeira construção baixa a imagem e as dependências. O container prepara automaticamente o volume, gera a chave, aplica migrações, provisiona as contas e sincroniza o catálogo. Não é necessário instalar Python/Node, criar `.env` ou editar arquivos no host.
+Acesse **http://localhost:8080**. Após atualizar o código de uma instalação com imagem já construída, execute `docker compose up -d --build`.
+
+Consulte as credenciais iniciais de demonstração somente no terminal local:
 
 ```bash
-docker compose ps
 docker compose exec app flask demo-credentials
 ```
 
-O segundo comando mostra localmente os e-mails e as senhas aleatórias iniciais de `solicitante@example.com` e `tecnico@example.com`. Credenciais não são versionadas nem escritas nos logs. Quem tem acesso ao Docker pode ler os segredos do volume; restrinja esse acesso. Não cole a saída em issues ou commits.
+As senhas são geradas no primeiro provisionamento. Não publique a saída desse comando. A configuração é destinada à demonstração local; as contas não devem ser expostas na internet.
 
-## Persistência e operação
+## Estado e configuração
 
-O volume nomeado `<projeto-compose>_helpdesk_state` contém SQLite, chave de sessão e credenciais iniciais. Permissões são preparadas pela imagem; a aplicação e o provisionamento executam como UID/GID 10001. O seed não redefine senhas, não duplica contas/tarefas nem altera colunas existentes do quadro. Metadados de tarefas, incluindo descrição e critérios de aceite, são sincronizados de `docs/backlog.yml`. O catálogo registra as tarefas das Sprints 2 e 3 e mantém vídeo/apresentação/postagem pendentes; prazos, metas e relação entre tarefas-resumo e detalhadas estão em [docs/kanban.md](docs/kanban.md).
+O volume nomeado `helpdesk_state` preserva o banco, a chave de sessão e as credenciais. Não remova o volume nem use `docker compose down -v` se deseja manter os dados. A inicialização aplica migrações e provisionamento idempotente. `docs/backlog.yml` é o catálogo utilizado pelo Kanban; a sincronização preserva as colunas alteradas pelo usuário.
 
 ```bash
+docker compose ps
 docker compose logs --tail 50 app
-docker compose up -d --force-recreate --wait
 docker compose down
-docker compose up -d
 ```
 
-Esses comandos preservam os dados. Não use `down -v` ou remova o volume se deseja preservá-los. Após atualizar o código de uma instalação que já tem imagem construída, execute `docker compose up -d --build`. A política `unless-stopped` reinicia o processo se ele falhar; migrações com erro encerram a inicialização sem iniciar o servidor.
+A porta é publicada em localhost. Use `HELPDESK_PORT=8081 docker compose up -d` para selecionar outra porta. O serviço usa Gunicorn e disponibiliza `/healthz` para conferir aplicação e banco. Em HTTPS, configure `COOKIE_SECURE=true`; o padrão local permite HTTP.
 
-A porta é publicada somente em `127.0.0.1`. Para trocar a porta sem editar arquivos: `HELPDESK_PORT=8081 docker compose up -d`. `/healthz` responde 200 quando consegue consultar a revisão de migração e tabelas do banco; caso contrário responde 503. Logs operacionais vão a stdout/stderr sem corpo de formulários, senha, cookie ou query string. O servidor é Gunicorn, sem debug, um worker e quatro threads; `exec` e o init do Docker encaminham os sinais de encerramento.
+## Testar
 
-## Testes
-
-Banco e estado são temporários em cada teste; o container de testes não monta o volume de demonstração:
+Os testes usam banco temporário, sem montar o volume da aplicação:
 
 ```bash
+docker compose config --quiet
 docker build --target test -t helpdesk-tests .
 docker run --rm helpdesk-tests
-docker compose config --quiet
 ```
 
-Alternativa para desenvolvimento, com Python 3.13 e ambiente virtual já disponível: `pip install -r requirements-dev.lock` e `python -m pytest -q`. O teste usa a configuração real e troca o diretório de estado por um temporário. Não execute testes sobre o banco de demonstração.
-
-O workflow `.github/workflows/ci.yml` executa a suíte, valida o Compose e testa a inicialização/saúde. O resultado local e as limitações estão em [docs/verificacoes.md](docs/verificacoes.md).
-
-A verificação opcional de navegador/persistência usa dados sintéticos e um projeto isolado. Requer Node apenas para essa verificação, nunca para iniciar a aplicação:
-
-```bash
-npm install --prefix /tmp/helpdesk-browser playwright@1.64.1 @axe-core/playwright@4.11.1
-NODE_PATH=/tmp/helpdesk-browser/node_modules /tmp/helpdesk-browser/node_modules/.bin/playwright install chromium
-HELPDESK_PORT=8081 docker compose -p helpdesk-browser-check up -d --build --wait
-NODE_PATH=/tmp/helpdesk-browser/node_modules CHECK_COMPOSE_PROJECT=helpdesk-browser-check CHECK_BASE_URL=http://localhost:8081 node scripts/browser-check.cjs
-HELPDESK_PORT=8081 docker compose -p helpdesk-browser-check up -d --force-recreate --wait
-NODE_PATH=/tmp/helpdesk-browser/node_modules CHECK_COMPOSE_PROJECT=helpdesk-browser-check CHECK_BASE_URL=http://localhost:8081 node scripts/browser-check.cjs --verify-persistence
-HELPDESK_PORT=8081 docker compose -p helpdesk-browser-check down
-```
-
-Capturas locais ficam em `artifacts/browser/`, ignoradas no Git. O estado temporário do teste de navegador contém um cookie de teste em `/tmp/helpdesk-browser-check-state.json`, com modo 0600; remova-o após verificar. Nenhum volume é apagado.
-
-## Diagramas e documentação
-
-PlantUML substitui o diagrams.net inicialmente previsto para permitir fontes versionadas e renderização reproduzível. Não havia arquivo existente exigindo `.drawio`. A entrega final reúne 13 figuras UML em 17 imagens SVG/PNG, incluindo as continuações; o renderizador é opcional e independente da aplicação:
-
-```bash
-./scripts/render-diagrams.sh
-```
-
-O script constrói `helpdesk-diagrams:1.2025.10` a partir de `plantuml/plantuml:1.2025.10`, acrescentando libgd para a exportação PNG das atividades. A renderização usa um container sem rede, com UID/GID do usuário e acesso somente à pasta de desenhos. Em ambientes sem shell POSIX, construa a imagem com `docker build -f scripts/diagrams/Dockerfile -t helpdesk-diagrams:1.2025.10 .` e execute-a montando `docs/diagrams` em `/work`, com os argumentos `-charset UTF-8 -failfast2 -tsvg *.puml` e a variante `-tpng`. A aplicação e o serviço opcional do Compose permanecem independentes desse comando.
-
-- [Entrega final da Sprint 3](docs/entrega-sprint-3.md): [DOCX editável](docs/entrega-sprint-3.docx) e [PDF final](docs/entrega-sprint-3.pdf).
-- [Slides para apresentação em 10 minutos](docs/apresentacao-helpdesk.html): [PDF dos slides](docs/apresentacao-helpdesk.pdf), [roteiro com falas e tempos](docs/apresentacao/roteiro-10-minutos.md) e [instruções de uso e edição](docs/apresentacao/README.md).
-- [Roteiro cronometrado do vídeo da Sprint 3](docs/roteiro-video-final.md) e [checklist do LEX](docs/checklist-lex.md).
-- [Verificações da Sprint 3](docs/verificacoes-sprint-3.md) e [backup/restauração local](docs/backup-restauracao.md).
-- [Entrega consolidada da Sprint 2](docs/entrega-sprint-2.md): [DOCX editável](docs/entrega-sprint-2.docx) e [PDF](docs/entrega-sprint-2.pdf), com as correções UML e UC01 a UC07.
-- [Roteiro de apresentação e revisão técnica](docs/roteiro-sprint-2.md).
-- [Verificações da Sprint 2](docs/verificacoes-sprint-2.md).
-- [Registro histórico da entrega da Sprint 1](docs/entrega-sprint-1.md): [DOCX editável](docs/entrega-sprint-1.docx) e [PDF](docs/entrega-sprint-1.pdf).
-- [Requisitos e UML da Sprint 1 como registro histórico](docs/sprint-1.md).
-- [Catálogo inicial de tarefas e critérios](docs/backlog.yml).
-- [Acompanhamento versionado](docs/kanban.md): registro do código verificado. O quadro da aplicação mantém o estado operacional no banco, exclusivo do técnico.
-- [Registro das verificações e limites reais](docs/verificacoes.md).
-- [Contexto do produto](PRODUCT.md) e [sistema visual](DESIGN.md).
-
-## Arquitetura e evolução
-
-`helpdesk/__init__.py` cria a aplicação, registra extensões, rotas, erros e cabeçalhos. `config.py` configura o estado e os cookies; `models.py` define persistência e invariantes; `tickets.py` aplica a visibilidade, coordena as gravações, reúne o histórico e calcula os indicadores; `forms.py` valida entrada; `security.py` centraliza permissões, sessões e limites; `routes.py` implementa os fluxos; `cli.py` provisiona. Templates Jinja2 escapam conteúdo; CSS local não depende de CDN. Migrações em `migrations/`, testes em `tests/`.
-
-Datas no SQLite são armazenadas sem offset e representam UTC; a interface identifica UTC explicitamente. Protocolo usa UUID v4 completo com prefixo HD-. A confirmação de abertura permanece acessível somente ao autor autenticado. A listagem `/chamados` e o detalhe `/chamados/<id>/detalhes` autorizam solicitantes apenas aos próprios registros e técnicos a todos.
-
-Para futuras alterações de esquema, gere uma nova revisão com Flask-Migrate e revise-a antes de aplicar; não modifique a revisão já entregue. A migração da Sprint 2 preserva chamados anteriores com prioridade Média. O fluxo é Aberto → Em atendimento → Concluído; solução com 1 a 5.000 caracteres após remover espaços externos e conclusão UTC são obrigatórias ao concluir. Concluído é terminal, inclusive para prioridade. Cada mudança de status cria um evento com autor, data UTC e valores anterior/novo na mesma transação. A versão do chamado impede sobreposição de alterações concorrentes; em conflito, a página pede revisão dos dados atualizados. A migração da Sprint 3 cria TicketNote sem modificar chamados ou StatusEvent. O detalhe reúne eventos e anotações em ordem de data UTC; empates são resolvidos por tipo (status antes de anotação) e identificador. Anotações têm de 1 a 5.000 caracteres, não têm edição/exclusão e podem ser acrescentadas após a conclusão sem alterar o atendimento. O painel `/indicadores` é exclusivo do técnico e agrega somente chamados, com valores zero para status/prioridades ausentes. O catálogo do Kanban aceita novos IDs e atualizações de metadados, preservando colunas e tarefas adicionais.
-
-## Configuração local de demonstração e publicação real
-
-Esta entrega é configurada para demonstração local em HTTP. Cookies têm HttpOnly, SameSite=Lax e prazo de 8 horas; `Secure=false` permite localhost HTTP. A sessão autenticada tem limite absoluto de 8 horas validado no banco e é revogada no logout. CSRF protege todos os POSTs. Limites persistem por 10 minutos: cinco falhas por conta e trinta por IP; contas desconhecidas recebem a mesma mensagem e verificação contra hash fictício. Contadores usam HMAC e não guardam e-mail/IP em claro. É uma mitigação básica para uma instância, sem serviço externo de limitação.
-
-Para HTTPS, termine TLS em proxy controlado, configure `COOKIE_SECURE=true` e recrie o container. Ative HSTS no proxy somente após confirmar HTTPS. Se publicar atrás de proxy, configure e teste explicitamente a confiança no encaminhamento de IP; a aplicação hoje usa o IP direto, sem confiar em `X-Forwarded-For`. Publique somente pelas rotas e interfaces necessárias.
-
-Antes de publicar fora da demonstração: desabilite/substitua o provisionamento automático de contas demo e a recuperação de suas senhas; use gestão de segredos e contas institucionais, política de senha, backups consistentes do SQLite e testes de restauração, monitoramento, TLS, atualização de dependências e revisão de acesso/privacidade. Não exponha as contas de demonstração na internet. O arquivo de credenciais contém senhas iniciais em claro exclusivamente para recuperação local solicitada; senhas de autenticação são verificadas por hash scrypt no banco.
-
-Uma chave externa pode ser fornecida como `SECRET_KEY` (mínimo 32 caracteres aleatórios) ao ambiente do serviço por um override privado/gestor de segredos. Sem ela, a chave é gerada com `secrets` e preservada no volume em modo 0600. Nunca versione esse valor. Trocar a chave invalida cookies existentes.
-
-## Roteiro de demonstração geral
-
-Para o vídeo de 03/12, siga o [roteiro da Sprint 3](docs/roteiro-video-final.md): apresente as atualizações documentais e RF05/RF06. A sequência abaixo é uma referência de demonstração do sistema completo, não o roteiro desse vídeo.
-
-1. Execute `docker compose up -d`, mostre o estado healthy e recupere credenciais no terminal local.
-2. Como solicitante, tente senha incorreta, entre e abra um chamado da categoria Rede. Mostre a validação obrigatória de campos.
-3. Envie dados válidos. Mostre protocolo, autor implícito, status Aberto e abertura UTC. Atualize a confirmação para comprovar PRG.
-4. Saia e mostre que a URL privada exige login.
-5. Entre como técnico, consulte chamados e combine filtros. Abra um detalhe, defina prioridade, inicie atendimento, registre uma anotação e conclua com solução. Mostre histórico, indicadores e o quadro acadêmico separado.
-6. Recrie os containers sem apagar volumes e confirme que o quadro persiste.
-7. Volte ao solicitante e mostre o histórico do próprio chamado. Use o roteiro do vídeo final e confira as pendências de gravação, apresentação e postagem no checklist do LEX.
-
-
-## Gerar o documento de entrega
-
-As fontes são `docs/entrega-sprint-1.md`, `docs/entrega-sprint-2.md` e `docs/entrega-sprint-3.md`. Cada DOCX e PDF é produzido em sequência a partir do mesmo Markdown e das imagens nele referenciadas:
-
-```bash
-./scripts/build-delivery-docs.sh 3
-```
-
-O script constrói uma ferramenta opcional em container, separada da aplicação, com Pandoc, python-docx e LibreOffice. Aplica apenas formatação ao DOCX e exporta esse arquivo para PDF. Requer Docker e acesso à rede na primeira construção; não altera banco, código ou configuração da aplicação. A versão entregue usou Pandoc 2.17.1.1, python-docx 1.2.0 e LibreOffice 7.4.7.2. A imagem base é Python 3.13.7 em Debian Bookworm; pacotes da distribuição podem receber atualizações em construções futuras, portanto confira novamente a paginação após regenerar.
-
-Os argumentos `1` e `2` geram as entregas históricas correspondentes; sem argumento, o script seleciona a Sprint 1. As consolidações das Sprints 2 e 3 usam páginas em paisagem para os desenhos maiores. Não regenere os documentos históricos sem necessidade.
-
-A captura em `docs/figures/` contém somente um chamado sintético de ensaio. Os diagramas com prefixo `entrega-` são versões de leitura em A4 dos desenhos detalhados preservados; `scripts/render-diagrams.sh` renderiza ambos os conjuntos. Os prefixos `sprint-2-` e `sprint-3-` identificam as respectivas consolidações; a entrega final reutiliza os desenhos anteriores cujo fluxo foi preservado. Os documentos contêm somente a redação final revisada.
-
-
-## Verificação de navegador da Sprint 2
-
-Com as dependências opcionais de navegador instaladas como acima, execute em um projeto e volume isolados:
-
-```bash
-HELPDESK_PORT=8082 docker compose -p helpdesk-sprint2-check up -d --build --wait
-NODE_PATH=/tmp/helpdesk-browser/node_modules CHECK_COMPOSE_PROJECT=helpdesk-sprint2-check CHECK_BASE_URL=http://localhost:8082 node scripts/sprint2-check.cjs
-HELPDESK_PORT=8082 docker compose -p helpdesk-sprint2-check up -d --force-recreate --wait
-NODE_PATH=/tmp/helpdesk-browser/node_modules CHECK_COMPOSE_PROJECT=helpdesk-sprint2-check CHECK_BASE_URL=http://localhost:8082 node scripts/sprint2-check.cjs --verify-persistence
-HELPDESK_PORT=8082 docker compose -p helpdesk-sprint2-check down
-```
-
-O ensaio insere dados sintéticos no volume de teste. Use um projeto novo no primeiro ensaio para conferir o estado vazio. Capturas e referência de persistência ficam em `artifacts/sprint-2/`, ignorado pelo Git. Não execute sobre o volume de uso normal.
-
-
-## Verificação de navegador da Sprint 3
-
-O primeiro ensaio exige projeto e volume novos para conferir indicadores vazios. Se já executou o exemplo, escolha outro nome de projeto; não apague volumes para repetir. Use as dependências opcionais de navegador descritas acima:
-
-```bash
-HELPDESK_PORT=8083 docker compose -p helpdesk-sprint3-local-check up -d --build --wait
-NODE_PATH=/tmp/helpdesk-browser/node_modules CHECK_COMPOSE_PROJECT=helpdesk-sprint3-local-check CHECK_BASE_URL=http://localhost:8083 node scripts/sprint3-check.cjs
-HELPDESK_PORT=8083 docker compose -p helpdesk-sprint3-local-check up -d --force-recreate --wait
-NODE_PATH=/tmp/helpdesk-browser/node_modules CHECK_COMPOSE_PROJECT=helpdesk-sprint3-local-check CHECK_BASE_URL=http://localhost:8083 node scripts/sprint3-check.cjs --verify-persistence
-docker compose -p helpdesk-sprint3-local-check down
-```
-
-O ensaio insere somente dados sintéticos. Capturas e referência de persistência ficam em `artifacts/sprint-3/`, ignorado pelo Git. Ele não deve usar o volume da instância de demonstração normal. O script recupera credenciais somente em memória e não as publica.
-
-Para backup consistente, use `docker compose exec app flask backup-db /data/backups/entrega.sqlite`. O comando não sobrescreve arquivos e não copia diretamente o banco ativo. O procedimento completo, incluindo restauração em volume novo, está em [backup-restauracao.md](docs/backup-restauracao.md).
+Configuração em `helpdesk/`, migrações em `migrations/` e testes em `tests/`. Scripts de verificação e manutenção ficam em `scripts/`.

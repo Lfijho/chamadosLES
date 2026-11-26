@@ -10,3 +10,24 @@ runtime/
 htmlcov/
 node_modules/
 artifacts/
+
+# Materiais locais; somente o catálogo do Kanban integra a aplicação.
+/docs/*
+!/docs/backlog.yml
+/*.md
+!/README.md
+/.*/
+!/.github/
+/apresenta*/
+/presentations/
+/slides/
+*.pdf
+*.docx
+*.pptx
+*.puml
+/scripts/build-delivery-docs.sh
+/scripts/build-presentation.py
+/scripts/export-presentation.cjs
+/scripts/render-diagrams.sh
+/scripts/documents/
+/scripts/diagrams/

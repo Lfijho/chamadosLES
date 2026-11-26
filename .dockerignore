@@ -9,3 +9,15 @@ runtime
 node_modules
 .*/
 artifacts
+
+# Materiais externos à aplicação.
+docs/*
+!docs/backlog.yml
+DESIGN.md
+PRODUCT.md
+scripts/build-delivery-docs.sh
+scripts/build-presentation.py
+scripts/export-presentation.cjs
+scripts/render-diagrams.sh
+scripts/documents
+scripts/diagrams
